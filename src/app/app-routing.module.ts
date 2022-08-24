@@ -8,8 +8,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'createbill',
     pathMatch: 'full'
+  },
+  {
+    path: 'createbill',
+    loadChildren: () => import('./create-bill/create-bill.module').then( m => m.CreateBillPageModule)
   },
 ];
 
