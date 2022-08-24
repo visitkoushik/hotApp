@@ -1,0 +1,7 @@
+{
+  "name": "chataBook",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
