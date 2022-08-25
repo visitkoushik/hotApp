@@ -15,6 +15,18 @@ const routes: Routes = [
     path: 'createbill',
     loadChildren: () => import('./create-bill/create-bill.module').then( m => m.CreateBillPageModule)
   },
+  {
+    path: 'configure',
+    loadChildren: () => import('./configure/configure.module').then( m => m.ConfigurePageModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then( m => m.ReportsPageModule)
+  },
+  {
+    path: 'appsetting',
+    loadChildren: () => import('./appsetting/appsetting.module').then( m => m.AppsettingPageModule)
+  },
 ];
 
 @NgModule({

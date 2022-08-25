@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CreateBillPageRoutingModule } from './create-bill-routing.module';
 
 import { CreateBillPage } from './create-bill.page';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CreateBillPageRoutingModule
+    CreateBillPageRoutingModule,
+    MaterialModule
   ],
   declarations: [CreateBillPage]
 })

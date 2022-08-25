@@ -6,31 +6,24 @@
       </button>
       <ion-title>{{ pageTitle }}</ion-title>
       <mat-menu #menu="matMenu">
-        <button
-          mat-menu-item
-          routerLink="/createbill"
-          routerLinkActive="active" 
+        <button mat-menu-item  routerLink="/createbill" routerLinkActive="active"
         >
           <mat-icon>create</mat-icon>
-          <span>Create Bill</span>
+          <span>New Bill</span>
         </button>
-        <button
-          mat-menu-item
-          routerLink="/home"
-          routerLinkActive="active"   
-        >
+        <button mat-menu-item routerLink="/home" routerLinkActive="active">
           <mat-icon>view_list</mat-icon>
-          <span>Item List</span>
+          <span>Items</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/configure" routerLinkActive="active">
           <mat-icon>view_module</mat-icon>
           <span>Configure</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/reports" routerLinkActive="active">
           <mat-icon>report</mat-icon>
-          <span>Report</span>
+          <span>Reports & Bills</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/appsetting" routerLinkActive="active">
           <mat-icon>settings</mat-icon>
           <span>App Settings</span>
         </button>
