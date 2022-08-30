@@ -28,6 +28,6 @@ export class ConfiremdBillPage implements OnInit {
 
   onDone = () => {
     this.cartService.reSet();
-    this.router.navigate(['/createbill'],{queryParams:{data:JSON.stringify(this.cartService.reSet())}});
+    this.router.navigate(['/createbill'], { queryParams: { reset: true } });
   };
 }

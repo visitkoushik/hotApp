@@ -54,32 +54,45 @@ export class CreateBillPage implements OnInit {
       this.ite1,
       this.ite2,
     ];
+
+
+    this.creatBillPage = this.cartService.reSet();
+    this.creatBillPage.listOfCartItem =
+      this.cartService.mainItems.map<I_CartItem>(
+        (itm: I_Items, inx: number) => ({
+          id: inx + 1 + '',
+          items: { ...itm },
+          count: 0,
+        })
+      );
+
+    this.cartService.createBillPageRef = { ...this.creatBillPage };
   }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((p) => {
-      if (p.data) {
+      if (p.reset) {
+        this.creatBillPage = this.cartService.reSet();
+        this.creatBillPage.listOfCartItem =
+          this.cartService.mainItems.map<I_CartItem>(
+            (itm: I_Items, inx: number) => ({
+              id: inx + 1 + '',
+              items: { ...itm },
+              count: 0,
+            })
+          );
+
+        this.cartService.createBillPageRef = { ...this.creatBillPage };
+      }
+      else if(p.data){
         this.creatBillPage = JSON.parse(p.data);
-        // this.creatBillPage.listOfCartItem = this.mainItems.map<I_CartItem>(
-        //   (itm: I_Items, inx: number) => ({
-        //     id: inx + 1 + '',
-        //     items: { ...itm },
-        //     count: 0,
-        //   })
-        // );
+      }
+      else {
+        this.creatBillPage = { ...this.cartService.createBillPageRef };
       }
     });
 
-    this.creatBillPage = this.cartService.reSet();
-    this.creatBillPage.listOfCartItem = this.cartService.mainItems.map<I_CartItem>(
-      (itm: I_Items, inx: number) => ({
-        id: inx + 1 + '',
-        items: { ...itm },
-        count: 0,
-      })
-    );
 
-    this.cartService.createBillPageRef = { ...this.creatBillPage };
   }
   onModifyItem = (id: string, isIncrease: boolean) => {
     this.creatBillPage.listOfCartItem = this.creatBillPage.listOfCartItem.map(
@@ -96,6 +109,7 @@ export class CreateBillPage implements OnInit {
     );
   };
   onNextScreen = () => {
+    this.cartService.createBillPageRef = { ...this.creatBillPage };
     const selectedItem = this.creatBillPage.listOfCartItem.filter(
       (e) => e.count > 0
     );

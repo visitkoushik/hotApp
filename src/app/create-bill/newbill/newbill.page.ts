@@ -27,9 +27,6 @@ export class NewbillPage implements OnInit {
     });
   }
 
-  onBack = () => {
-    this.location.back();
-  };
 
   onConfirm = () => {
     const billClass = this.cartService.createBillPageRef.currentBiill
