@@ -8,6 +8,8 @@ import { CreateBillPageRoutingModule } from './create-bill-routing.module';
 
 import { CreateBillPage } from './create-bill.page';
 import { MaterialModule } from '../material.module';
+import { PipeModule } from '../pipe/pipe.module';
+
 
 @NgModule({
   imports: [
@@ -15,8 +17,10 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     IonicModule,
     CreateBillPageRoutingModule,
-    MaterialModule
+    MaterialModule,
+    PipeModule,
   ],
   declarations: [CreateBillPage]
+
 })
 export class CreateBillPageModule {}

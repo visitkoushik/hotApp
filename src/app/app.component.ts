@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
@@ -8,8 +9,10 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  pageTitle: string = '';
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  pageEvent: any = null;
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {}
 
   ngOnInit(): void {
     this.router.events
@@ -17,16 +20,17 @@ export class AppComponent implements OnInit {
         filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
         map((route) => {
-          while (route.firstChild) route = route.firstChild;
+          while (route.firstChild) {route = route.firstChild;}
           return route;
         }),
-        filter((route) => {
-          return route.outlet === 'primary';
-        }),
+        filter((route) => route.outlet === 'primary'),
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
-        this.pageTitle = event?.title || '';
+        this.pageEvent = event;
       });
   }
+  onBack=()=>{
+    this.location.back();
+  };
 }

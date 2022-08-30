@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { CartService } from './providers/cart-service.service';
+import { PipeModule } from './pipe/pipe.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,8 +19,12 @@ import { MaterialModule } from './material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    PipeModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    CartService ,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

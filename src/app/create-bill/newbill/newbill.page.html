@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-item>
+    <mat-label
+      >Customer Name:
+      {{data.gender|formatgender}}{{data.customerName}}</mat-label
+    >
+
+    <mat-divider></mat-divider>
+  </ion-item>
+  <ion-item>
+    <mat-label>Contact Number: {{data.customerContact}}</mat-label>
+  </ion-item>
+</ion-header>
+<mat-divider></mat-divider>
+
+<ion-content>
+  <mat-list>
+    <mat-card *ngFor="let cartItem of data.listItem ">
+      <mat-card-title-group>
+        <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
+        <mat-card-subtitle>Qty. {{cartItem.count}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: red">
+          Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
+          Rs.
+        </mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card>
+  </mat-list>
+</ion-content>
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-item>
+      <ion-label style="color:green">(Total) {{data.listItem|subtotal}} - (Discount) {{data.discount}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-title
+        >Total({{data.listItem|subtotal:'count'}}): {{data.listItem|subtotal:
+        'price':data.discount+""}} Rs.</ion-title
+      >
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="+(data.listItem|subtotal:'count')===0 || (!data.customerName||data.customerName.trim().length===0)"
+        (click)="onConfirm()"
+      >
+        Confirm
+      </button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

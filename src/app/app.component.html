@@ -1,10 +1,13 @@
 <ion-app>
-  <ion-header mode="md">
-    <ion-toolbar class="my-toolbar">
+  <ion-header mode="ios">
+    <ion-toolbar class="app-toolbar" color="primary">
       <button mat-icon-button [matMenuTriggerFor]="menu" class="menuicon">
-        <mat-icon end>more_vert</mat-icon>
+        <mat-icon end>menu</mat-icon>
       </button>
-      <ion-title>{{ pageTitle }}</ion-title>
+      <ion-title>{{ pageEvent?.title || '' }}</ion-title>
+      <button mat-icon-button (click)="onBack()" *ngIf="pageEvent?.displayBackButton">
+        <mat-icon end>arrow_back_ios</mat-icon>
+      </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item  routerLink="/createbill" routerLinkActive="active"
         >

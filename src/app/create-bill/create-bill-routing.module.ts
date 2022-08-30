@@ -9,6 +9,10 @@ const routes: Routes = [
     component: CreateBillPage,
     data: { title: 'New Bill' },
   },
+  {
+    path: 'newbill',
+    loadChildren: () => import('./newbill/newbill.module').then( m => m.NewbillPageModule)
+  }
 ];
 
 @NgModule({

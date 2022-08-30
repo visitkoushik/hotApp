@@ -1,16 +1,138 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>createBill</ion-title>
-  </ion-toolbar>
+<ion-header>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">Customer Name *</mat-label>
+    <input
+      matInput
+      placeholder="Customer Name is mandatory"
+      [(ngModel)]="cartService.customerName"
+      type="text"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Contact Number</mat-label>
+    <input
+      matInput
+      placeholder="Ex:1234567890"
+      type="tel"
+      [(ngModel)]="cartService.customerContact"
+    />
+  </mat-form-field>
+  <div class="gender">
+    <mat-label>Gender</mat-label>
+    <mat-radio-group aria-label="Gender" [(ngModel)]="cartService.gender">
+      <mat-radio-button
+        id="mrgndr"
+        name="gender-male"
+        [value]="CLONED_GENDER.MALE"
+        [checked]="cartService.gender===CLONED_GENDER.MALE"
+        class="radiobutton"
+        >Male</mat-radio-button
+      >
+      <mat-radio-button
+        id="frgndr"
+        name="gender-female"
+        [value]="CLONED_GENDER.FEMALE"
+        [checked]="cartService.gender===CLONED_GENDER.FEMALE"
+        class="radiobutton"
+        >Female</mat-radio-button
+      >
+      <mat-radio-button
+        id="orgndr"
+        name="gender-others"
+        [value]="CLONED_GENDER.OTHERS"
+        [checked]="cartService.gender===CLONED_GENDER.OTHERS"
+        class="radiobutton"
+        >Others</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <ion-searchbar
+    placeholder="Search..."
+    [(ngModel)]="cartService.filterTerm"
+    animated="true"
+  ></ion-searchbar>
 </ion-header>
- -->
 <ion-content>
-  <form class="newbill-form">
-    <p>
-    <mat-form-field class="newbill-full-width" appearance="fill">
-      <mat-label>Customer Name</mat-label>
-      <input matInput placeholder="Name of Customer" value="" />
-    </mat-form-field>
-    </p>
-  </form>
+  <mat-list>
+    <mat-card *ngFor="let cartItem of cartService.listOfCartItem | filter: cartService.filterTerm">
+      <mat-card-title-group>
+        <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
+        <mat-card-subtitle style="color: red"
+          >Price:{{cartItem.items.itemSellValue.toFixed(2)}} Rs.
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <div class="rowList2" *ngIf="cartItem.count>0">
+          <div class="rowListinner">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="onModifyItem(cartItem.id,false)"
+            >
+              -
+            </button>
+            <input [value]="cartItem.count" class="inputClass" readonly />
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="onModifyItem(cartItem.id,true)"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div class="rowList3" *ngIf="cartItem.count===0">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="onModifyItem(cartItem.id,true)"
+          >
+            ADD
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-list>
+  <mat-divider></mat-divider>
 </ion-content>
+
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-item>
+      <mat-form-field class="newbill-half-width" appearance="fill">
+        <mat-label>Due</mat-label>
+        <input
+          matInput
+          placeholder="Ex:20.00"
+          type="number"
+          [(ngModel)]="cartService.due"
+        />
+      </mat-form-field>
+      <mat-form-field class="newbill-half-width" appearance="fill">
+        <mat-label>Discount</mat-label>
+        <input
+          matInput
+          placeholder="Ex:20.00"
+          type="number"
+          [(ngModel)]="cartService.discount"
+        />
+      </mat-form-field>
+    </ion-item>
+    <ion-item>
+      <ion-title
+        >Total({{cartService.listOfCartItem|subtotal:'count'}}): {{cartService.listOfCartItem|subtotal}}
+        Rs.</ion-title
+      >
+      <button mat-raised-button color="primary">Reset</button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="+(cartService.listOfCartItem|subtotal:'count')===0 || cartService.customerName?.trim().length===0"
+        (click)="onNextScreen()"
+      >
+        Next
+      </button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
