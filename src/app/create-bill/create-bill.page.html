@@ -4,7 +4,7 @@
     <input
       matInput
       placeholder="Customer Name is mandatory"
-      [(ngModel)]="cartService.customerName"
+      [(ngModel)]="creatBillPage.customerName"
       type="text"
     />
   </mat-form-field>
@@ -15,17 +15,17 @@
       matInput
       placeholder="Ex:1234567890"
       type="tel"
-      [(ngModel)]="cartService.customerContact"
+      [(ngModel)]="creatBillPage.customerContact"
     />
   </mat-form-field>
   <div class="gender">
     <mat-label>Gender</mat-label>
-    <mat-radio-group aria-label="Gender" [(ngModel)]="cartService.gender">
+    <mat-radio-group aria-label="Gender" [(ngModel)]="creatBillPage.gender">
       <mat-radio-button
         id="mrgndr"
         name="gender-male"
         [value]="CLONED_GENDER.MALE"
-        [checked]="cartService.gender===CLONED_GENDER.MALE"
+        [checked]="creatBillPage.gender===CLONED_GENDER.MALE"
         class="radiobutton"
         >Male</mat-radio-button
       >
@@ -33,7 +33,7 @@
         id="frgndr"
         name="gender-female"
         [value]="CLONED_GENDER.FEMALE"
-        [checked]="cartService.gender===CLONED_GENDER.FEMALE"
+        [checked]="creatBillPage.gender===CLONED_GENDER.FEMALE"
         class="radiobutton"
         >Female</mat-radio-button
       >
@@ -41,7 +41,7 @@
         id="orgndr"
         name="gender-others"
         [value]="CLONED_GENDER.OTHERS"
-        [checked]="cartService.gender===CLONED_GENDER.OTHERS"
+        [checked]="creatBillPage.gender===CLONED_GENDER.OTHERS"
         class="radiobutton"
         >Others</mat-radio-button
       >
@@ -49,13 +49,13 @@
   </div>
   <ion-searchbar
     placeholder="Search..."
-    [(ngModel)]="cartService.filterTerm"
+    [(ngModel)]="creatBillPage.filterTerm"
     animated="true"
   ></ion-searchbar>
 </ion-header>
 <ion-content>
   <mat-list>
-    <mat-card *ngFor="let cartItem of cartService.listOfCartItem | filter: cartService.filterTerm">
+    <mat-card *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm">
       <mat-card-title-group>
         <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
         <mat-card-subtitle style="color: red"
@@ -106,7 +106,7 @@
           matInput
           placeholder="Ex:20.00"
           type="number"
-          [(ngModel)]="cartService.due"
+          [(ngModel)]="creatBillPage.due"
         />
       </mat-form-field>
       <mat-form-field class="newbill-half-width" appearance="fill">
@@ -115,20 +115,20 @@
           matInput
           placeholder="Ex:20.00"
           type="number"
-          [(ngModel)]="cartService.discount"
+          [(ngModel)]="creatBillPage.discount"
         />
       </mat-form-field>
     </ion-item>
     <ion-item>
       <ion-title
-        >Total({{cartService.listOfCartItem|subtotal:'count'}}): {{cartService.listOfCartItem|subtotal}}
+        >Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
         Rs.</ion-title
       >
       <button mat-raised-button color="primary">Reset</button>
       <button
         mat-raised-button
         color="primary"
-        [disabled]="+(cartService.listOfCartItem|subtotal:'count')===0 || cartService.customerName?.trim().length===0"
+        [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.customerName?.trim().length===0"
         (click)="onNextScreen()"
       >
         Next

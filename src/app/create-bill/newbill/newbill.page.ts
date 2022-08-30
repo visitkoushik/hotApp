@@ -32,8 +32,16 @@ export class NewbillPage implements OnInit {
   };
 
   onConfirm = () => {
-    const billClass = this.cartService.currentBiill
-      ? new ClassBill(this.cartService.currentBiill)
+    const billClass = this.cartService.createBillPageRef.currentBiill
+      ? new ClassBill({
+          ...this.cartService.createBillPageRef.currentBiill,
+          itemPurchased: this.data.listItem,
+          customerName: this.data.customerName,
+          customerContact: this.data.customerContact,
+          gender: this.data.gender,
+          due: this.data.due,
+          discount:this.data.discount
+        })
       : new ClassBill(
           this.data.listItem,
           this.data.customerName,
@@ -44,7 +52,7 @@ export class NewbillPage implements OnInit {
           this.data.due,
           this.data.discount
         );
-    this.cartService.currentBiill = billClass.bill;
+    this.cartService.createBillPageRef.currentBiill = billClass.bill;
 
     this.router.navigate(['confirmedbill'], {
       relativeTo: this.activeRoute,
