@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/providers/cart-service.service';
+import { I_Bill } from 'src/model/bill';
 import { ClassBill, I_Print } from 'src/model/billClass';
 
 @Component({
-  templateUrl: './confirmed-bill.html',
-  styleUrls: ['./confiremd-bill.scss'],
+  selector: 'app-existingbill',
+  templateUrl: './existingbill.page.html',
+  styleUrls: ['./existingbill.page.scss'],
 })
-export class ConfiremdBillPage implements OnInit {
+export class ExistingbillPage implements OnInit {
+
+  public currentBill: ClassBill = null;
   public currentBillPrint: I_Print = null;
   public displayedColumns: any[] = null;
   constructor(
@@ -18,7 +22,9 @@ export class ConfiremdBillPage implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((p) => {
-      this.currentBillPrint = JSON.parse(p.data);
+      const ibill= JSON.parse(p.data);
+      this.currentBill = new ClassBill(ibill);
+      this.currentBillPrint = this.currentBill.getPrintValue();
       this.displayedColumns =
         this.currentBillPrint.Items?.length > 0
           ? Object.keys(this.currentBillPrint.Items[0])
@@ -26,12 +32,5 @@ export class ConfiremdBillPage implements OnInit {
     });
   }
 
-  onDone = () => {
-    this.cartService.allBiills.push({
-      ...this.cartService.createBillPageRef.currentBiill,
-      status: true,
-    });
-    this.cartService.setDefault();
-    this.router.navigateByUrl('/tab/createbill');
-  };
+
 }

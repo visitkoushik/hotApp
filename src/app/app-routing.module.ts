@@ -2,14 +2,19 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
+
   {
     path: '',
-    redirectTo: 'createbill',
+    redirectTo: 'tab',
     pathMatch: 'full'
+  },
+  {
+    path: 'tab',
+    loadChildren: () => import('./tab/tab.module').then( m => m.TabPageModule)
+  },
+  {
+    path: 'allbills',
+    loadChildren: () => import('./all-bills/all-bills.module').then( m => m.AllBillsPageModule)
   },
   {
     path: 'createbill',
@@ -27,6 +32,7 @@ const routes: Routes = [
     path: 'appsetting',
     loadChildren: () => import('./appsetting/appsetting.module').then( m => m.AppsettingPageModule)
   },
+
 ];
 
 @NgModule({

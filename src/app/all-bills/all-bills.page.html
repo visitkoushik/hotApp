@@ -1,0 +1,27 @@
+<ion-header>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <!-- #docregion toggle -->
+    <input matInput [matDatepicker]="picker" [(ngModel)]="currentDate" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <!-- #enddocregion toggle -->
+  </mat-form-field>
+</ion-header>
+
+<ion-content>
+  <mat-list>
+    <mat-card *ngFor="let billItem of allBills;trackBy: trackByFn "  (click)="onClickItemBill(billItem)">
+      <mat-card-title-group>
+        <mat-card-title> Bill Number: {{billItem.billnumber}}</mat-card-title>
+        <mat-card-subtitle style="color: red">
+          {{(billItem.billDate|dateformat).date}}</mat-card-subtitle
+        >
+      </mat-card-title-group>
+      <mat-card-content class="rowAmount">
+        {{billItem.itemPurchased|subtotal}}Rs.
+      </mat-card-content>
+
+    </mat-card>
+  </mat-list>
+</ion-content>
