@@ -10,18 +10,7 @@ import { GENDER, I_CreateBillPage } from 'src/model/util';
 export class CartService {
   public createBillPageRef: I_CreateBillPage = null;
   public mainItems: I_Items[] = [];
-  // public cartElement: I_CartItem[] = [];
-  // public currentBiill: I_Bill = null;
-  // public gender: GENDER = GENDER.MALE;
-  // public customerName = '';
-  // public customerContact = '';
-  // public due = 0;
-  // public discount = 0;
-
-  // public listOfCartItem: I_CartItem[] = null;
-  // public filterTerm: string;
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+  public allBiills: I_Bill[] = [] as I_Bill[];
 
   private globalOrderNumber = 0;
   constructor() {}
@@ -31,26 +20,17 @@ export class CartService {
     return this.globalOrderNumber;
   };
 
-  public reSet = (): I_CreateBillPage => {
-    // this.cartElement = [];
-    // this.currentBiill = null;
-    // this.gender = GENDER.MALE;
-    // this.customerName = '';
-    // this.customerContact = '';
-    // this.due = 0;
-    // this.discount = 0;
-    // this.listOfCartItem = null;
-    // this.filterTerm = '';
+  public setDefault = () => {
 
     const icreatPage: I_CreateBillPage = {} as I_CreateBillPage;
 
-    icreatPage.cartElement = [];
-    icreatPage.currentBiill = null;
-    icreatPage.gender = GENDER.MALE;
-    icreatPage.customerName = '';
-    icreatPage.customerContact = '';
-    icreatPage.due = 0;
-    icreatPage.discount = 0;
+    // icreatPage.cartElement = [];
+    icreatPage.currentBiill = {} as I_Bill;
+    icreatPage.currentBiill .gender = GENDER.MALE;
+    icreatPage.currentBiill .customerName = '';
+    icreatPage.currentBiill .customerContact = '';
+    icreatPage.currentBiill .due = 0;
+    icreatPage.currentBiill .discount = 0;
     icreatPage.listOfCartItem = this.mainItems.map<I_CartItem>(
       (itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
@@ -59,6 +39,7 @@ export class CartService {
       })
     );;
     icreatPage.filterTerm = '';
-    return { ...icreatPage };
+    this.createBillPageRef =  { ...icreatPage };
+
   };
 }

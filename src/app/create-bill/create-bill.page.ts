@@ -56,35 +56,13 @@ export class CreateBillPage implements OnInit {
     ];
 
 
-    this.creatBillPage = this.cartService.reSet();
-    this.creatBillPage.listOfCartItem =
-      this.cartService.mainItems.map<I_CartItem>(
-        (itm: I_Items, inx: number) => ({
-          id: inx + 1 + '',
-          items: { ...itm },
-          count: 0,
-        })
-      );
-
-    this.cartService.createBillPageRef = { ...this.creatBillPage };
+    this.cartService.setDefault();
   }
 
   ngOnInit() {
-    this.activeRoute.queryParams.subscribe((p) => {
-      if (p.reset) {
-        this.creatBillPage = this.cartService.reSet();
-        this.creatBillPage.listOfCartItem =
-          this.cartService.mainItems.map<I_CartItem>(
-            (itm: I_Items, inx: number) => ({
-              id: inx + 1 + '',
-              items: { ...itm },
-              count: 0,
-            })
-          );
 
-        this.cartService.createBillPageRef = { ...this.creatBillPage };
-      }
-      else if(p.data){
+    this.activeRoute.queryParams.subscribe((p) => {
+      if(p.data){
         this.creatBillPage = JSON.parse(p.data);
       }
       else {
@@ -117,11 +95,11 @@ export class CreateBillPage implements OnInit {
       const query: Params = {
         data: JSON.stringify({
           listItem: selectedItem,
-          customerContact: this.creatBillPage.customerContact,
-          customerName: this.creatBillPage.customerName,
-          gender: this.creatBillPage.gender,
-          due: this.creatBillPage.due,
-          discount: this.creatBillPage.discount,
+          customerContact: this.creatBillPage.currentBiill.customerContact,
+          customerName: this.creatBillPage.currentBiill.customerName,
+          gender: this.creatBillPage.currentBiill.gender,
+          due: this.creatBillPage.currentBiill.due,
+          discount: this.creatBillPage.currentBiill.discount,
         }),
       };
       this.router.navigate(['newbill'], {

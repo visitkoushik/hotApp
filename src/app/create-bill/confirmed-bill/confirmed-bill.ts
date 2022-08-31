@@ -27,7 +27,8 @@ export class ConfiremdBillPage implements OnInit {
   }
 
   onDone = () => {
-    this.cartService.reSet();
-    this.router.navigate(['/createbill'], { queryParams: { reset: true } });
+    this.cartService.allBiills.push({...this.cartService.createBillPageRef.currentBiill});
+    this.cartService.setDefault();
+    this.router.navigateByUrl('/createbill');
   };
 }

@@ -4,7 +4,7 @@
     <input
       matInput
       placeholder="Customer Name is mandatory"
-      [(ngModel)]="creatBillPage.customerName"
+      [(ngModel)]="creatBillPage.currentBiill.customerName"
       type="text"
     />
   </mat-form-field>
@@ -15,17 +15,17 @@
       matInput
       placeholder="Ex:1234567890"
       type="tel"
-      [(ngModel)]="creatBillPage.customerContact"
+      [(ngModel)]="creatBillPage.currentBiill.customerContact"
     />
   </mat-form-field>
   <div class="gender">
     <mat-label>Gender</mat-label>
-    <mat-radio-group aria-label="Gender" [(ngModel)]="creatBillPage.gender">
+    <mat-radio-group aria-label="Gender" [(ngModel)]="creatBillPage.currentBiill.gender">
       <mat-radio-button
         id="mrgndr"
         name="gender-male"
         [value]="CLONED_GENDER.MALE"
-        [checked]="creatBillPage.gender===CLONED_GENDER.MALE"
+        [checked]="creatBillPage.currentBiill.gender===CLONED_GENDER.MALE"
         class="radiobutton"
         >Male</mat-radio-button
       >
@@ -33,7 +33,7 @@
         id="frgndr"
         name="gender-female"
         [value]="CLONED_GENDER.FEMALE"
-        [checked]="creatBillPage.gender===CLONED_GENDER.FEMALE"
+        [checked]="creatBillPage.currentBiill.gender===CLONED_GENDER.FEMALE"
         class="radiobutton"
         >Female</mat-radio-button
       >
@@ -41,7 +41,7 @@
         id="orgndr"
         name="gender-others"
         [value]="CLONED_GENDER.OTHERS"
-        [checked]="creatBillPage.gender===CLONED_GENDER.OTHERS"
+        [checked]="creatBillPage.currentBiill.gender===CLONED_GENDER.OTHERS"
         class="radiobutton"
         >Others</mat-radio-button
       >
@@ -106,7 +106,7 @@
           matInput
           placeholder="Ex:20.00"
           type="number"
-          [(ngModel)]="creatBillPage.due"
+          [(ngModel)]="creatBillPage.currentBiill.due"
         />
       </mat-form-field>
       <mat-form-field class="newbill-half-width" appearance="fill">
@@ -115,7 +115,7 @@
           matInput
           placeholder="Ex:20.00"
           type="number"
-          [(ngModel)]="creatBillPage.discount"
+          [(ngModel)]="creatBillPage.currentBiill.discount"
         />
       </mat-form-field>
     </ion-item>
@@ -128,7 +128,7 @@
       <button
         mat-raised-button
         color="primary"
-        [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.customerName?.trim().length===0"
+        [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.currentBiill.customerName?.trim().length===0"
         (click)="onNextScreen()"
       >
         Next

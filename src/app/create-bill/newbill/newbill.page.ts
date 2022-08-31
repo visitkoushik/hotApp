@@ -29,7 +29,8 @@ export class NewbillPage implements OnInit {
 
 
   onConfirm = () => {
-    const billClass = this.cartService.createBillPageRef.currentBiill
+
+    const billClass = this.cartService.createBillPageRef?.currentBiill?.billID
       ? new ClassBill({
           ...this.cartService.createBillPageRef.currentBiill,
           itemPurchased: this.data.listItem,

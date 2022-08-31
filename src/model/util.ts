@@ -9,13 +9,8 @@ export enum GENDER {
 }
 
 export interface I_CreateBillPage {
-  cartElement: I_CartItem[];
+  // cartElement: I_CartItem[];
   currentBiill: I_Bill;
-  gender: GENDER;
-  customerName: string;
-  customerContact: string;
-  due: number;
-  discount: number;
   listOfCartItem: I_CartItem[];
   filterTerm: string;
 }
