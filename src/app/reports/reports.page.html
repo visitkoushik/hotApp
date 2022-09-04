@@ -1,9 +1,101 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>reports</ion-title>
-  </ion-toolbar>
+  <h5 style="margin-left: 1rem">Filter By</h5>
 </ion-header>
-
 <ion-content>
+  <ion-item>
+    <mat-label>Filter Report By</mat-label>
+    <mat-radio-group aria-label="" [(ngModel)]="filterDateBy">
+      <mat-radio-button
+        id="datebby"
+        name="datebby"
+        [value]="FILTERBY.DATE"
+        [checked]="filterDateBy===FILTERBY.DATE"
+        class="radiobutton"
+        color="primary"
+        (change)="onChangeFilterType()"
+        >Date Range</mat-radio-button
+      >
+      <mat-radio-button
+        id="month"
+        name="month"
+        [value]="FILTERBY.MONTH"
+        [checked]="filterDateBy===FILTERBY.MONTH"
+        class="radiobutton"
+        color="primary"
+        (change)="onChangeFilterType()"
+        >Month Range</mat-radio-button
+      >
+      <mat-radio-button
+        id="year"
+        name="year"
+        [value]="FILTERBY.YEAR"
+        [checked]="filterDateBy===FILTERBY.YEAR"
+        class="radiobutton"
+        color="primary"
+        (change)="onChangeFilterType()"
+        >Year Range</mat-radio-button
+      >
+    </mat-radio-group>
+  </ion-item>
+  <mat-form-field
+    color="primary"
+    class="newbill-full-width"
+    appearance="fill"
+    *ngIf="filterDateBy===FILTERBY.DATE"
+  >
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate placeholder="Start date" [(ngModel)]="startDate" />
+      <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+  </mat-form-field>
 
+  <app-year-picker
+    label="Select year range"
+    [(startYear)]="startY"
+    [(endYear)]="endY"
+    *ngIf="filterDateBy===FILTERBY.YEAR"
+  ></app-year-picker>
+
+  <app-month-picker
+    label="Select month range"
+    [(startMonth)]="startM"
+    [(endMonth)]="endM"
+    *ngIf="filterDateBy===FILTERBY.MONTH"
+  ></app-month-picker>
+
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Choose Item </mat-label>
+    <mat-select
+      [(ngModel)]="selectedReport"
+      name="report"
+      disableOptionCentering
+      panelClass="myPanelClass"
+      (selectionChange)="onChangeItem($event.value)"
+    >
+      <mat-option value="-1" selected>All</mat-option>
+      <mat-option *ngFor="let item of allItems" [value]="item.itemId">
+        {{item.itemName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ion-label
+    >{{startM}}{{startY}}{{startDate}}-{{endM}}{{endY}}{{endDate}}</ion-label
+  >
 </ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-title></ion-title>
+    <button
+      mat-raised-button
+      color="primary"
+      float-right
+      (click)="onNextScreen()"
+    >
+      Next
+    </button>
+  </ion-item>
+</ion-footer>

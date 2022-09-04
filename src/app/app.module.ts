@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { CartService } from './providers/cart-service.service';
 import { PipeModule } from './pipe/pipe.module';
+import { YearPickerComponent } from './custom-mat-picker/year-picker/year-picker.component';
 
 @NgModule({
   declarations: [AppComponent],

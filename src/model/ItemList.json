@@ -1,0 +1,50 @@
+[
+    {
+    "itemId": "PyT",
+    "itemName": "Pappyi Tea",
+    "itemPurchaseValue": 12.5,
+    "itemSellValue": 13.5,
+    "itemSellDiscount": 10,
+    "discountInPercent": false
+  },
+   {
+    "itemId": "PC",
+    "itemName": "Papai Chiken",
+    "itemPurchaseValue": 10.5,
+    "itemSellValue": 11.5,
+    "itemSellDiscount": 0,
+    "discountInPercent": false
+  },
+  {
+   "itemId": "PT",
+   "itemName": "Papai Tea",
+   "itemPurchaseValue": 12.5,
+   "itemSellValue": 15.5,
+   "itemSellDiscount": 0,
+   "discountInPercent": false
+ },
+ {
+  "itemId": "PCER",
+  "itemName": "Papai chicken egg roll",
+  "itemPurchaseValue": 25,
+  "itemSellValue": 55.0,
+  "itemSellDiscount": 0,
+  "discountInPercent": false
+},
+{
+  "itemId": "5",
+  "itemName": "Papai egg roll",
+  "itemPurchaseValue": 15,
+  "itemSellValue": 30.0,
+  "itemSellDiscount": 0,
+  "discountInPercent": false
+},
+{
+  "itemId": "6",
+  "itemName": "Jasmin Tea",
+  "itemPurchaseValue": 8,
+  "itemSellValue": 18.0,
+  "itemSellDiscount": 0,
+  "discountInPercent": false
+}
+]

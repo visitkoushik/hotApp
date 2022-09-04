@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { I_Bill } from 'src/model/bill';
+import { I_CartItem } from 'src/model/cartItem';
+import { I_ReportResult, ReportBalance } from 'src/model/ClassBalance';
+import { I_Items } from 'src/model/items';
+import { FILTER_BY } from 'src/model/util';
+import { CartService } from '../providers/cart-service.service';
 
 @Component({
   selector: 'app-reports',
@@ -6,10 +13,67 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reports.page.scss'],
 })
 export class ReportsPage implements OnInit {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  FILTERBY = FILTER_BY;
 
-  constructor() { }
+  public filterDateBy = FILTER_BY.DATE;
+
+  public startDate: Date = null;
+  public endDate: Date = null;
+
+  public startM = '';
+  public endM = '';
+
+  public startY = '';
+  public endY = '';
+
+  public selectedReport = '-1';
+  public allItems: I_Items[] = [];
+
+  constructor(
+    private cartServc: CartService,
+    private activeRoute: ActivatedRoute,
+    private route: Router
+  ) {}
 
   ngOnInit() {
+    this.allItems = [...this.cartServc.mainItems];
   }
 
+  onNextScreen = () => {
+    this.route.navigate(['report-tab'], {
+      relativeTo: this.activeRoute,
+      queryParams: {
+        filterDateBy: this.filterDateBy,
+        startDate:
+          this.filterDateBy === this.FILTERBY.DATE
+            ? this.startDate
+            : this.filterDateBy === this.FILTERBY.MONTH
+            ? this.startM
+            : this.startY,
+        endDate:
+          this.filterDateBy === this.FILTERBY.DATE
+            ? this.endDate
+            : this.filterDateBy === this.FILTERBY.MONTH
+            ? this.endM
+            : this.endY,
+        selectedReport: this.selectedReport,
+      },
+    });
+  };
+
+  onChangeItem = (value) => {};
+
+  onChangeDate = (value) => {};
+
+  onChangeFilterType = () => {
+    this.startDate = null;
+    this.endDate = null;
+
+    this.startM = '';
+    this.endM = '';
+
+    this.startY = '';
+    this.endY = '';
+  };
 }

@@ -1,0 +1,15 @@
+<ion-content>
+  <app-profitloss-daterange
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [selectedReport]="selectedReport"
+    *ngIf="selectedReport==='-1' && filterDateBy===FILTERBY.DATE"
+  ></app-profitloss-daterange>
+  <app-period-profitloss
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [selectedReport]="selectedReport"
+    [filterDateBy]="filterDateBy"
+    *ngIf="selectedReport==='-1' && filterDateBy!==FILTERBY.DATE"
+  ></app-period-profitloss>
+</ion-content>

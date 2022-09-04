@@ -15,7 +15,7 @@
       <mat-card-title-group>
         <mat-card-title> Bill Number: {{billItem.billnumber}}</mat-card-title>
         <mat-card-subtitle style="color: red">
-          {{(billItem.billDate|dateformat).date}}</mat-card-subtitle
+          {{billItem.billDate|dateformat:'date'}}</mat-card-subtitle
         >
       </mat-card-title-group>
       <mat-card-content class="rowAmount">

@@ -10,9 +10,11 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   pageEvent: any = null;
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location: Location) {}
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.router.events
@@ -20,7 +22,9 @@ export class AppComponent implements OnInit {
         filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
         map((route) => {
-          while (route.firstChild) {route = route.firstChild;}
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
           return route;
         }),
         filter((route) => route.outlet === 'primary'),
@@ -30,7 +34,11 @@ export class AppComponent implements OnInit {
         this.pageEvent = event;
       });
   }
-  onBack=()=>{
-    this.location.back();
+  onBack = () => {
+    if (this.pageEvent.backTo) {
+      this.router.navigateByUrl(`/${this.pageEvent.backTo}`);
+    } else {
+      this.location.back();
+    }
   };
 }

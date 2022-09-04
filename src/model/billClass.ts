@@ -1,6 +1,6 @@
 import { I_Bill } from './bill';
 import { I_CartItem } from './cartItem';
-import { GENDER } from './util';
+import { GENDER, UtilClass } from './util';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface I_Print {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -18,7 +18,10 @@ export interface I_Print {
     qty: number;
     rate: number;
     price: number;
+    disc: string;
   }[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  TotalPurchaseValue: number;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   Total: number;
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -98,14 +101,9 @@ export class ClassBill {
     return 'billID' in object;
   }
 
-  getTotal = (): number => {
-    let price = 0;
-    this.bill.itemPurchased.forEach((e: I_CartItem) => {
-      price =
-        price + e.count * (e.items.itemSellValue - e.items.itemSellDiscount);
-    });
-    return +price.toFixed(2);
-  };
+  getTotal = (): number => UtilClass.Get_Total(this.bill.itemPurchased);
+  getItemCount = (): number =>  UtilClass.Get_Item_Count(this.bill.itemPurchased);
+
 
   getPurchaseCost = (): number => {
     let price = 0;
@@ -115,23 +113,25 @@ export class ClassBill {
     return +price.toFixed(2);
   };
 
-  getItemCount = (): number => {
-    let count = 0;
-    this.bill.itemPurchased.forEach((e: I_CartItem) => {
-      count = count + e.count;
-    });
-    return +count.toFixed(0);
-  };
 
   getPrintValue = (): I_Print => {
     const total: number = this.getTotal();
+    const purchaseTotal: number = this.getPurchaseCost();
     const printableItemList = this.bill.itemPurchased.map(
       (e: I_CartItem, inx: number) => ({
         item: inx + 1,
         itemName: e.items.itemName,
         qty: e.count,
         rate: e.items.itemSellValue,
-        price: e.count * (e.items.itemSellValue - e.items.itemSellDiscount),
+        disc: e.items.discountInPercent
+          ? e.items.itemSellDiscount + '%'
+          : e.items.itemSellDiscount + 'Rs',
+        price: e.items.discountInPercent
+          ? (e.count *
+              e.items.itemSellValue *
+              (100 - e.items.itemSellDiscount)) /
+            100
+          : e.count * (e.items.itemSellValue - e.items.itemSellDiscount),
       })
     );
     return {
@@ -146,13 +146,17 @@ export class ClassBill {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Items: printableItemList,
       // eslint-disable-next-line @typescript-eslint/naming-convention
+      TotalPurchaseValue: purchaseTotal,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       Total: total,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Discount: this.bill.discount,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Tax: (this.bill.tax * (total - this.bill.discount)) / 100,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      Payable: Math.round((total - this.bill.discount) * (1 + this.bill.tax / 100)),
+      Payable: Math.round(
+        (total - this.bill.discount) * (1 + this.bill.tax / 100)
+      ),
     };
   };
 
