@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthService } from './providers/auth.service';
 
 const routes: Routes = [
   {
@@ -27,11 +28,13 @@ const routes: Routes = [
     path: 'configure',
     loadChildren: () =>
       import('./configure/configure.module').then((m) => m.ConfigurePageModule),
+    canLoad: [AuthService],
   },
   {
     path: 'reports',
     loadChildren: () =>
       import('./reports/reports.module').then((m) => m.ReportsPageModule),
+    canLoad: [AuthService],
   },
   {
     path: 'appsetting',
@@ -39,13 +42,14 @@ const routes: Routes = [
       import('./appsetting/appsetting.module').then(
         (m) => m.AppsettingPageModule
       ),
+    canLoad: [AuthService],
   },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: PreloadAllModules,
     }),
   ],
   exports: [RouterModule],

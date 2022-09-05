@@ -154,7 +154,7 @@ export class ClassBill {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Tax: (this.bill.tax * (total - this.bill.discount)) / 100,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      Payable: Math.round(
+      Payable: (
         (total - this.bill.discount) * (1 + this.bill.tax / 100)
       ),
     };

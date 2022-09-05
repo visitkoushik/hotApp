@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { ShowItemReportsPageRoutingModule } from './show-item-reports-routing.module';
 
 import { ShowItemReportsPage } from './show-item-reports.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
+import { MaterialModule } from 'src/app/material.module';
+import { ItemProfitComponent } from '../item-profit/item-profit.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ShowItemReportsPageRoutingModule
+    ShowItemReportsPageRoutingModule,
+    PipeModule,
+    MaterialModule,
   ],
-  declarations: [ShowItemReportsPage]
+  declarations: [ShowItemReportsPage, ItemProfitComponent],
 })
 export class ShowItemReportsPageModule {}

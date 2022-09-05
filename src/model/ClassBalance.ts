@@ -22,7 +22,7 @@ export class ReportBalance {
   public getTheBalance = (): I_ReportResult[] => this.bills.map((b: I_Bill) => {
       const cb = new ClassBill(b);
       const purchase =cb.getPurchaseCost();
-      const sell= Math.round(
+      const sell=(
         (cb.getTotal() - b.discount) * (1 + b.tax / 100));
       return {
         ordernumber: b.billnumber,

@@ -49,7 +49,6 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     selectedReport?: any;
     filterDateBy?: any;
   }): void {
-    console.log(val);
     this.startDate = val.startDate?.currentValue;
     this.endDate = val.endDate?.currentValue;
     this.selectedReport = val.selectedReport?.currentValue;
@@ -58,8 +57,8 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     const transform = new ConvertToFullDate().transform;
     switch (this.filterDateBy) {
       case FILTER_BY.DATE:
-        this.start = this.startDate;
-        this.end = this.endDate;
+        this.start = new Date(this.startDate);
+        this.end =new Date(this.endDate);
         break;
       case FILTER_BY.MONTH:
         this.start = transform(this.startDate, 'M');
@@ -98,7 +97,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.start < bill.billDate && this.end > bill.billDate
+          this.start <= bill.billDate && this.end >= bill.billDate
       );
     }
 
@@ -108,25 +107,34 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
       [key: string]: I_Bill[];
     };
     for (const bill of allBills) {
-      if (this.filterDateBy === FILTER_BY.MONTH) {
+      if (this.filterDateBy === FILTER_BY.DATE) {
         const arry =
           billWithDateHeader[
-            MMM[bill.billDate.getMonth()] + '-' + bill.billDate.getFullYear()
+            MMM[bill.billDate.getMonth()] +
+              bill.billDate.getDate() +
+              ', ' +
+              bill.billDate.getFullYear()
           ] || [];
         arry.push(bill);
         billWithDateHeader[
-          MMM[bill.billDate.getMonth()] + '-' + bill.billDate.getFullYear()
+          MMM[bill.billDate.getMonth()] +
+            bill.billDate.getDate() +
+            ', ' +
+            bill.billDate.getFullYear()
         ] = [...arry];
-      }
-      else if (this.filterDateBy === FILTER_BY.YEAR) {
+      } else if (this.filterDateBy === FILTER_BY.MONTH) {
         const arry =
           billWithDateHeader[
-             bill.billDate.getFullYear()
+            MMM[bill.billDate.getMonth()] + ', ' + bill.billDate.getFullYear()
           ] || [];
         arry.push(bill);
         billWithDateHeader[
-           bill.billDate.getFullYear()
+          MMM[bill.billDate.getMonth()] + ', ' + bill.billDate.getFullYear()
         ] = [...arry];
+      } else if (this.filterDateBy === FILTER_BY.YEAR) {
+        const arry = billWithDateHeader[bill.billDate.getFullYear()] || [];
+        arry.push(bill);
+        billWithDateHeader[bill.billDate.getFullYear()] = [...arry];
       }
     }
 

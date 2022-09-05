@@ -1,15 +1,12 @@
+<ion-header>
+  <ion-title> {{pageheading}} </ion-title>
+</ion-header>
 <ion-content>
-  <app-profitloss-daterange
-    [startDate]="startDate"
-    [endDate]="endDate"
-    [selectedReport]="selectedReport"
-    *ngIf="selectedReport==='-1' && filterDateBy===FILTERBY.DATE"
-  ></app-profitloss-daterange>
   <app-period-profitloss
     [startDate]="startDate"
     [endDate]="endDate"
     [selectedReport]="selectedReport"
     [filterDateBy]="filterDateBy"
-    *ngIf="selectedReport==='-1' && filterDateBy!==FILTERBY.DATE"
+    *ngIf="selectedReport==='-1'"
   ></app-period-profitloss>
 </ion-content>

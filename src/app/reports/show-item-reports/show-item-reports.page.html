@@ -1,9 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>show-item-reports</ion-title>
-  </ion-toolbar>
+  <ion-title>{{pageheading}}</ion-title>
 </ion-header>
-
 <ion-content>
-
+  <app-period-item-profit
+    [startDate]="startDate"
+    [endDate]="endDate"
+    [selectedReport]="selectedReport"
+    [filterDateBy]="filterDateBy"
+    *ngIf="selectedReport==='-1'"
+  >
+  </app-period-item-profit>
 </ion-content>

@@ -14,9 +14,9 @@ export class ReportTabPage implements OnInit {
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((p) => {
-      debugger;
       if(p.filterDateBy)
       {this.queryP = p;}
+      // this.onOpenItem('showreports');
       this.onOpenItem('showreports');
     });
   }

@@ -5,6 +5,7 @@ import { SubtotalPipe } from './subtotal.pipe';
 import { DateformatPipe } from './dateformat.pipe';
 import { BalanceSheetPipe } from './balance.pipe';
 import { ConvertToFullDate } from './convert-to-fulldate';
+import { ShortDatePipe } from './short-date.pipe';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ConvertToFullDate } from './convert-to-fulldate';
     FormatGenderPipe,
     DateformatPipe,
     BalanceSheetPipe,
-    ConvertToFullDate
+    ConvertToFullDate,
+    ShortDatePipe
   ],
   exports:[
     SubtotalPipe,
@@ -22,7 +24,8 @@ import { ConvertToFullDate } from './convert-to-fulldate';
     FormatGenderPipe,
     DateformatPipe,
     BalanceSheetPipe,
-    ConvertToFullDate
+    ConvertToFullDate,
+    ShortDatePipe
 
   ],
 })

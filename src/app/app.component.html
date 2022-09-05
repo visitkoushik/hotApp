@@ -14,7 +14,7 @@
           <mat-icon>create</mat-icon>
           <span>New Bill</span>
         </button>
-        <button mat-menu-item routerLink="/home" routerLinkActive="active">
+        <button mat-menu-item routerLink="/item" routerLinkActive="active">
           <mat-icon>view_list</mat-icon>
           <span>Items</span>
         </button>
@@ -29,6 +29,11 @@
         <button mat-menu-item routerLink="/appsetting" routerLinkActive="active">
           <mat-icon>settings</mat-icon>
           <span>App Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="appLogout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>LogOut</span>
         </button>
       </mat-menu>
     </ion-toolbar>

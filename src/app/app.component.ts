@@ -41,4 +41,7 @@ export class AppComponent implements OnInit {
       this.location.back();
     }
   };
+  appLogout=()=>{
+    alert(1)
+  }
 }

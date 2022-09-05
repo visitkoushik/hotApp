@@ -11,6 +11,8 @@ import { MaterialModule } from './material.module';
 import { CartService } from './providers/cart-service.service';
 import { PipeModule } from './pipe/pipe.module';
 import { YearPickerComponent } from './custom-mat-picker/year-picker/year-picker.component';
+import { SaveService } from './providers/save.service';
+import { AuthService } from './providers/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { YearPickerComponent } from './custom-mat-picker/year-picker/year-picker
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CartService ,
+    SaveService,
+    AuthService
   ],
   bootstrap: [AppComponent],
 })

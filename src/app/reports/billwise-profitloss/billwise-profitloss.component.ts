@@ -13,10 +13,10 @@ import { I_Items } from 'src/model/items';
 
 @Component({
   selector: 'app-profitloss-daterange',
-  templateUrl: './profitloss.component.html',
-  styleUrls: ['./profitloss.component.scss'],
+  templateUrl: './billwise-profitloss.component.html',
+  styleUrls: ['./billwise-profitloss.component.scss'],
 })
-export class ProfitlossComponent implements OnInit, OnChanges {
+export class BillWiseProfitlossComponent implements OnInit, OnChanges {
   @Input() startDate: Date;
   @Input() endDate: Date;
   @Input() selectedReport: string;
@@ -66,7 +66,7 @@ export class ProfitlossComponent implements OnInit, OnChanges {
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.startDate < bill.billDate && this.endDate > bill.billDate
+          this.startDate <= bill.billDate && this.endDate >= bill.billDate
       );
     }
 
