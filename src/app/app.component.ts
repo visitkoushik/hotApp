@@ -1,20 +1,26 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { AuthService } from './providers/auth.service';
+import { UtilService } from './providers/utilservice.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnChanges {
   pageEvent: any = null;
+  isLoggedIn = false;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    public auth: AuthService,
+    public util: UtilService
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.router.events
@@ -41,7 +47,7 @@ export class AppComponent implements OnInit {
       this.location.back();
     }
   };
-  appLogout=()=>{
-    alert(1)
-  }
+  appLogout = () => {
+    this.auth.isLoggedIn = false;
+  };
 }

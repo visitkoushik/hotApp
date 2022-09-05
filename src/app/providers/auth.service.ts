@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService implements CanLoad{
-
+  public isLoggedIn=false;
   constructor() { }
   canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-   return false;
+   return this.isLoggedIn;
   }
 }

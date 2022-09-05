@@ -1,0 +1,30 @@
+<ion-header> </ion-header>
+<button
+  style="position: absolute; bottom: 1rem; right: 1rem; z-index: 1;"
+  mat-fab
+  color="primary"
+  (click)="onCancel()"
+>
+  <mat-icon>home</mat-icon>
+</button>
+<ion-content>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">User Name *</mat-label>
+    <input matInput [(ngModel)]="username" type="text" />
+  </mat-form-field>
+
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">Passcode *</mat-label>
+    <input matInput type="password" [(ngModel)]="passcode" />
+  </mat-form-field>
+  <div appearance="fill" class="divlogin">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onLogin()"
+      [disabled]="passcode.trim()==='' || username.trim()===''"
+    >
+      Login
+    </button>
+  </div>
+</ion-content>

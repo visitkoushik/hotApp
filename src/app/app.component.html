@@ -1,15 +1,41 @@
 <ion-app>
   <ion-header mode="ios">
     <ion-toolbar class="app-toolbar" color="primary">
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="menuicon">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        class="menuicon"
+        routerLink="/tab/createbill"
+        *ngIf="pageEvent?.hideMenu!==true"
+      >
         <mat-icon end>menu</mat-icon>
       </button>
-      <ion-title>{{ pageEvent?.title || '' }}</ion-title>
-      <button mat-icon-button (click)="onBack()" *ngIf="pageEvent?.displayBackButton">
+
+      <button
+        mat-icon-button
+        class="menuicon"
+        *ngIf="!auth.isLoggedIn"
+        routerLink="/login"
+      >
+        <mat-icon end>lock</mat-icon>
+      </button>
+
+      <button mat-icon-button class="menuicon" *ngIf="auth.isLoggedIn">
+        <mat-icon end>lock_open</mat-icon>
+      </button>
+      <ion-title>{{ pageEvent?.title || "" }}</ion-title>
+      <button
+        mat-icon-button
+        (click)="onBack()"
+        *ngIf="pageEvent?.displayBackButton"
+      >
         <mat-icon end>arrow_back_ios</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item  routerLink="/tab/createbill" routerLinkActive="active"
+        <button
+          mat-menu-item
+          routerLink="/tab/createbill"
+          routerLinkActive="active"
         >
           <mat-icon>create</mat-icon>
           <span>New Bill</span>
@@ -26,7 +52,11 @@
           <mat-icon>report</mat-icon>
           <span>Reports & Bills</span>
         </button>
-        <button mat-menu-item routerLink="/appsetting" routerLinkActive="active">
+        <button
+          mat-menu-item
+          routerLink="/appsetting"
+          routerLinkActive="active"
+        >
           <mat-icon>settings</mat-icon>
           <span>App Settings</span>
         </button>
@@ -37,8 +67,11 @@
         </button>
       </mat-menu>
     </ion-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="util.isLoading"></mat-progress-bar>
+
   </ion-header>
   <ion-content>
+
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
 </ion-app>
