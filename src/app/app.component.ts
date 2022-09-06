@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
-import { AuthService } from './providers/auth.service';
+import { AuthService } from './providers/auth/auth.service';
 import { UtilService } from './providers/utilservice.service';
 
 @Component({
@@ -49,5 +49,6 @@ export class AppComponent implements OnInit, OnChanges {
   };
   appLogout = () => {
     this.auth.isLoggedIn = false;
+    this.auth.redirectUrl = '';
   };
 }
