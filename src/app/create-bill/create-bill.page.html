@@ -8,7 +8,6 @@
       type="text"
     />
   </mat-form-field>
-
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label>Contact Number</mat-label>
     <input
@@ -64,8 +63,8 @@
         <mat-card-subtitle style="color: red"
           >Price:{{cartItem.items.itemSellValue.toFixed(2)}} Rs.
         </mat-card-subtitle>
-      </mat-card-title-group>
-      <mat-card-content>
+
+
         <div class="rowList2" *ngIf="cartItem.count>0">
           <div class="rowListinner">
             <button
@@ -94,8 +93,8 @@
             ADD
           </button>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </mat-card-title-group>
+      </mat-card>
   </mat-list>
   <mat-divider></mat-divider>
 </ion-content>
@@ -112,7 +111,7 @@
           [(ngModel)]="creatBillPage.currentBiill.due"
         />
       </mat-form-field>
-      <mat-form-field class="newbill-half-width" appearance="fill">
+      <mat-form-field class="newbill-half-width" appearance="fill" >
         <mat-label>Discount</mat-label>
         <input
           matInput
