@@ -9,6 +9,7 @@ import { CreateBillPageRoutingModule } from './create-bill-routing.module';
 import { CreateBillPage } from './create-bill.page';
 import { MaterialModule } from '../material.module';
 import { PipeModule } from '../pipe/pipe.module';
+import { AppStorageModule } from '../app-storage/app-storage.module';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { PipeModule } from '../pipe/pipe.module';
     IonicModule,
     CreateBillPageRoutingModule,
     MaterialModule,
-    PipeModule,
+    PipeModule
   ],
   declarations: [CreateBillPage]
 

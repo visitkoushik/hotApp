@@ -14,6 +14,13 @@ const routes: Routes = [
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
   },
   {
+    path: 'tab-item',
+    loadChildren: () =>
+      import('./Items/tab-item/tab-item.module').then(
+        (m) => m.TabItemPageModule
+      ),
+  },
+  {
     path: 'allbills',
     loadChildren: () =>
       import('./all-bills/all-bills.module').then((m) => m.AllBillsPageModule),
@@ -24,6 +31,14 @@ const routes: Routes = [
       import('./create-bill/create-bill.module').then(
         (m) => m.CreateBillPageModule
       ),
+  },
+  {
+    path: 'add-item',
+    loadChildren:() => import('./Items/add-item/add-item-routing.module').then( m => m.AddItemPageRoutingModule)
+  },
+  {
+    path: 'item-list',
+    loadChildren:() => import('./Items/item-list/item-list-routing.module').then( m => m.ItemListPageRoutingModule)
   },
   {
     path: 'configure',
@@ -47,7 +62,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
   },
 ];
 

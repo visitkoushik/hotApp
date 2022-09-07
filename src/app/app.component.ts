@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { UtilService } from './providers/utilservice.service';
 
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     public auth: AuthService,
-    public util: UtilService
+    public util: UtilService,
+    private store: AppStorageService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {}
 

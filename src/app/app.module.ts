@@ -13,6 +13,7 @@ import { PipeModule } from './pipe/pipe.module';
 import { YearPickerComponent } from './custom-mat-picker/year-picker/year-picker.component';
 import { SaveService } from './providers/save.service';
 import { AuthService } from './providers/auth/auth.service';
+import { AppStorageModule } from './app-storage/app-storage.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,8 @@ import { AuthService } from './providers/auth/auth.service';
     BrowserAnimationsModule,
     MaterialModule,
     PipeModule,
+    AppStorageModule
+
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

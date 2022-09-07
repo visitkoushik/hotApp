@@ -4,24 +4,24 @@ import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage } from 'src/model/util';
 import { CartService } from '../providers/cart-service.service';
-import  *  as  itemList  from  '../../model/itemList.json';
+import * as itemList from '../../model/itemList.json';
+import { AppStorageService } from '../app-storage/app-storage.service';
 @Component({
   selector: 'app-create-bill',
   templateUrl: './create-bill.page.html',
   styleUrls: ['./create-bill.page.scss'],
 })
 export class CreateBillPage implements OnInit {
-
-
   // eslint-disable-next-line @typescript-eslint/naming-convention
   CLONED_GENDER = GENDER;
   creatBillPage: I_CreateBillPage = null;
   constructor(
+    private storeServic: AppStorageService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
     private router: Router
   ) {
-    cartService.mainItems =  (itemList as any).default;
+    cartService.mainItems = (itemList as any).default;
 
     this.cartService.setDefault();
   }
@@ -29,15 +29,12 @@ export class CreateBillPage implements OnInit {
   ngOnInit() {
 
     this.activeRoute.queryParams.subscribe((p) => {
-      if(p.data){
+      if (p.data) {
         this.creatBillPage = JSON.parse(p.data);
-      }
-      else {
+      } else {
         this.creatBillPage = { ...this.cartService.createBillPageRef };
       }
     });
-
-
   }
   onModifyItem = (id: string, isIncrease: boolean) => {
     this.creatBillPage.listOfCartItem = this.creatBillPage.listOfCartItem.map(
@@ -75,4 +72,7 @@ export class CreateBillPage implements OnInit {
       });
     }
   };
+
+  public onReset = () =>{};
+
 }

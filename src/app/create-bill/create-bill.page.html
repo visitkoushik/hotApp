@@ -126,7 +126,7 @@
         >Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
         Rs.</ion-title
       >
-      <button mat-raised-button color="primary">Reset</button>
+      <button mat-raised-button color="primary" (click)="onReset()">Reset</button>
       <button
         mat-raised-button
         color="primary"
