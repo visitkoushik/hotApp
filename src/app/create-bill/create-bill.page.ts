@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Params,
+  Router,
+} from '@angular/router';
 import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage } from 'src/model/util';
@@ -19,14 +26,34 @@ export class CreateBillPage implements OnInit {
     private storeServic: AppStorageService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
+    private storage: AppStorageService,
     private router: Router
   ) {
-    cartService.mainItems = (itemList as any).default;
+    this.cartService.setDefaultBill();
+    this.creatBillPage = { ...this.cartService.createBillPageRef };
+    this.fetchData();
+    this.router.events.subscribe(
+      (event: NavigationStart | NavigationEnd | NavigationError) => {
+        if (event instanceof NavigationStart) {
+          this.creatBillPage = { ...this.cartService.createBillPageRef };
+        }
 
-    this.cartService.setDefault();
+        if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+        }
+
+        if (event instanceof NavigationError) {
+          // Hide loading indicator
+
+          // Present error to user
+          console.log(event.error);
+        }
+      }
+    );
   }
 
   ngOnInit() {
+    // cartService.mainItems = (itemList as any).default;
 
     this.activeRoute.queryParams.subscribe((p) => {
       if (p.data) {
@@ -73,6 +100,20 @@ export class CreateBillPage implements OnInit {
     }
   };
 
-  public onReset = () =>{};
+  public onReset = () => {};
 
+  private fetchData = () => {
+    this.storage
+      .getStorage('items')
+      .then((e) => {
+        this.cartService.mainItems = [...e];
+        if (!this.cartService.createBillPageRef || !this.cartService.createBillPageRef.currentBiill) {
+          this.cartService.setDefaultBill();
+        } else {
+          this.cartService.updateDefaultBill();
+        }
+        this.creatBillPage = { ...this.cartService.createBillPageRef };
+      })
+      .catch((e) => {});
+  };
 }

@@ -6,9 +6,8 @@ import { ItemListPage } from './item-list.page';
 const routes: Routes = [
   {
     path: '',
-    component: ItemListPage,
-    data: { title: 'All Items' },
-  },
+    component: ItemListPage
+  }
 ];
 
 @NgModule({

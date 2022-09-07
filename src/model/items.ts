@@ -6,4 +6,5 @@ export interface I_Items {
   itemSellValue: number;
   itemSellDiscount: number;
   discountInPercent: boolean;
+  isAvailable?: boolean;
 }

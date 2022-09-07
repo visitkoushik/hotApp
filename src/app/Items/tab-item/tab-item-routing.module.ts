@@ -13,7 +13,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:() => import('../add-item/add-item-routing.module').then( m => m.AddItemPageRoutingModule)
+            loadChildren:() => import('../add-item/add-item.module').then( m => m.AddItemPageModule)
           },
         ],
       },
@@ -22,7 +22,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:() => import('../item-list/item-list-routing.module').then( m => m.ItemListPageRoutingModule)
+            loadChildren:() => import('../item-list/item-list.module').then( m => m.ItemListPageModule)
           },
         ],
       },

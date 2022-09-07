@@ -31,7 +31,7 @@ export class ConfiremdBillPage implements OnInit {
       ...this.cartService.createBillPageRef.currentBiill,
       status: true,
     });
-    this.cartService.setDefault();
+    this.cartService.setDefaultBill();
     this.router.navigateByUrl('/tab/createbill');
   };
 }

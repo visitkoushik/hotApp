@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TabItemPageRoutingModule } from './tab-item-routing.module';
 
 import { TabItemPage } from './tab-item.page';
+import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabItemPageRoutingModule
+    TabItemPageRoutingModule,
+    MaterialModule
   ],
   declarations: [TabItemPage]
 })

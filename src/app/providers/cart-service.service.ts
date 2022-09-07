@@ -20,26 +20,47 @@ export class CartService {
     return this.globalOrderNumber;
   };
 
-  public setDefault = () => {
-
+  public setDefaultBill = () => {
     const icreatPage: I_CreateBillPage = {} as I_CreateBillPage;
 
     // icreatPage.cartElement = [];
     icreatPage.currentBiill = {} as I_Bill;
-    icreatPage.currentBiill .gender = GENDER.MALE;
-    icreatPage.currentBiill .customerName = '';
-    icreatPage.currentBiill .customerContact = '';
-    icreatPage.currentBiill .due = 0;
-    icreatPage.currentBiill .discount = 0;
+    icreatPage.currentBiill.gender = GENDER.MALE;
+    icreatPage.currentBiill.customerName = '';
+    icreatPage.currentBiill.customerContact = '';
+    icreatPage.currentBiill.due = 0;
+    icreatPage.currentBiill.discount = 0;
     icreatPage.listOfCartItem = this.mainItems.map<I_CartItem>(
       (itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
         items: { ...itm },
         count: 0,
       })
-    );;
+    );
     icreatPage.filterTerm = '';
-    this.createBillPageRef =  { ...icreatPage };
+    this.createBillPageRef = { ...icreatPage };
+  };
 
+  public updateDefaultBill = () => {
+
+    const listOfCartItem = this.mainItems.map<I_CartItem>(
+      (itm: I_Items, inx: number) => {
+        const cartItem = this.createBillPageRef.listOfCartItem.find(
+          (e) => e.items.itemId === itm.itemId
+        );
+
+        return cartItem
+          ? { ...cartItem, items: { ...itm } }
+          : {
+              id: inx + 1 + '',
+              items: { ...itm },
+              count: 0,
+            };
+      }
+    );
+    this.createBillPageRef = {
+      ...this.createBillPageRef,
+      listOfCartItem: [...listOfCartItem],
+    };
   };
 }

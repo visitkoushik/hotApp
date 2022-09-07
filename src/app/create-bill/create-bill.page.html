@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header >
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label style="color: red">Customer Name *</mat-label>
     <input
@@ -17,7 +17,7 @@
       [(ngModel)]="creatBillPage.currentBiill.customerContact"
     />
   </mat-form-field>
-  <div class="gender">
+  <div class="gender" >
     <mat-label>Gender</mat-label>
     <mat-radio-group aria-label="Gender" [(ngModel)]="creatBillPage.currentBiill.gender">
       <mat-radio-button
@@ -53,9 +53,10 @@
     placeholder="Search..."
     [(ngModel)]="creatBillPage.filterTerm"
     animated="true"
+
   ></ion-searchbar>
 </ion-header>
-<ion-content>
+<ion-content >
   <mat-list>
     <mat-card *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm">
       <mat-card-title-group>
@@ -99,9 +100,9 @@
   <mat-divider></mat-divider>
 </ion-content>
 
-<ion-footer collapse="fade">
+<ion-footer collapse="fade" >
   <ion-toolbar>
-    <ion-item>
+    <ion-item >
       <mat-form-field class="newbill-half-width" appearance="fill">
         <mat-label>Due</mat-label>
         <input

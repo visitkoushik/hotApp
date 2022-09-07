@@ -6,9 +6,8 @@ import { AddItemPage } from './add-item.page';
 const routes: Routes = [
   {
     path: '',
-    component: AddItemPage,
-    data: { title: 'New Item' },
-  },
+    component: AddItemPage
+  }
 ];
 
 @NgModule({
