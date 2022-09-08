@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { I_Bill } from 'src/model/bill';
 import { ClassBill } from 'src/model/billClass';
+import { AppStorageService } from '../app-storage/app-storage.service';
 import { CartService } from '../providers/cart-service.service';
+import { UtilService } from '../providers/utilservice.service';
 
 @Component({
   selector: 'app-all-bills',
@@ -15,12 +23,35 @@ export class AllBillsPage implements OnInit {
   constructor(
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private storage: AppStorageService,
+    private util: UtilService
   ) {
     this.currentDate = new Date();
+    this.router.events.subscribe(
+      (event: NavigationStart | NavigationEnd | NavigationError) => {
+        if (event instanceof NavigationStart) {
+          this.util.isLoading = true;
+
+          this.fetchBills();
+        }
+
+        if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+        }
+
+        if (event instanceof NavigationError) {
+          // Hide loading indicator
+
+          // Present error to user
+          console.log(event.error);
+        }
+      }
+    );
   }
 
   ngOnInit() {
+    this.fetchBills();
     this.activeRoute.queryParams.subscribe((p) => {
       this.allBills = [...this.cartService.allBiills];
     });
@@ -30,6 +61,19 @@ export class AllBillsPage implements OnInit {
     this.router.navigate(['existingbill'], {
       relativeTo: this.activeRoute,
       queryParams: { data: JSON.stringify(billItem) },
+    });
+  };
+
+  fetchBills=()=>{
+    this.storage
+    .getStorage('bills')
+    .then((e) => {
+      this.util.isLoading = !true;
+      [...this.cartService.allBiills]=[...e];
+      this.allBills = [...this.cartService.allBiills];
+    })
+    .catch((e) => {
+      this.util.isLoading = !true;
     });
   };
 

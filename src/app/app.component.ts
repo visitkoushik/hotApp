@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
+import { CartService } from './providers/cart-service.service';
 import { UtilService } from './providers/utilservice.service';
 
 @Component({
@@ -20,11 +21,13 @@ export class AppComponent implements OnInit, OnChanges {
     private location: Location,
     public auth: AuthService,
     public util: UtilService,
-    private store: AppStorageService
+    private store: AppStorageService,
+    private cart: CartService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

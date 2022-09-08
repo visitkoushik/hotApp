@@ -27,9 +27,7 @@ export class NewbillPage implements OnInit {
     });
   }
 
-
-  onConfirm = () => {
-
+  onConfirm = async () => {
     const billClass = this.cartService.createBillPageRef?.currentBiill?.billID
       ? new ClassBill({
           ...this.cartService.createBillPageRef.currentBiill,
@@ -38,14 +36,14 @@ export class NewbillPage implements OnInit {
           customerContact: this.data.customerContact,
           gender: this.data.gender,
           due: this.data.due,
-          discount:this.data.discount
+          discount: this.data.discount,
         })
       : new ClassBill(
           this.data.listItem,
           this.data.customerName,
           this.data.customerContact,
           this.data.gender,
-          this.cartService.getOrderNumber(),
+          await this.cartService.getOrderNumber(),
           false,
           this.data.due,
           this.data.discount

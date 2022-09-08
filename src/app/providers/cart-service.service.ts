@@ -3,6 +3,7 @@ import { I_Bill } from 'src/model/bill';
 import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage } from 'src/model/util';
+import { AppStorageService } from '../app-storage/app-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,21 @@ export class CartService {
   public mainItems: I_Items[] = [];
   public allBiills: I_Bill[] = [] as I_Bill[];
 
-  private globalOrderNumber = 0;
-  constructor() {}
+  public globalOrderNumber = 0;
+  constructor(private store: AppStorageService) {}
 
-  public getOrderNumber = (): number => {
+  public getOrderNumber = async (): Promise<number> => {
+
+    const dt = new Date();
+    const key = `${dt.getDay()}-${dt.getMonth()}-${dt.getFullYear()}`;
+    const eKey = await this.store.getStorage('order').catch((e) => {});
+
+    this.globalOrderNumber = eKey && eKey.key===key ? eKey.order : 0;
+
     this.globalOrderNumber++;
-    return this.globalOrderNumber;
+    return new Promise((res)=>{
+        res(this.globalOrderNumber);
+    });
   };
 
   public setDefaultBill = () => {
@@ -30,21 +40,21 @@ export class CartService {
     icreatPage.currentBiill.customerContact = '';
     icreatPage.currentBiill.due = 0;
     icreatPage.currentBiill.discount = 0;
-    icreatPage.listOfCartItem = this.mainItems.filter(e=>e.isAvailable).map<I_CartItem>(
-      (itm: I_Items, inx: number) => ({
+    icreatPage.listOfCartItem = this.mainItems
+      .filter((e) => e.isAvailable)
+      .map<I_CartItem>((itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
         items: { ...itm },
         count: 0,
-      })
-    );
+      }));
     icreatPage.filterTerm = '';
     this.createBillPageRef = { ...icreatPage };
   };
 
   public updateDefaultBill = () => {
-
-    const listOfCartItem = this.mainItems.filter(e=>e.isAvailable).map<I_CartItem>(
-      (itm: I_Items, inx: number) => {
+    const listOfCartItem = this.mainItems
+      .filter((e) => e.isAvailable)
+      .map<I_CartItem>((itm: I_Items, inx: number) => {
         const cartItem = this.createBillPageRef.listOfCartItem.find(
           (e) => e.items.itemId === itm.itemId
         );
@@ -56,8 +66,7 @@ export class CartService {
               items: { ...itm },
               count: 0,
             };
-      }
-    );
+      });
     this.createBillPageRef = {
       ...this.createBillPageRef,
       listOfCartItem: [...listOfCartItem],
