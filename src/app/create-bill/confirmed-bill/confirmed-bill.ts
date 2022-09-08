@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
+import { AlertService } from 'src/app/providers/alert.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
@@ -19,7 +21,9 @@ export class ConfiremdBillPage implements OnInit {
     private cartService: CartService,
     private storeage: AppStorageService,
     private util: UtilService,
-    private snack: SnackbarService
+    private snack: SnackbarService,
+    private alertServc: AlertService,
+    private altrCtrl: AlertController
   ) {}
 
   ngOnInit(): void {
@@ -32,14 +36,29 @@ export class ConfiremdBillPage implements OnInit {
     });
   }
 
-  onDone = async () => {
+  onDone = () => {
+    this.alertServc.presentAlert(
+      this.altrCtrl,
+      'Confirm',
+      'Are you sure, you want to confirm the bill?',
+      { ok: 'Yes', cancel: 'No' },
+      () => {
+        // eslint-disable-next-line no-underscore-dangle
+        this.__onDone();
+      },
+      ()=>{
+
+      }
+    );
+  };
+
+  __onDone = async () => {
     this.util.isLoading = true;
     const allbills = [...this.cartService.allBiills];
     allbills.push({
       ...this.cartService.createBillPageRef.currentBiill,
       status: true,
     });
-
 
     const dt = new Date();
     const key = `${dt.getDay()}-${dt.getMonth()}-${dt.getFullYear()}`;
@@ -61,6 +80,8 @@ export class ConfiremdBillPage implements OnInit {
         this.router.navigateByUrl('/tab/createbill');
         this.util.isLoading = false;
       })
-      .catch((ex) => { this.util.isLoading = false;});
+      .catch((ex) => {
+        this.util.isLoading = false;
+      });
   };
 }
