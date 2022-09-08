@@ -60,7 +60,7 @@
           <span>App Settings</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item (click)="appLogout()">
+        <button mat-menu-item (click)="appLogout()" [disabled]="!auth.isLoggedIn">
           <mat-icon>exit_to_app</mat-icon>
           <span>LogOut</span>
         </button>

@@ -1,5 +1,11 @@
 <ion-content *ngIf="currentBillPrint && displayedColumns">
-  <ion-title>ORDER NO.: {{currentBillPrint['Order NO.']}}</ion-title>
+  <ion-title class="billtitle">House of Tea</ion-title>
+  <div>
+    <ion-label class="label">
+      <span style="font-weight: bold">ORDER NO.: </span>
+      {{currentBillPrint['Order NO.']}}</ion-label
+    >
+  </div>
   <div>
     <ion-label class="label">
       <span style="font-weight: bold">Date:</span>
@@ -7,17 +13,18 @@
       <span style="font-weight: bold">Time:</span>
       {{currentBillPrint?.Date|dateformat:"time" }}
     </ion-label>
-    <mat-divider></mat-divider>
+  </div>
+  <div>
     <ion-label class="label">
       <span style="font-weight: bold">Name:</span>
       {{currentBillPrint?.Name}}
     </ion-label>
-    <mat-divider></mat-divider>
+  </div>
+  <div>
     <ion-label class="label"
       ><span style="font-weight: bold">Contact:</span>
       {{currentBillPrint?.Contact}}
     </ion-label>
-    <mat-divider></mat-divider>
   </div>
   <table
     mat-table
@@ -72,20 +79,26 @@
       <td class="tabletd">{{currentBillPrint?.Tax.toFixed(2)}}</td>
     </tr>
     <tr>
-      <td class="tabletd" style="font-size: 1.4rem; font-weight:'bold'">Payable with round:</td>
-      <td class="tabletd" style="font-size: 1.4rem; font-weight:'bold'">{{currentBillPrint?.Payable.toFixed(2)}}</td>
+      <td class="tabletd" style="font-size: 1rem; font-weight: 'bold'">
+        Grand Total:
+      </td>
+      <td class="tabletd" style="font-size: 1rem; font-weight: 'bold'">
+        {{currentBillPrint?.Payable.toFixed(2)}}
+      </td>
     </tr>
   </table>
 
-  <div style="text-align: center; font-style: italic; margin: 1rem;">All values in INR</div>
-
+  <div style="text-align: center; font-style: italic; margin: 1rem">
+    All values in INR
+  </div>
 </ion-content>
 <ion-footer>
-  <button
-  mat-raised-button
-  color="primary"
-  (click)="onDone()"
->
-  Done
-</button>
+  <ion-title></ion-title>
+
+  <ion-item>
+    <ion-title></ion-title>
+    <button mat-raised-button color="primary" float-right (click)="onDone()">
+      Done
+    </button>
+  </ion-item>
 </ion-footer>

@@ -14,13 +14,6 @@ const routes: Routes = [
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
   },
   {
-    path: 'tab-item',
-    loadChildren: () =>
-      import('./items/tab-item/tab-item.module').then(
-        (m) => m.TabItemPageModule
-      ),
-  },
-  {
     path: 'allbills',
     loadChildren: () =>
       import('./all-bills/all-bills.module').then((m) => m.AllBillsPageModule),
@@ -59,15 +52,18 @@ const routes: Routes = [
   },
   {
     path: 'tab-item',
-    loadChildren: () => import('./items/tab-item/tab-item.module').then( m => m.TabItemPageModule)
+    loadChildren: () => import('./items/tab-item/tab-item.module').then( m => m.TabItemPageModule),
+    canLoad: [AuthGaurdService]
   },
   {
     path: 'add-item',
-    loadChildren: () => import('./items/add-item/add-item.module').then( m => m.AddItemPageModule)
+    loadChildren: () => import('./items/add-item/add-item.module').then( m => m.AddItemPageModule),
+    canLoad: [AuthGaurdService]
   },
   {
     path: 'item-list',
-    loadChildren: () => import('./items/item-list/item-list.module').then( m => m.ItemListPageModule)
+    loadChildren: () => import('./items/item-list/item-list.module').then( m => m.ItemListPageModule),
+    canLoad: [AuthGaurdService]
   },
 ];
 

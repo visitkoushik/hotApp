@@ -110,6 +110,7 @@
           placeholder="Ex:20.00"
           type="number"
           [(ngModel)]="creatBillPage.currentBiill.due"
+          (click)="$event.target.select()"
         />
       </mat-form-field>
       <mat-form-field class="newbill-half-width" appearance="fill" >
@@ -119,15 +120,16 @@
           placeholder="Ex:20.00"
           type="number"
           [(ngModel)]="creatBillPage.currentBiill.discount"
+          (click)="$event.target.select()"
         />
       </mat-form-field>
     </ion-item>
     <ion-item>
-      <ion-title
-        >Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
+     <ion-title>
+       Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
         Rs.</ion-title
       >
-      <button mat-raised-button color="primary" (click)="onReset()">Reset</button>
+      <!-- <button mat-raised-button color="primary" (click)="onReset()">Reset</button> -->
       <button
         mat-raised-button
         color="primary"
@@ -136,6 +138,7 @@
       >
         Next
       </button>
+
     </ion-item>
   </ion-toolbar>
 </ion-footer>

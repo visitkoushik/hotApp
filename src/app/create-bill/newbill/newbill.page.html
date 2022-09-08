@@ -14,23 +14,28 @@
 <mat-divider></mat-divider>
 
 <ion-content>
-  <mat-list>
-    <mat-card *ngFor="let cartItem of data.listItem ">
-      <mat-card-title-group>
-        <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
-        <mat-card-subtitle>Qty. {{cartItem.count}}</mat-card-subtitle>
-        <mat-card-subtitle style="color: red">
-          Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
-          Rs.
-        </mat-card-subtitle>
-      </mat-card-title-group>
-    </mat-card>
-  </mat-list>
+  <ion-list>
+    <ion-item *ngFor="let cartItem of data.listItem ">
+
+        <div style="width: 100%">
+          <h3>{{cartItem.items.itemName}}</h3>
+          <span style="float:left"> Qty. {{cartItem.count}}</span>
+          <span style="float:right; color: red">
+            Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
+            Rs.</span
+          >
+        </div>
+
+    </ion-item>
+  </ion-list>
 </ion-content>
 <ion-footer collapse="fade">
   <ion-toolbar>
     <ion-item>
-      <ion-label style="color:green">(Total) {{data.listItem|subtotal}} - (Discount) {{data.discount}}</ion-label>
+      <ion-label style="color: green"
+        >(Total) {{data.listItem|subtotal}} - (Discount)
+        {{data.discount}}</ion-label
+      >
     </ion-item>
     <ion-item>
       <ion-title

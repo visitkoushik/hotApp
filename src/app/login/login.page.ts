@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../providers/auth/auth.service';
+import { SnackbarService } from '../providers/snackbar.service';
 import { UtilService } from '../providers/utilservice.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginPage implements OnInit {
     private location: Location,
     private auth: AuthService,
     private util: UtilService,
-    private router: Router
+    private router: Router,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnInit() {}
@@ -27,7 +29,6 @@ export class LoginPage implements OnInit {
     this.auth
       .login(this.username, this.passcode)
       .then((e) => {
-        console.log(e, this.auth.redirectUrl);
         this.util.isLoading = false;
         if (this.auth.redirectUrl) {
           this.router.navigateByUrl(this.auth.redirectUrl);
@@ -37,6 +38,7 @@ export class LoginPage implements OnInit {
       })
       .catch((e) => {
         console.log(e);
+        this.snackbar.openSnackBar('Login Failed');
         this.util.isLoading = false;
       });
   };

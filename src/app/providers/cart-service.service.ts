@@ -17,16 +17,15 @@ export class CartService {
   constructor(private store: AppStorageService) {}
 
   public getOrderNumber = async (): Promise<number> => {
-
     const dt = new Date();
     const key = `${dt.getDay()}-${dt.getMonth()}-${dt.getFullYear()}`;
     const eKey = await this.store.getStorage('order').catch((e) => {});
 
-    this.globalOrderNumber = eKey && eKey.key===key ? eKey.order : 0;
+    this.globalOrderNumber = eKey && eKey.key === key ? eKey.order : 0;
 
     this.globalOrderNumber++;
-    return new Promise((res)=>{
-        res(this.globalOrderNumber);
+    return new Promise((res) => {
+      res(this.globalOrderNumber);
     });
   };
 

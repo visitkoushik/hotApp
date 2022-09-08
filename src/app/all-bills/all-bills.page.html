@@ -11,17 +11,25 @@
 
 <ion-content>
   <mat-list>
-    <mat-card *ngFor="let billItem of allBills;trackBy: trackByFn "  (click)="onClickItemBill(billItem)">
+    <mat-card
+      *ngFor="let billItem of allBills;trackBy: trackByFn "
+      (click)="onClickItemBill(billItem)"
+    >
       <mat-card-title-group>
-        <mat-card-title> Bill Number: {{billItem.billnumber}}</mat-card-title>
-        <mat-card-subtitle style="color: red">
+        <div style="width: 100%;">
+          <h5>Bill Number: {{billItem.billnumber}}</h5>
+          <span style="color: red">
+            {{billItem.billDate|dateformat:'date'}}</span
+          >
+        </div>
+
+        <!-- <mat-card-subtitle style="color: red">
           {{billItem.billDate|dateformat:'date'}}</mat-card-subtitle
-        >
+        > -->
       </mat-card-title-group>
       <mat-card-content class="rowAmount">
         {{billItem.itemPurchased|subtotal}}Rs.
       </mat-card-content>
-
     </mat-card>
   </mat-list>
 </ion-content>

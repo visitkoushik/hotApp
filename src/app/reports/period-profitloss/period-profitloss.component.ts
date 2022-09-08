@@ -97,7 +97,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.start <= bill.billDate && this.end >= bill.billDate
+          this.start <= new Date(bill.billDate) && this.end >= new Date(bill.billDate)
       );
     }
 
@@ -107,34 +107,35 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
       [key: string]: I_Bill[];
     };
     for (const bill of allBills) {
+      const billDate = new Date(bill.billDate);
       if (this.filterDateBy === FILTER_BY.DATE) {
         const arry =
           billWithDateHeader[
-            MMM[bill.billDate.getMonth()] +
-              bill.billDate.getDate() +
+            MMM[billDate.getMonth()] +
+            billDate.getDate() +
               ', ' +
-              bill.billDate.getFullYear()
+              billDate.getFullYear()
           ] || [];
         arry.push(bill);
         billWithDateHeader[
-          MMM[bill.billDate.getMonth()] +
-            bill.billDate.getDate() +
+          MMM[billDate.getMonth()] +
+            billDate.getDate() +
             ', ' +
-            bill.billDate.getFullYear()
+            billDate.getFullYear()
         ] = [...arry];
       } else if (this.filterDateBy === FILTER_BY.MONTH) {
         const arry =
           billWithDateHeader[
-            MMM[bill.billDate.getMonth()] + ', ' + bill.billDate.getFullYear()
+            MMM[billDate.getMonth()] + ', ' + billDate.getFullYear()
           ] || [];
         arry.push(bill);
         billWithDateHeader[
-          MMM[bill.billDate.getMonth()] + ', ' + bill.billDate.getFullYear()
+          MMM[billDate.getMonth()] + ', ' + billDate.getFullYear()
         ] = [...arry];
       } else if (this.filterDateBy === FILTER_BY.YEAR) {
-        const arry = billWithDateHeader[bill.billDate.getFullYear()] || [];
+        const arry = billWithDateHeader[billDate.getFullYear()] || [];
         arry.push(bill);
-        billWithDateHeader[bill.billDate.getFullYear()] = [...arry];
+        billWithDateHeader[billDate.getFullYear()] = [...arry];
       }
     }
 

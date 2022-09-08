@@ -27,7 +27,7 @@ export class AuthService {
 
   public login = (username, passcode): Promise<string> =>
     new Promise((resolve, reject) => {
-      setTimeout(() => {
+
         if (username === 'houseoftea' && passcode === 'janina') {
           this.isLoggedIn = true;
 
@@ -36,6 +36,6 @@ export class AuthService {
           this.isLoggedIn = false;
           reject('Login failed');
         }
-      }, 15000);
+
     });
 }

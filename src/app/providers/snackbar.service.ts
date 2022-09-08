@@ -5,14 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class SnackbarService {
-  constructor(private snackbar: MatSnackBar) {
+  constructor(private snackbar: MatSnackBar) {}
 
+  openSnackBar(message: string, duration: number = 3000) {
+    this.snackbar.open(message, undefined, { duration });
   }
-
-  openSnackBar(message: string) {
-    this.snackbar.open(message);
-    setTimeout(()=>{
-      this.snackbar.dismiss();
-    },5000);
+  openActionSnackBar(message: string, action: any, duration: number = 3000) {
+    this.snackbar.open(message, action, { duration });
   }
 }
