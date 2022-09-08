@@ -30,7 +30,7 @@ export class CartService {
     icreatPage.currentBiill.customerContact = '';
     icreatPage.currentBiill.due = 0;
     icreatPage.currentBiill.discount = 0;
-    icreatPage.listOfCartItem = this.mainItems.map<I_CartItem>(
+    icreatPage.listOfCartItem = this.mainItems.filter(e=>e.isAvailable).map<I_CartItem>(
       (itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
         items: { ...itm },
@@ -43,7 +43,7 @@ export class CartService {
 
   public updateDefaultBill = () => {
 
-    const listOfCartItem = this.mainItems.map<I_CartItem>(
+    const listOfCartItem = this.mainItems.filter(e=>e.isAvailable).map<I_CartItem>(
       (itm: I_Items, inx: number) => {
         const cartItem = this.createBillPageRef.listOfCartItem.find(
           (e) => e.items.itemId === itm.itemId
