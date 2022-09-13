@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthGaurdService } from './providers/auth/auth-gaurd.service';
 import { AuthService } from './providers/auth/auth.service';
+import { TanGaurdService } from './providers/company/tan-gaurd.service';
+import { UtilService } from './providers/utilservice.service';
 
 const routes: Routes = [
   {
@@ -12,21 +15,30 @@ const routes: Routes = [
   {
     path: 'tab',
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
+    canLoad: [TanGaurdService],
+    providers: [TanGaurdService]
   },
   {
     path: 'allbills',
     loadChildren: () =>
-      import('./all-bills/all-bills.module').then((m) => m.AllBillsPageModule),
+      import('./bills/all-bills/all-bills.module').then((m) => m.AllBillsPageModule),
   },
   {
     path: 'createbill',
     loadChildren: () =>
-      import('./create-bill/create-bill.module').then(
+      import('./bills/create-bill/create-bill.module').then(
         (m) => m.CreateBillPageModule
       ),
   },
   {
     path: 'configure',
+    loadChildren: () =>
+      import('./configure/configure.module').then((m) => m.ConfigurePageModule),
+
+  },
+
+  {
+    path: 'configures',
     loadChildren: () =>
       import('./configure/configure.module').then((m) => m.ConfigurePageModule),
     canLoad: [AuthGaurdService],
@@ -64,6 +76,10 @@ const routes: Routes = [
     path: 'item-list',
     loadChildren: () => import('./items/item-list/item-list.module').then( m => m.ItemListPageModule),
     canLoad: [AuthGaurdService]
+  },
+  {
+    path: 'add-category',
+    loadChildren: () => import('./items/add-category/add-category.module').then( m => m.AddCategoryPageModule)
   },
 ];
 

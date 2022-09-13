@@ -28,10 +28,22 @@ export interface I_ProductReport {
   order?: number;
 }
 
+export interface I_TenantDetails {
+  name: string;
+  code: string;
+  tan: string;
+  pan: string;
+  tradeLicense: string;
+  username: string;
+  password: string;
+}
+
 export class UtilClass {
   static Get_Total = (itemPurchased: I_CartItem[]): number => {
     let price = 0;
-
+    if(!Array.isArray(itemPurchased)){
+      return price;
+    }
     itemPurchased
       .filter((e) => e.count > 0)
       .forEach((e: I_CartItem) => {
@@ -47,6 +59,9 @@ export class UtilClass {
 
   static Get_Item_Count = (itemPurchased: I_CartItem[]): number => {
     let count = 0;
+    if(!Array.isArray(itemPurchased)){
+      return count;
+    }
     itemPurchased.forEach((e: I_CartItem) => {
       count = count + e.count;
     });

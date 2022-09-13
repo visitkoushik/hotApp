@@ -8,6 +8,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UtilService } from '../utilservice.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AuthService {
   public isLoggedIn = false;
   private url = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private util: UtilService) {}
 
   get redirectUrl(): string {
     return this.url;
@@ -27,15 +28,16 @@ export class AuthService {
 
   public login = (username, passcode): Promise<string> =>
     new Promise((resolve, reject) => {
+      if (
+        username === this.util.tenantDetail?.username &&
+        passcode === this.util.tenantDetail?.password
+      ) {
+        this.isLoggedIn = true;
 
-        if (username === 'houseoftea' && passcode === 'janina') {
-          this.isLoggedIn = true;
-
-          resolve('Login success');
-        } else {
-          this.isLoggedIn = false;
-          reject('Login failed');
-        }
-
+        resolve('Login success');
+      } else {
+        this.isLoggedIn = false;
+        reject('Login failed');
+      }
     });
 }

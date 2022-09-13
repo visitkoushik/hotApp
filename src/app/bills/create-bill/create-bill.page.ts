@@ -10,9 +10,9 @@ import {
 import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage } from 'src/model/util';
-import { CartService } from '../providers/cart-service.service';
-import * as itemList from '../../model/itemList.json';
-import { AppStorageService } from '../app-storage/app-storage.service';
+import { CartService } from '../../providers/cart-service.service';
+import * as itemList from '../../../model/itemList.json';
+import { AppStorageService } from '../../app-storage/app-storage.service';
 @Component({
   selector: 'app-create-bill',
   templateUrl: './create-bill.page.html',
@@ -86,11 +86,11 @@ export class CreateBillPage implements OnInit {
       const query: Params = {
         data: JSON.stringify({
           listItem: selectedItem,
-          customerContact: this.creatBillPage.currentBiill.customerContact,
-          customerName: this.creatBillPage.currentBiill.customerName,
-          gender: this.creatBillPage.currentBiill.gender,
-          due: this.creatBillPage.currentBiill.due,
-          discount: this.creatBillPage.currentBiill.discount,
+          // customerContact: this.creatBillPage.currentBiill.customerContact,
+          // customerName: this.creatBillPage.currentBiill.customerName,
+          // gender: this.creatBillPage.currentBiill.gender,
+          // due: this.creatBillPage.currentBiill.due,
+          // discount: this.creatBillPage.currentBiill.discount,
         }),
       };
       this.router.navigate(['newbill'], {

@@ -26,6 +26,15 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'add-category',
+        children: [
+          {
+            path: '',
+            loadChildren:() => import('../add-category/add-category.module').then( m => m.AddCategoryPageModule)
+          },
+        ],
+      },
 
       {
         path: '',

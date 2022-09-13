@@ -8,9 +8,9 @@ import {
 } from '@angular/router';
 import { I_Bill } from 'src/model/bill';
 import { ClassBill } from 'src/model/billClass';
-import { AppStorageService } from '../app-storage/app-storage.service';
-import { CartService } from '../providers/cart-service.service';
-import { UtilService } from '../providers/utilservice.service';
+import { AppStorageService } from '../../app-storage/app-storage.service';
+import { CartService } from '../../providers/cart-service.service';
+import { UtilService } from '../../providers/utilservice.service';
 
 @Component({
   selector: 'app-all-bills',
@@ -64,18 +64,31 @@ export class AllBillsPage implements OnInit {
     });
   };
 
-  fetchBills=()=>{
+  fetchBills = () => {
     this.storage
-    .getStorage('bills')
-    .then((e) => {
-      this.util.isLoading = !true;
-      [...this.cartService.allBiills]=[...e];
-      this.allBills = [...this.cartService.allBiills];
-    })
-    .catch((e) => {
-      this.util.isLoading = !true;
-    });
+      .getStorage('bills')
+      .then((e) => {
+        this.util.isLoading = !true;
+        [...this.cartService.allBiills] = [...e];
+        this.onChangeDate();
+      })
+      .catch((e) => {
+        this.util.isLoading = !true;
+      });
+  };
+
+
+  onChangeDate=()=>{
+    this.allBills = [...this.cartService.allBiills].filter(
+      (itm) =>
+        new Date(itm.billDate).toLocaleDateString() ===
+        new Date(this.currentDate).toLocaleDateString()
+    );
   };
 
   trackByFn = (inx, item: I_Bill) => item.billID;
+
+  onPayDue=(e)=>{
+    e.stopPropagation();
+  }
 }

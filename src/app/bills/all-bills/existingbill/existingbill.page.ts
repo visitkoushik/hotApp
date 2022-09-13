@@ -13,6 +13,7 @@ export class ExistingbillPage implements OnInit {
 
   public currentBill: ClassBill = null;
   public currentBillPrint: I_Print = null;
+  public currentBillPrintStr: string = null;
   public displayedColumns: any[] = null;
   constructor(
     private router: Router,
@@ -25,6 +26,7 @@ export class ExistingbillPage implements OnInit {
       const ibill= JSON.parse(p.data);
       this.currentBill = new ClassBill(ibill);
       this.currentBillPrint = this.currentBill.getPrintValue();
+      this.currentBillPrintStr = JSON.stringify(this.currentBillPrint);
       this.displayedColumns =
         this.currentBillPrint.Items?.length > 0
           ? Object.keys(this.currentBillPrint.Items[0])

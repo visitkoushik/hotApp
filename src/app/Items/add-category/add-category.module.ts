@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ExistingbillPageRoutingModule } from './existingbill-routing.module';
+import { AddCategoryPageRoutingModule } from './add-category-routing.module';
 
-import { ExistingbillPage } from './existingbill.page';
-import { PipeModule } from 'src/app/pipe/pipe.module';
+import { AddCategoryPage } from './add-category.page';
 import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
@@ -15,10 +14,9 @@ import { MaterialModule } from 'src/app/material.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ExistingbillPageRoutingModule,
-    PipeModule,
+    AddCategoryPageRoutingModule,
     MaterialModule
   ],
-  declarations: [ExistingbillPage]
+  declarations: [AddCategoryPage]
 })
-export class ExistingbillPageModule {}
+export class AddCategoryPageModule {}

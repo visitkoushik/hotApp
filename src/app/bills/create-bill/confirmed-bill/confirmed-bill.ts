@@ -13,8 +13,8 @@ import { ClassBill, I_Print } from 'src/model/billClass';
   styleUrls: ['./confiremd-bill.scss'],
 })
 export class ConfiremdBillPage implements OnInit {
+  public currentBillPrintStr: string = null;
   public currentBillPrint: I_Print = null;
-  public displayedColumns: any[] = null;
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
@@ -28,11 +28,9 @@ export class ConfiremdBillPage implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((p) => {
+      this.currentBillPrintStr = p.data;
       this.currentBillPrint = JSON.parse(p.data);
-      this.displayedColumns =
-        this.currentBillPrint.Items?.length > 0
-          ? Object.keys(this.currentBillPrint.Items[0])
-          : null;
+
     });
   }
 
@@ -44,7 +42,7 @@ export class ConfiremdBillPage implements OnInit {
       { ok: 'Yes', cancel: 'No' },
       () => {
         // eslint-disable-next-line no-underscore-dangle
-        this.__onDone();
+        this.done();
       },
       ()=>{
 
@@ -52,7 +50,7 @@ export class ConfiremdBillPage implements OnInit {
     );
   };
 
-  __onDone = async () => {
+  done = async () => {
     this.util.isLoading = true;
     const allbills = [...this.cartService.allBiills];
     allbills.push({

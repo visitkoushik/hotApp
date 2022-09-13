@@ -5,6 +5,7 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
+import { SnackbarService } from './providers/snackbar.service';
 import { UtilService } from './providers/utilservice.service';
 
 @Component({
@@ -21,12 +22,28 @@ export class AppComponent implements OnInit, OnChanges {
     private location: Location,
     public auth: AuthService,
     public util: UtilService,
-    private store: AppStorageService,
+    private storage: AppStorageService,
+    private snackbar: SnackbarService,
     private cart: CartService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+    this.storage
+      .getStorage('tenant')
+      .then((e) => {
+        this.util.tenantDetail = { ...e };
+
+        if (
+          this.util.tenantDetail?.tan?.trim().length > 0 ||
+          this.util.tenantDetail?.pan?.trim().length > 0
+        ) {
+          this.router.navigateByUrl('/tab');
+        }
+      })
+      .catch((e) => {
+        this.snackbar.openSnackBar('Please set Tenant detail');
+      });
 
     this.router.events
       .pipe(

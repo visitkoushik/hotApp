@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { I_Bill } from 'src/model/bill';
 import { I_CartItem } from 'src/model/cartItem';
+import { I_Category } from 'src/model/category';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
@@ -12,7 +13,7 @@ export class CartService {
   public createBillPageRef: I_CreateBillPage = null;
   public mainItems: I_Items[] = [];
   public allBiills: I_Bill[] = [] as I_Bill[];
-
+  public categoryList: I_Category[] = [] as I_Category[];
   public globalOrderNumber = 0;
   constructor(private store: AppStorageService) {}
 

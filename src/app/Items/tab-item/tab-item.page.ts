@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AppStorageService } from 'src/app/app-storage/app-storage.service';
+import { CartService } from 'src/app/providers/cart-service.service';
+import { I_Category } from 'src/model/category';
 
 @Component({
   selector: 'app-tab-item',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tab-item.page.scss'],
 })
 export class TabItemPage implements OnInit {
+  constructor(
+    private cartServc: CartService,
+    private storage: AppStorageService
+  ) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.cartServc.categoryList =
+      (await this.storage.getStorage('category').catch((e) => {})) ||
+      ([] as I_Category[]);
   }
-
 }

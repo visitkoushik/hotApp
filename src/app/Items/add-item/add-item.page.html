@@ -1,7 +1,12 @@
 <ion-content>
   <ion-item *ngIf="item.itemId?.length>0">
     <ion-label>Is in Stock?</ion-label>
-    <ion-toggle slot="end" name="apple" color="primary" [(ngModel)]="item.isAvailable"></ion-toggle>
+    <ion-toggle
+      slot="end"
+      name="apple"
+      color="primary"
+      [(ngModel)]="item.isAvailable"
+    ></ion-toggle>
   </ion-item>
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label style="color: red">Item Name *</mat-label>
@@ -10,9 +15,29 @@
       placeholder="Itme Name is mandatory"
       [(ngModel)]="item.itemName"
       type="text"
-      (click)="$event.target.select()"
+      (click)="oninputClick($event)"
     />
   </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">Select category *</mat-label>
+
+    <mat-select
+      [(ngModel)]="item.catergoryId"
+      name="report"
+      disableOptionCentering
+      panelClass="myPanelClass"
+      (selectionChange)="onChangeItem($event.value)"
+    >
+      <mat-option value="-1" selected>Slect One Item</mat-option>
+      <mat-option
+        *ngFor="let category of cartsrvc.categoryList"
+        [value]="category.categoryId"
+      >
+        {{category.categoryName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label style="color: red">Making Cost *</mat-label>
     <input
@@ -21,7 +46,7 @@
       type="number"
       [(ngModel)]="item.itemPurchaseValue"
       min="0"
-      (click)="$event.target.select()"
+      (click)="oninputClick($event)"
     />
   </mat-form-field>
   <mat-form-field class="newbill-full-width" appearance="fill">
@@ -32,7 +57,7 @@
       type="number"
       [(ngModel)]="item.itemSellValue"
       min="0"
-      (click)="$event.target.select()"
+      (click)="oninputClick($event)"
     />
   </mat-form-field>
   <mat-checkbox
@@ -54,7 +79,7 @@
       type="number"
       [(ngModel)]="item.itemSellDiscount"
       max="100"
-      (click)="$event.target.select()"
+      (click)="oninputClick($event)"
     />
   </mat-form-field>
   <mat-form-field
@@ -68,7 +93,7 @@
       placeholder="Discount on the Item"
       type="number"
       [(ngModel)]="item.itemSellDiscount"
-      (click)="$event.target.select()"
+      (click)="oninputClick($event)"
     />
   </mat-form-field>
   <!-- <mat-checkbox

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { GENDER } from 'src/model/util';
 import { CartService } from 'src/app/providers/cart-service.service';
@@ -24,10 +24,20 @@ export class NewbillPage implements OnInit {
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((p) => {
       this.data = JSON.parse(p.data);
+      this.data = {
+        ...this.data,
+        customerContact:
+          this.cartService.createBillPageRef.currentBiill.customerContact,
+        customerName:
+          this.cartService.createBillPageRef.currentBiill.customerName,
+        gender: this.cartService.createBillPageRef.currentBiill.gender,
+        due: this.cartService.createBillPageRef.currentBiill.due,
+        discount: this.cartService.createBillPageRef.currentBiill.discount,
+      };
     });
   }
 
-  onConfirm = async () => {
+  onNext = async () => {
     const billClass = this.cartService.createBillPageRef?.currentBiill?.billID
       ? new ClassBill({
           ...this.cartService.createBillPageRef.currentBiill,
@@ -50,10 +60,28 @@ export class NewbillPage implements OnInit {
         );
     this.cartService.createBillPageRef.currentBiill = billClass.bill;
 
-    this.router.navigate(['confirmedbill'], {
-      relativeTo: this.activeRoute,
+    this.router.navigate(['tab/createbill/newbill/confirmedbill'], {
+      relativeTo: this.activeRoute.root,
+      replaceUrl: false,
       queryParams: { data: JSON.stringify(billClass.getPrintValue()) },
     });
   };
-  onModelChange = () => {};
+  onChange = () => {
+    this.data.discount = !this.data.discount ? 0 : this.data.discount;
+    this.data.due = !this.data.due ? 0 : this.data.due;
+    const queryParams: Params = { data: JSON.stringify(this.data) };
+
+    this.cartService.createBillPageRef.currentBiill.discount =
+      this.data.discount;
+    this.cartService.createBillPageRef.currentBiill.due = this.data.due;
+
+    this.router.navigate([], {
+      relativeTo: this.activeRoute,
+      replaceUrl: true,
+      queryParams,
+    });
+  };
+
+  onClickInput = (target) => target.select();
+
 }

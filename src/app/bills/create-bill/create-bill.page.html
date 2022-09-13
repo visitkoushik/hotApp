@@ -1,4 +1,4 @@
-<ion-header >
+<ion-header>
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label style="color: red">Customer Name *</mat-label>
     <input
@@ -17,9 +17,12 @@
       [(ngModel)]="creatBillPage.currentBiill.customerContact"
     />
   </mat-form-field>
-  <div class="gender" >
+  <div class="gender">
     <mat-label>Gender</mat-label>
-    <mat-radio-group aria-label="Gender" [(ngModel)]="creatBillPage.currentBiill.gender">
+    <mat-radio-group
+      aria-label="Gender"
+      [(ngModel)]="creatBillPage.currentBiill.gender"
+    >
       <mat-radio-button
         id="mrgndr"
         name="gender-male"
@@ -53,18 +56,18 @@
     placeholder="Search..."
     [(ngModel)]="creatBillPage.filterTerm"
     animated="true"
-
   ></ion-searchbar>
 </ion-header>
-<ion-content >
+<ion-content>
   <mat-list>
-    <mat-card *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm">
+    <mat-card
+      *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm"
+    >
       <mat-card-title-group>
         <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
         <mat-card-subtitle style="color: red"
           >Price:{{cartItem.items.itemSellValue.toFixed(2)}} Rs.
         </mat-card-subtitle>
-
 
         <div class="rowList2" *ngIf="cartItem.count>0">
           <div class="rowListinner">
@@ -95,40 +98,18 @@
           </button>
         </div>
       </mat-card-title-group>
-      </mat-card>
+    </mat-card>
   </mat-list>
   <mat-divider></mat-divider>
 </ion-content>
 
-<ion-footer collapse="fade" >
+<ion-footer collapse="fade">
   <ion-toolbar>
-    <ion-item >
-      <mat-form-field class="newbill-half-width" appearance="fill">
-        <mat-label>Due</mat-label>
-        <input
-          matInput
-          placeholder="Ex:20.00"
-          type="number"
-          [(ngModel)]="creatBillPage.currentBiill.due"
-          (click)="$event.target.select()"
-        />
-      </mat-form-field>
-      <mat-form-field class="newbill-half-width" appearance="fill" >
-        <mat-label>Discount</mat-label>
-        <input
-          matInput
-          placeholder="Ex:20.00"
-          type="number"
-          [(ngModel)]="creatBillPage.currentBiill.discount"
-          (click)="$event.target.select()"
-        />
-      </mat-form-field>
-    </ion-item>
     <ion-item>
-     <ion-title>
-       Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
-        Rs.</ion-title
-      >
+      <ion-title>
+        <!--  Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
+        Rs.-->
+      </ion-title>
       <!-- <button mat-raised-button color="primary" (click)="onReset()">Reset</button> -->
       <button
         mat-raised-button
@@ -138,7 +119,6 @@
       >
         Next
       </button>
-
     </ion-item>
   </ion-toolbar>
 </ion-footer>

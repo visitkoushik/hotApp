@@ -6,8 +6,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
-import { ConfiremdBillPage } from '../confirmed-bill/confirmed-bill';
+import { ConfiremdBillPage } from './confirmed-bill';
 import { ConfiremedbillPageRoutingModule } from './confirmed-routing.module copy';
+import { BillPrintDetailsModule } from '../../bill-print-details/bill-print-details.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ConfiremedbillPageRoutingModule } from './confirmed-routing.module copy
     IonicModule,
     ConfiremedbillPageRoutingModule,
     MaterialModule,
-    PipeModule
+    PipeModule,
+    BillPrintDetailsModule
   ],
   declarations: [ConfiremdBillPage]
 })

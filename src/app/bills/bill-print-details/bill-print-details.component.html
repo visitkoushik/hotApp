@@ -1,5 +1,5 @@
-<ion-content *ngIf="currentBillPrint && displayedColumns">
-  <ion-title class="billtitle">House of Tea</ion-title>
+<ng-container *ngIf="currentBillPrint && displayedColumns">
+  <ion-title class="billtitle">{{util.tenantDetail?.name|| companyName}}</ion-title>
   <div>
     <ion-label class="label">
       <span style="font-weight: bold">ORDER NO.: </span>
@@ -91,14 +91,4 @@
   <div style="text-align: center; font-style: italic; margin: 1rem">
     All values in INR
   </div>
-</ion-content>
-<ion-footer>
-  <ion-title></ion-title>
-
-  <ion-item>
-    <ion-title></ion-title>
-    <button mat-raised-button color="primary" float-right (click)="onDone()">
-      Done
-    </button>
-  </ion-item>
-</ion-footer>
+</ng-container>

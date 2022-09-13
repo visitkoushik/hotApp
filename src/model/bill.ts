@@ -14,4 +14,6 @@ export interface I_Bill {
   billnumber: number;
   billDate: Date;
   billID: string;
+  total: number;
+  paid: number;
 }

@@ -4,13 +4,15 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'dateformat',
 })
 export class DateformatPipe implements PipeTransform {
-  transform(value: Date, ...args: unknown[]): { date: string; time: string }|string{
+  transform(
+    value: Date,
+    ...args: unknown[]
+  ): { date: string; time: string } | string {
     if (value) {
       value = new Date(value);
-      if(args[0] && args[0]==='date'){
+      if (args[0] && args[0] === 'date') {
         return value.toLocaleDateString();
-      }
-      else if(args[0] && args[0]==='time'){
+      } else if (args[0] && args[0] === 'time') {
         return value.toLocaleTimeString();
       }
       return {

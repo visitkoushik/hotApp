@@ -1,0 +1,17 @@
+
+<ion-content>
+  <app-bill-print-details
+  [data]="currentBillPrintStr"
+  *ngIf="currentBillPrint"
+></app-bill-print-details>
+
+</ion-content>
+<ion-footer>
+  <ion-title></ion-title>
+  <ion-item>
+    <ion-title></ion-title>
+    <button mat-raised-button color="primary" float-right (click)="onDone()">
+      Confirm
+    </button>
+  </ion-item>
+</ion-footer>

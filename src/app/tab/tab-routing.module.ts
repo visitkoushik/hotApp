@@ -14,7 +14,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:() => import('../create-bill/create-bill.module').then( m => m.CreateBillPageModule)
+            loadChildren:() => import('../bills/create-bill/create-bill.module').then( m => m.CreateBillPageModule)
           },
         ],
       },
@@ -23,7 +23,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren:() => import('../all-bills/all-bills.module').then( m => m.AllBillsPageModule)
+            loadChildren:() => import('../bills/all-bills/all-bills.module').then( m => m.AllBillsPageModule)
           },
         ],
       },

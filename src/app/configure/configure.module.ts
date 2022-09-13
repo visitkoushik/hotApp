@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ConfigurePageRoutingModule } from './configure-routing.module';
 
 import { ConfigurePage } from './configure.page';
+import { PipeModule } from '../pipe/pipe.module';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfigurePageRoutingModule
+    ConfigurePageRoutingModule,
+    PipeModule,
+    MaterialModule
   ],
   declarations: [ConfigurePage]
 })

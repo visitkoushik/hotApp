@@ -19,7 +19,18 @@ export class AppStorageService {
     this._storage = storage;
   }
 
-  public getStorage = (col: string): Promise<any> => this._storage.get(col);
-  public setStorage = (col: string, val: any): Promise<any> =>
-    this._storage.set(col, val);
+  public getStorage = async (col: string): Promise<any> => {
+    if (!this._storage) {
+      await this.init();
+    }
+
+    return this._storage.get(col);
+  };
+  public setStorage = async (col: string, val: any): Promise<any> => {
+    if (!this._storage) {
+      this.init();
+    }
+
+    return this._storage.set(col, val);
+  };
 }

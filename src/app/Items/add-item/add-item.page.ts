@@ -11,6 +11,7 @@ import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
+import { I_Category } from 'src/model/category';
 import { I_Items } from 'src/model/items';
 
 @Component({
@@ -19,17 +20,19 @@ import { I_Items } from 'src/model/items';
   styleUrls: ['./add-item.page.scss'],
 })
 export class AddItemPage implements OnInit {
-  public item: I_Items = null;
+  public item: I_Items = {} as I_Items;
+  public categoryList: I_Category[] = [] as I_Category[];
 
   constructor(
     private storage: AppStorageService,
     private snackbar: SnackbarService,
-    private cartsrvc: CartService,
+    public cartsrvc: CartService,
     private utisrvc: UtilService,
     private activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.categoryList = this.cartsrvc.categoryList;
     this.activeRoute.queryParams.subscribe((p) => {
       if (p && p.data) {
         this.item = JSON.parse(p.data);
@@ -38,9 +41,10 @@ export class AddItemPage implements OnInit {
       }
     });
   }
-
+  oninputClick = (e) => e.target.select();
   setDefault = () => {
     this.item = {
+      catergoryId: '-1',
       itemId: null,
       itemName: '',
       itemPurchaseValue: 0,
@@ -54,7 +58,9 @@ export class AddItemPage implements OnInit {
   isNotValid = (): boolean =>
     this.item.itemPurchaseValue === 0 ||
     this.item.itemSellValue === 0 ||
-    this.item.itemName.trim().length === 0;
+    this.item?.itemName?.trim().length === 0 ||
+    !this.item.catergoryId ||
+    this.item.catergoryId === '-1';
 
   onSave = async () => {
     let allreadySavedItems: I_Items[] = [] as I_Items[];
@@ -104,4 +110,6 @@ export class AddItemPage implements OnInit {
         this.snackbar.openSnackBar('Error on item Saved ');
       });
   };
+
+  onChangeItem = (value) => (this.item.catergoryId = value);
 }

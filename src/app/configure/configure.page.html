@@ -1,9 +1,49 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>configure</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Trade License</mat-label>
+    <input matInput [(ngModel)]="tradeLicense" type="text" />
+  </mat-form-field>
+  <!-- <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Company Code</mat-label>
+    <input matInput [(ngModel)]="code" type="text" />
+  </mat-form-field> -->
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label>Company Name</mat-label>
+    <input matInput [(ngModel)]="companyName" type="text" />
+  </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">PAN *</mat-label>
+    <input matInput [(ngModel)]="pan" type="text" />
+  </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">TAN *</mat-label>
+    <input matInput [(ngModel)]="tan" type="text" />
+  </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">User name *</mat-label>
+    <input matInput [(ngModel)]="username" type="text" placeholder="Set admin user name, min length 6" minlength="6"/>
+  </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">Password *</mat-label>
+    <input matInput [(ngModel)]="password" type="password" placeholder="Set admin Password , min length 8" minlength="8"/>
+  </mat-form-field>
+  <mat-form-field class="newbill-full-width" appearance="fill">
+    <mat-label style="color: red">Confirm Password *</mat-label>
+    <input matInput [(ngModel)]="confpassword" type="password" placeholder="" minlength="8"/>
+  </mat-form-field>
+  <mat-label *ngIf="password!==confpassword" style="color: red">Pasword not match</mat-label>
 </ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-toolbar></ion-toolbar>
+    <button
+      mat-raised-button
+      color="primary"
+      float-right
+      (click)="onSave()"
+      [disabled]="!isValid()"
+    >
+      Save
+    </button>
+  </ion-item>
+</ion-footer>

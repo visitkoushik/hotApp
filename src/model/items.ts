@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface I_Items {
+  catergoryId: string;
   itemName: string;
   itemId: string;
   itemPurchaseValue: number;
@@ -8,3 +9,4 @@ export interface I_Items {
   discountInPercent: boolean;
   isAvailable?: boolean;
 }
+

@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AllBillsPageRoutingModule } from './all-bills-routing.module';
 
 import { AllBillsPage } from './all-bills.page';
-import { PipeModule } from '../pipe/pipe.module';
-import { MaterialModule } from '../material.module';
+import { PipeModule } from '../../pipe/pipe.module';
+import { MaterialModule } from '../../material.module';
 
 @NgModule({
   imports: [
