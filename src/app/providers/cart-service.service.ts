@@ -3,7 +3,7 @@ import { I_Bill } from 'src/model/bill';
 import { I_CartItem } from 'src/model/cartItem';
 import { I_Category } from 'src/model/category';
 import { I_Items } from 'src/model/items';
-import { GENDER, I_CreateBillPage } from 'src/model/util';
+import { GENDER, I_CreateBillPage, StoreName } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class CartService {
   public getOrderNumber = async (): Promise<number> => {
     const dt = new Date();
     const key = `${dt.getDay()}-${dt.getMonth()}-${dt.getFullYear()}`;
-    const eKey = await this.store.getStorage('order').catch((e) => {});
+    const eKey = await this.store.getStorage(StoreName.ORDER).catch((e) => {});
 
     this.globalOrderNumber = eKey && eKey.key === key ? eKey.order : 0;
 

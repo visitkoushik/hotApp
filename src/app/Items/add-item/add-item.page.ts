@@ -13,6 +13,7 @@ import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
 import { I_Category } from 'src/model/category';
 import { I_Items } from 'src/model/items';
+import { StoreName } from 'src/model/util';
 
 @Component({
   selector: 'app-add-item',
@@ -70,7 +71,7 @@ export class AddItemPage implements OnInit {
     //Get Already Saved Item or blank array
 
     allreadySavedItems =
-      (await this.storage.getStorage('items').catch((e) => {
+      (await this.storage.getStorage(StoreName.ITEM).catch((e) => {
         this.utisrvc.isLoading = false;
         this.snackbar.openSnackBar('Error on Exiting item');
       })) || [];
@@ -90,7 +91,7 @@ export class AddItemPage implements OnInit {
     }
 
     this.storage
-      .setStorage('items', newSavedItems)
+      .setStorage(StoreName.ITEM, newSavedItems)
       .then((e) => {
         this.utisrvc.isLoading = false;
         this.snackbar.openSnackBar('Item Saved');

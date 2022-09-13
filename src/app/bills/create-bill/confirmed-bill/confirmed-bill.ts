@@ -7,6 +7,7 @@ import { CartService } from 'src/app/providers/cart-service.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
 import { ClassBill, I_Print } from 'src/model/billClass';
+import { StoreName } from 'src/model/util';
 
 @Component({
   templateUrl: './confirmed-bill.html',
@@ -60,13 +61,13 @@ export class ConfiremdBillPage implements OnInit {
 
     const dt = new Date();
     const key = `${dt.getDay()}-${dt.getMonth()}-${dt.getFullYear()}`;
-    await this.storeage.setStorage('order', {
+    await this.storeage.setStorage(StoreName.ORDER, {
       key,
       order: this.cartService.globalOrderNumber,
     });
 
     this.storeage
-      .setStorage('bills', allbills)
+      .setStorage(StoreName.BILL, allbills)
       .then((e) => {
         this.snack.openSnackBar('Bill created');
         this.cartService.allBiills.push({

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { StoreName } from 'src/model/util';
 import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.storage
-      .getStorage('tenant')
+      .getStorage(StoreName.TENANT)
       .then((e) => {
         this.util.tenantDetail = { ...e };
 

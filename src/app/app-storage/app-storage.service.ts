@@ -6,6 +6,8 @@ import * as SQLiteDriver from 'localforage-cordovasqlitedriver';
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class AppStorageService {
   private _storage: Storage | null = null;
   constructor(private storage: Storage) {

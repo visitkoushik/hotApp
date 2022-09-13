@@ -14,6 +14,14 @@ export enum FILTER_BY {
   YEAR,
 }
 
+export enum StoreName {
+  ITEM = 'items',
+  CATEGORY = 'category',
+  BILL = 'bills',
+  TENANT = 'tenant',
+  ORDER = 'order',
+}
+
 export interface I_CreateBillPage {
   // cartElement: I_CartItem[];
   currentBiill: I_Bill;
@@ -41,7 +49,7 @@ export interface I_TenantDetails {
 export class UtilClass {
   static Get_Total = (itemPurchased: I_CartItem[]): number => {
     let price = 0;
-    if(!Array.isArray(itemPurchased)){
+    if (!Array.isArray(itemPurchased)) {
       return price;
     }
     itemPurchased
@@ -59,7 +67,7 @@ export class UtilClass {
 
   static Get_Item_Count = (itemPurchased: I_CartItem[]): number => {
     let count = 0;
-    if(!Array.isArray(itemPurchased)){
+    if (!Array.isArray(itemPurchased)) {
       return count;
     }
     itemPurchased.forEach((e: I_CartItem) => {

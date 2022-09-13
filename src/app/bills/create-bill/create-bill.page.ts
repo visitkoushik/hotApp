@@ -9,7 +9,7 @@ import {
 } from '@angular/router';
 import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
-import { GENDER, I_CreateBillPage } from 'src/model/util';
+import { GENDER, I_CreateBillPage, StoreName } from 'src/model/util';
 import { CartService } from '../../providers/cart-service.service';
 import * as itemList from '../../../model/itemList.json';
 import { AppStorageService } from '../../app-storage/app-storage.service';
@@ -104,7 +104,7 @@ export class CreateBillPage implements OnInit {
 
   private fetchData = () => {
     this.storage
-      .getStorage('items')
+      .getStorage(StoreName.ITEM)
       .then((e) => {
         this.cartService.mainItems = [...e];
         if (!this.cartService.createBillPageRef || !this.cartService.createBillPageRef.currentBiill) {

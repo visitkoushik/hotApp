@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { I_Bill } from 'src/model/bill';
 import { ClassBill } from 'src/model/billClass';
+import { StoreName } from 'src/model/util';
 import { AppStorageService } from '../../app-storage/app-storage.service';
 import { CartService } from '../../providers/cart-service.service';
 import { UtilService } from '../../providers/utilservice.service';
@@ -66,7 +67,7 @@ export class AllBillsPage implements OnInit {
 
   fetchBills = () => {
     this.storage
-      .getStorage('bills')
+      .getStorage(StoreName.BILL)
       .then((e) => {
         this.util.isLoading = !true;
         [...this.cartService.allBiills] = [...e];
@@ -90,5 +91,5 @@ export class AllBillsPage implements OnInit {
 
   onPayDue=(e)=>{
     e.stopPropagation();
-  }
+  };
 }

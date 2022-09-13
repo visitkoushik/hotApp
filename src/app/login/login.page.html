@@ -8,15 +8,15 @@
   <mat-icon>home</mat-icon>
 </button>
 <ion-content>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">User Name *</mat-label>
-    <input matInput [(ngModel)]="username" type="text" />
-  </mat-form-field>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">User Name *</ion-label>
+    <ion-input [(ngModel)]="username" type="text"></ion-input>
+  </ion-item>
 
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">Passcode *</mat-label>
-    <input matInput type="password" [(ngModel)]="passcode" />
-  </mat-form-field>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">Passcode *</ion-label>
+    <ion-input type="password" [(ngModel)]="passcode"></ion-input>
+  </ion-item>
   <div appearance="fill" class="divlogin">
     <button
       mat-raised-button

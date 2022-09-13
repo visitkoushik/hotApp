@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { I_TenantDetails } from 'src/model/util';
+import { I_TenantDetails, StoreName } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
 import { UtilService } from '../providers/utilservice.service';
 
@@ -47,7 +47,7 @@ export class ConfigurePage implements OnInit {
 
     this.util.tenantDetail = { ...tenat };
     this.store
-      .setStorage('tenant', { ...this.util.tenantDetail })
+      .setStorage(StoreName.TENANT, { ...this.util.tenantDetail })
       .then((e) => {
 
           this.router.navigateByUrl('tab');

@@ -1,37 +1,53 @@
 <ion-content>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label>Trade License</mat-label>
-    <input matInput [(ngModel)]="tradeLicense" type="text" />
-  </mat-form-field>
-  <!-- <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label>Company Code</mat-label>
-    <input matInput [(ngModel)]="code" type="text" />
-  </mat-form-field> -->
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label>Company Name</mat-label>
-    <input matInput [(ngModel)]="companyName" type="text" />
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">PAN *</mat-label>
-    <input matInput [(ngModel)]="pan" type="text" />
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">TAN *</mat-label>
-    <input matInput [(ngModel)]="tan" type="text" />
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">User name *</mat-label>
-    <input matInput [(ngModel)]="username" type="text" placeholder="Set admin user name, min length 6" minlength="6"/>
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">Password *</mat-label>
-    <input matInput [(ngModel)]="password" type="password" placeholder="Set admin Password , min length 8" minlength="8"/>
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">Confirm Password *</mat-label>
-    <input matInput [(ngModel)]="confpassword" type="password" placeholder="" minlength="8"/>
-  </mat-form-field>
-  <mat-label *ngIf="password!==confpassword" style="color: red">Pasword not match</mat-label>
+  <ion-item>
+    <ion-label position="floating">Trade License</ion-label>
+    <ion-input [(ngModel)]="tradeLicense" type="text"></ion-input>
+  </ion-item>
+  <!--  <ion-item>
+    <ion-label position="floating">Company Code</ion-label>
+     <ion-input [(ngModel)]="code" type="text" />
+  </ion-item> -->
+  <ion-item>
+    <ion-label position="floating">Company Name</ion-label>
+    <ion-input [(ngModel)]="companyName" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">PAN *</ion-label>
+    <ion-input [(ngModel)]="pan" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">TAN *</ion-label>
+    <ion-input [(ngModel)]="tan" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">User name *</ion-label>
+    <ion-input
+      [(ngModel)]="username"
+      type="text"
+      placeholder="Set admin user name, min length 6"
+      minlength="6"
+      ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">Password *</ion-label>
+    <ion-input
+      [(ngModel)]="password"
+      type="password"
+      placeholder="Set admin Password , min length 8"
+      minlength="8"
+      ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating"  style="color: red">Confirm Password *</ion-label>
+    <ion-input
+      [(ngModel)]="confpassword"
+      type="password"
+      placeholder=""
+      minlength="8"
+      ></ion-input>
+  </ion-item>
+  <ion-label position="floating"  *ngIf="password!==confpassword" style="color: red"
+    >Pasword not match</ion-label>
 </ion-content>
 <ion-footer>
   <ion-item>

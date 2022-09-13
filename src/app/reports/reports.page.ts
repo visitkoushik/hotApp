@@ -10,7 +10,7 @@ import { I_Bill } from 'src/model/bill';
 import { I_CartItem } from 'src/model/cartItem';
 import { I_ReportResult, ReportBalance } from 'src/model/ClassBalance';
 import { I_Items } from 'src/model/items';
-import { FILTER_BY, UtilClass } from 'src/model/util';
+import { FILTER_BY, StoreName, UtilClass } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
 import { CartService } from '../providers/cart-service.service';
 import { UtilService } from '../providers/utilservice.service';
@@ -50,7 +50,7 @@ export class ReportsPage implements OnInit {
         if (event instanceof NavigationStart) {
           this.util.isLoading = true;
           this.storage
-            .getStorage('bills')
+            .getStorage(StoreName.BILL)
             .then((e) => {
               this.util.isLoading = !true;
               [...this.cartServc.allBiills] = [...e];

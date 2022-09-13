@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
+import { StoreName } from 'src/model/util';
 import { UtilService } from '../utilservice.service';
 import { CompanyService } from './company.service';
 
@@ -35,7 +36,7 @@ export class TanGaurdService implements CanLoad {
     // return false;
     return new Promise<boolean>((res, rej) => {
       this.store
-        .getStorage('tenant')
+        .getStorage(StoreName.TENANT)
         .then((e) => {
           this.utilsrvc.tenantDetail = { ...e };
           if (

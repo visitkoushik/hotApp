@@ -3,6 +3,7 @@ import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
 import { I_Category } from 'src/model/category';
+import { StoreName } from 'src/model/util';
 
 @Component({
   selector: 'app-add-category',
@@ -45,7 +46,7 @@ export class AddCategoryPage implements OnInit {
     };
     this.item = { ...i } as I_Category;
 
-    await this.store.setStorage('category', [...this.cartServc.categoryList]);
+    await this.store.setStorage(StoreName.CATEGORY, [...this.cartServc.categoryList]);
 
     this.util.isLoading = false;
   };

@@ -1,22 +1,24 @@
 <ion-header>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">Customer Name *</mat-label>
-    <input
-      matInput
+
+
+  <ion-item>
+    <ion-label position="floating" style="color: red">Customer Name *</ion-label>
+    <ion-input
       placeholder="Customer Name is mandatory"
       [(ngModel)]="creatBillPage.currentBiill.customerName"
       type="text"
-    />
-  </mat-form-field>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label>Contact Number</mat-label>
-    <input
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Customer contact</ion-label>
+    <ion-input
       matInput
       placeholder="Ex:1234567890"
       type="tel"
       [(ngModel)]="creatBillPage.currentBiill.customerContact"
-    />
-  </mat-form-field>
+      ></ion-input>
+  </ion-item>
+
   <div class="gender">
     <mat-label>Gender</mat-label>
     <mat-radio-group
