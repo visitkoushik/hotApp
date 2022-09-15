@@ -57,7 +57,7 @@ export class BillWiseProfitlossComponent implements OnInit, OnChanges {
         this.cartServc.allBiills.filter(
           (bill: I_Bill) =>
             bill.itemPurchased.findIndex(
-              (e: I_CartItem) => e.items.itemId === this.selectedReport
+              (e: I_CartItem) => e.items === this.selectedReport
             ) > -1
         ) || [];
     } else {
@@ -70,6 +70,6 @@ export class BillWiseProfitlossComponent implements OnInit, OnChanges {
       );
     }
 
-    return new ReportBalance(allBills).getTheBalance();
+    return new ReportBalance(allBills).getTheBalance(this.cartServc);
   };
 }

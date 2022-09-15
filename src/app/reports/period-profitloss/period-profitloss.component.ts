@@ -146,7 +146,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
       let index = 1;
       const rb: I_ReportResult[] = new ReportBalance(
         billWithDateHeader[header]
-      ).getTheBalance();
+      ).getTheBalance(this.cartServc);
 
       const purchase = rb.reduce(
         (allPurchaseValue, item) => (allPurchaseValue += item.allPurchaseValue),

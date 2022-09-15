@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/providers/alert.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
+import { I_Bill } from 'src/model/bill';
 import { ClassBill, I_Print } from 'src/model/billClass';
 import { StoreName } from 'src/model/util';
 
@@ -16,6 +17,7 @@ import { StoreName } from 'src/model/util';
 export class ConfiremdBillPage implements OnInit {
   public currentBillPrintStr: string = null;
   public currentBillPrint: I_Print = null;
+  public currentBill: I_Bill;
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
@@ -31,6 +33,7 @@ export class ConfiremdBillPage implements OnInit {
     this.activeRoute.queryParams.subscribe((p) => {
       this.currentBillPrintStr = p.data;
       this.currentBillPrint = JSON.parse(p.data);
+      this.currentBill=this.cartService.createBillPageRef.currentBiill;
 
     });
   }
@@ -82,5 +85,11 @@ export class ConfiremdBillPage implements OnInit {
       .catch((ex) => {
         this.util.isLoading = false;
       });
+  };
+
+  onChangePaid=()=>{
+    this.cartService.createBillPageRef.currentBiill.paid =
+    this.currentBill.paid;
+    this.cartService.createBillPageRef.currentBiill.due = this.currentBill.total - this.currentBill.paid;
   };
 }

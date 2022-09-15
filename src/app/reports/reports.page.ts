@@ -38,6 +38,8 @@ export class ReportsPage implements OnInit {
   public selectedReport = '-1';
   public allItems: I_Items[] = [];
 
+  public maxDate: Date = null;
+
   constructor(
     private cartServc: CartService,
     private activeRoute: ActivatedRoute,
@@ -47,6 +49,7 @@ export class ReportsPage implements OnInit {
   ) {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
+        this.maxDate = new Date();
         if (event instanceof NavigationStart) {
           this.util.isLoading = true;
           this.storage
@@ -54,7 +57,6 @@ export class ReportsPage implements OnInit {
             .then((e) => {
               this.util.isLoading = !true;
               [...this.cartServc.allBiills] = [...e];
-
             })
             .catch((e) => {
               this.util.isLoading = !true;

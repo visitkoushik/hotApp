@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
@@ -21,8 +15,10 @@ export class YearPickerComponent implements OnInit {
   @Output() endYearChange = new EventEmitter<string>();
 
   mclick = 0;
-
-  ngOnInit() {}
+  public maxDate: Date = null;
+  ngOnInit() {
+    this.maxDate = new Date();
+  }
 
   public chosenHandler(
     normalizedMonth: Date,

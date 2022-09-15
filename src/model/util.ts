@@ -1,3 +1,4 @@
+import { CartService } from 'src/app/providers/cart-service.service';
 import { I_Bill } from './bill';
 import { I_CartItem } from './cartItem';
 import { I_Items } from './items';
@@ -47,20 +48,27 @@ export interface I_TenantDetails {
 }
 
 export class UtilClass {
-  static Get_Total = (itemPurchased: I_CartItem[]): number => {
+  static Get_Total = (
+    cartsrvc: CartService,
+    itemPurchased: I_CartItem[]
+  ): number => {
     let price = 0;
     if (!Array.isArray(itemPurchased)) {
       return price;
     }
+
     itemPurchased
       .filter((e) => e.count > 0)
       .forEach((e: I_CartItem) => {
-        price =
-          price +
-          e.count *
-            (e.items.discountInPercent
-              ? (e.items.itemSellValue * (100 - e.items.itemSellDiscount)) / 100
-              : e.items.itemSellValue - e.items.itemSellDiscount);
+        const item = cartsrvc.mainItems.find((i) => i.itemId === e.items);
+        if (item) {
+          price =
+            price +
+            e.count *
+              (item.discountInPercent
+                ? (item.itemSellValue * (100 - item.itemSellDiscount)) / 100
+                : item.itemSellValue - item.itemSellDiscount);
+        }
       });
     return +price.toFixed(2);
   };

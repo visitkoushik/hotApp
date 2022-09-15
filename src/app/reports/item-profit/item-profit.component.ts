@@ -102,23 +102,24 @@ export class ItemProfitComponent implements OnInit, OnChanges {
       [key: string]: I_ProductReport;
     };
     for (const bill of allBills) {
-      bill.itemPurchased.forEach((item: I_CartItem) => {
-        if (billWithIDHeader[item.items.itemId]) {
-          billWithIDHeader[item.items.itemId] = {
-            item: item.items,
-            count: billWithIDHeader[item.items.itemId].count + item.count,
+      bill.itemPurchased.forEach((cartItem: I_CartItem) => {
+        const item = this.cartServc.mainItems.find((i) => i.itemId === cartItem.items);
+        if (billWithIDHeader[item.itemId]) {
+          billWithIDHeader[item.itemId] = {
+            item,
+            count: billWithIDHeader[item.itemId].count + cartItem.count,
             sellvalue:
-              (item.items.itemSellValue - item.items.itemSellDiscount) *
-                item.count +
-              billWithIDHeader[item.items.itemId].sellvalue,
+              (item.itemSellValue - item.itemSellDiscount) *
+              cartItem.count +
+              billWithIDHeader[item.itemId].sellvalue,
           };
         } else {
-          billWithIDHeader[item.items.itemId] = {
-            item: item.items,
-            count: item.count,
+          billWithIDHeader[item.itemId] = {
+            item,
+            count: cartItem.count,
             sellvalue:
-              (item.items.itemSellValue - item.items.itemSellDiscount) *
-              item.count,
+              (item.itemSellValue - item.itemSellDiscount) *
+              cartItem.count,
           };
         }
       });

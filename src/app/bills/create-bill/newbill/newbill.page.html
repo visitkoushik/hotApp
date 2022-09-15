@@ -17,11 +17,11 @@
   <ion-list>
     <ion-item *ngFor="let cartItem of data.listItem ">
       <div style="width: 100%">
-        <h3>{{cartItem.items.itemName}}</h3>
+        <h3>{{(cartItem|toItem).itemName}}</h3>
         <span style="float: left"> Qty. {{cartItem.count}}</span>
         <span style="float: right; color: red">
-          Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
-          Rs.</span
+          Total:{{((cartItem|toItem).itemSellValue *
+          cartItem.count).toFixed(2)}} Rs.</span
         >
       </div>
     </ion-item>
@@ -29,27 +29,17 @@
 </ion-content>
 <ion-footer collapse="fade">
   <ion-item>
-    <mat-form-field class="newbill-half-width" appearance="fill">
-      <mat-label>Due</mat-label>
-      <input
-        matInput
-        placeholder="Ex:20.00"
-        type="number"
-        [(ngModel)]="data.due"
-        (click)="onClickInput($event.target)"
-      />
-    </mat-form-field>
-    <mat-form-field class="newbill-half-width" appearance="fill">
-      <mat-label>Discount</mat-label>
-      <input
-        matInput
+
+
+    <ion-item>
+      <ion-label position="floating">Discount</ion-label>
+      <ion-input
         placeholder="Ex:20.00"
         type="number"
         [(ngModel)]="data.discount"
-        (click)="onClickInput($event.target)"
         (ngModelChange)="onChange()"
-      />
-    </mat-form-field>
+      ></ion-input>
+    </ion-item>
   </ion-item>
   <ion-toolbar>
     <ion-title>
@@ -63,7 +53,6 @@
     <button
       mat-raised-button
       color="primary"
-      [disabled]="+(data.listItem|subtotal:'count')===0 || (!data.customerName||data.customerName.trim().length===0)"
       (click)="onNext()"
       style="float: right; margin: 0 1rem"
     >

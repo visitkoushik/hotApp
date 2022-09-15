@@ -18,7 +18,10 @@ export class MonthPickerComponent implements OnInit {
   convertFullDate = new ConvertToFullDate();
   mclick = 0;
 
-  ngOnInit() {}
+  public maxDate: Date = null;
+  ngOnInit() {
+    this.maxDate = new Date();
+  }
 
   public chosenHandler(
     normalizedMonth: Date,

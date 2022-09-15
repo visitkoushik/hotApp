@@ -7,8 +7,9 @@
       [matDatepicker]="picker"
       [(ngModel)]="currentDate"
       (dateChange)="onChangeDate()"
+      [max]="maxDate"
     />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <!-- #enddocregion toggle -->
   </mat-form-field>

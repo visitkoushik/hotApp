@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { GENDER } from 'src/model/util';
+import { GENDER, UtilClass } from 'src/model/util';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { I_CartItem } from 'src/model/cartItem';
 import { ClassBill } from 'src/model/billClass';
@@ -13,6 +13,7 @@ import { ClassBill } from 'src/model/billClass';
 })
 export class NewbillPage implements OnInit {
   data: any = null;
+  total=0;
 
   constructor(
     private cartService: CartService,
@@ -20,6 +21,7 @@ export class NewbillPage implements OnInit {
     private router: Router,
     private location: Location
   ) {}
+
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((p) => {
@@ -31,13 +33,15 @@ export class NewbillPage implements OnInit {
         customerName:
           this.cartService.createBillPageRef.currentBiill.customerName,
         gender: this.cartService.createBillPageRef.currentBiill.gender,
-        due: this.cartService.createBillPageRef.currentBiill.due,
+        paid: this.cartService.createBillPageRef.currentBiill.paid,
+        total: this.cartService.createBillPageRef.currentBiill.total,
         discount: this.cartService.createBillPageRef.currentBiill.discount,
       };
     });
   }
 
   onNext = async () => {
+    this.total=UtilClass.Get_Total(this.cartService,this.data.listItem);
     const billClass = this.cartService.createBillPageRef?.currentBiill?.billID
       ? new ClassBill({
           ...this.cartService.createBillPageRef.currentBiill,
@@ -45,7 +49,8 @@ export class NewbillPage implements OnInit {
           customerName: this.data.customerName,
           customerContact: this.data.customerContact,
           gender: this.data.gender,
-          due: this.data.due,
+          paid: this.data.paid,
+          total:this.total,
           discount: this.data.discount,
         })
       : new ClassBill(
@@ -55,15 +60,16 @@ export class NewbillPage implements OnInit {
           this.data.gender,
           await this.cartService.getOrderNumber(),
           false,
-          this.data.due,
-          this.data.discount
+          this.data.discount,
+          this.data.paid,
+          this.total,
         );
     this.cartService.createBillPageRef.currentBiill = billClass.bill;
 
     this.router.navigate(['tab/createbill/newbill/confirmedbill'], {
       relativeTo: this.activeRoute.root,
       replaceUrl: false,
-      queryParams: { data: JSON.stringify(billClass.getPrintValue()) },
+      queryParams: { data: JSON.stringify(billClass.getPrintValue(this.cartService)) },
     });
   };
   onChange = () => {
@@ -73,7 +79,7 @@ export class NewbillPage implements OnInit {
 
     this.cartService.createBillPageRef.currentBiill.discount =
       this.data.discount;
-    this.cartService.createBillPageRef.currentBiill.due = this.data.due;
+
 
     this.router.navigate([], {
       relativeTo: this.activeRoute,
@@ -81,7 +87,6 @@ export class NewbillPage implements OnInit {
       queryParams,
     });
   };
-
   onClickInput = (target) => target.select();
 
 }

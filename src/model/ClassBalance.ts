@@ -1,3 +1,4 @@
+import { CartService } from 'src/app/providers/cart-service.service';
 import { I_Bill } from './bill';
 import { ClassBill } from './billClass';
 import { I_CartItem } from './cartItem';
@@ -19,11 +20,11 @@ export class ReportBalance {
     this.bills = [...billlist];
   }
 
-  public getTheBalance = (): I_ReportResult[] => this.bills.map((b: I_Bill) => {
+  public getTheBalance = (cartsrvc: CartService): I_ReportResult[] => this.bills.map((b: I_Bill) => {
       const cb = new ClassBill(b);
-      const purchase =cb.getPurchaseCost();
+      const purchase =cb.getPurchaseCost(cartsrvc);
       const sell=(
-        (cb.getTotal() - b.discount) * (1 + b.tax / 100));
+        (cb.getTotal(cartsrvc) - b.discount) * (1 + b.tax / 100));
       return {
         ordernumber: b.billnumber,
         orderDate: b.billDate,

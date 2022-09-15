@@ -15,7 +15,11 @@ export class CartService {
   public allBiills: I_Bill[] = [] as I_Bill[];
   public categoryList: I_Category[] = [] as I_Category[];
   public globalOrderNumber = 0;
-  constructor(private store: AppStorageService) {}
+
+  public maxDate;
+  constructor(private store: AppStorageService) {
+    this.maxDate = new Date();
+  }
 
   public getOrderNumber = async (): Promise<number> => {
     const dt = new Date();
@@ -44,7 +48,7 @@ export class CartService {
       .filter((e) => e.isAvailable)
       .map<I_CartItem>((itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
-        items: { ...itm },
+        items: itm.itemId,
         count: 0,
       }));
     icreatPage.filterTerm = '';
@@ -56,14 +60,14 @@ export class CartService {
       .filter((e) => e.isAvailable)
       .map<I_CartItem>((itm: I_Items, inx: number) => {
         const cartItem = this.createBillPageRef.listOfCartItem.find(
-          (e) => e.items.itemId === itm.itemId
+          (e) => e.items === itm.itemId
         );
 
         return cartItem
-          ? { ...cartItem, items: { ...itm } }
+          ? { ...cartItem, items: itm.itemId }
           : {
               id: inx + 1 + '',
-              items: { ...itm },
+              items: itm.itemId,
               count: 0,
             };
       });

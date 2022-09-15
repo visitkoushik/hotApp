@@ -25,7 +25,7 @@ export class ExistingbillPage implements OnInit {
     this.activeRoute.queryParams.subscribe((p) => {
       const ibill= JSON.parse(p.data);
       this.currentBill = new ClassBill(ibill);
-      this.currentBillPrint = this.currentBill.getPrintValue();
+      this.currentBillPrint = this.currentBill.getPrintValue(this.cartService);
       this.currentBillPrintStr = JSON.stringify(this.currentBillPrint);
       this.displayedColumns =
         this.currentBillPrint.Items?.length > 0

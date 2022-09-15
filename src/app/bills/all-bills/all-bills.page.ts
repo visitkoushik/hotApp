@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -18,9 +18,10 @@ import { UtilService } from '../../providers/utilservice.service';
   templateUrl: './all-bills.page.html',
   styleUrls: ['./all-bills.page.scss'],
 })
-export class AllBillsPage implements OnInit {
+export class AllBillsPage implements OnInit  {
   public currentDate: Date = null;
   public allBills: I_Bill[] = [];
+  public maxDate ;
   constructor(
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
@@ -29,11 +30,12 @@ export class AllBillsPage implements OnInit {
     private util: UtilService
   ) {
     this.currentDate = new Date();
+
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
           this.util.isLoading = true;
-
+          this.setMaxDate();
           this.fetchBills();
         }
 
@@ -51,7 +53,9 @@ export class AllBillsPage implements OnInit {
     );
   }
 
+
   ngOnInit() {
+    this.setMaxDate();
     this.fetchBills();
     this.activeRoute.queryParams.subscribe((p) => {
       this.allBills = [...this.cartService.allBiills];
@@ -91,5 +95,10 @@ export class AllBillsPage implements OnInit {
 
   onPayDue=(e)=>{
     e.stopPropagation();
+  };
+
+
+  setMaxDate = ()=>{
+    this.maxDate = new Date();
   };
 }

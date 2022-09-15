@@ -102,6 +102,8 @@ export class CreateBillPage implements OnInit {
 
   public onReset = () => {};
 
+  trackByFn = (inx: number, item: I_CartItem) => item.id;
+
   private fetchData = () => {
     this.storage
       .getStorage(StoreName.ITEM)
@@ -116,4 +118,7 @@ export class CreateBillPage implements OnInit {
       })
       .catch((e) => {});
   };
+
+
+
 }

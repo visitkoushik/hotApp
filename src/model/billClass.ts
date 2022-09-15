@@ -1,3 +1,4 @@
+import { CartService } from 'src/app/providers/cart-service.service';
 import { I_Bill } from './bill';
 import { I_CartItem } from './cartItem';
 import { GENDER, UtilClass } from './util';
@@ -41,8 +42,10 @@ export class ClassBill {
     gender: GENDER,
     orderNumber: number,
     status: boolean,
-    due: number,
-    discount: number
+    discount: number,
+    paid: number,
+    total: number,
+
   );
   constructor(
     itemPurchased?: I_CartItem[] | I_Bill,
@@ -51,8 +54,9 @@ export class ClassBill {
     gender?: GENDER,
     orderNumber?: number,
     status?: boolean,
-    due?: number,
-    discount?: number
+    discount?: number,
+    paid?: number,
+    total?: number,
   ) {
     if (!Array.isArray(itemPurchased) && this.isBillObject(itemPurchased)) {
       this.bill = { ...itemPurchased };
@@ -67,7 +71,9 @@ export class ClassBill {
       this.bill.billID = Date.now() + '';
       this.bill.billDate = new Date();
       this.bill.tax = 0;
-      this.bill.due = due;
+      this.bill.paid=paid;
+      this.bill.total=total;
+      this.bill.due = this.bill.total-this.bill.paid;
     }
   }
 
@@ -101,38 +107,40 @@ export class ClassBill {
     return 'billID' in object;
   }
 
-  getTotal = (): number => UtilClass.Get_Total(this.bill.itemPurchased);
-  getItemCount = (): number =>  UtilClass.Get_Item_Count(this.bill.itemPurchased);
+  getTotal = (cartServc: CartService): number =>
+    UtilClass.Get_Total(cartServc, this.bill.itemPurchased);
+  getItemCount = (): number =>
+    UtilClass.Get_Item_Count(this.bill.itemPurchased);
 
-
-  getPurchaseCost = (): number => {
+  getPurchaseCost = (cartServc: CartService): number => {
     let price = 0;
     this.bill.itemPurchased.forEach((e: I_CartItem) => {
-      price = price + e.count * e.items.itemPurchaseValue;
+      const item = cartServc.mainItems.find((i) => i.itemId === e.items);
+      price = price + e.count * (item?.itemPurchaseValue||0);
     });
     return +price.toFixed(2);
   };
 
-
-  getPrintValue = (): I_Print => {
-    const total: number = this.getTotal();
-    const purchaseTotal: number = this.getPurchaseCost();
+  getPrintValue = (cartServc: CartService): I_Print => {
+    const total: number = this.getTotal(cartServc);
+    const purchaseTotal: number = this.getPurchaseCost(cartServc);
     const printableItemList = this.bill.itemPurchased.map(
-      (e: I_CartItem, inx: number) => ({
-        item: inx + 1,
-        itemName: e.items.itemName,
-        qty: e.count,
-        rate: e.items.itemSellValue,
-        disc: e.items.discountInPercent
-          ? e.items.itemSellDiscount + '%'
-          : e.items.itemSellDiscount + 'Rs',
-        price: e.items.discountInPercent
-          ? (e.count *
-              e.items.itemSellValue *
-              (100 - e.items.itemSellDiscount)) /
-            100
-          : e.count * (e.items.itemSellValue - e.items.itemSellDiscount),
-      })
+      (e: I_CartItem, inx: number) => {
+        const item = cartServc.mainItems.find((i) => i.itemId === e.items);
+        return {
+          item: inx + 1,
+          itemName: item.itemName,
+          qty: e.count,
+          rate: item.itemSellValue,
+          disc: item.discountInPercent
+            ? item.itemSellDiscount + '%'
+            : item.itemSellDiscount + 'Rs',
+          price: item.discountInPercent
+            ? (e.count * item.itemSellValue * (100 - item.itemSellDiscount)) /
+              100
+            : e.count * (item.itemSellValue - item.itemSellDiscount),
+        };
+      }
     );
     return {
       // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -154,9 +162,7 @@ export class ClassBill {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Tax: (this.bill.tax * (total - this.bill.discount)) / 100,
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      Payable: (
-        (total - this.bill.discount) * (1 + this.bill.tax / 100)
-      ),
+      Payable: (total - this.bill.discount) * (1 + this.bill.tax / 100),
     };
   };
 
