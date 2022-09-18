@@ -1,8 +1,7 @@
 <ion-header>
   <ion-item>
-    <ion-label position="floating" style="color: red"
-      >Customer Name *</ion-label
-    >
+    <ion-label position="floating" color="danger"
+      >Customer Name *</ion-label>
     <ion-input
       placeholder="Customer Name is mandatory"
       [(ngModel)]="creatBillPage.currentBiill.customerName"
@@ -10,7 +9,7 @@
     ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">Customer contact</ion-label>
+    <ion-label position="floating" >Customer contact</ion-label>
     <ion-input
       matInput
       placeholder="Ex:1234567890"
@@ -20,12 +19,53 @@
   </ion-item>
 
   <div class="gender">
-    <mat-label>Gender</mat-label>
-    <mat-radio-group
+    <ion-radio-group
       aria-label="Gender"
       [(ngModel)]="creatBillPage.currentBiill.gender"
     >
-      <mat-radio-button
+    <ion-row col="">
+
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio
+            slot="start"
+            id="mrgndr"
+            name="gender-male"
+            [value]="CLONED_GENDER.MALE"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Female</ion-label>
+          <ion-radio
+            slot="start"
+            id="frgndr"
+            name="gender-female"
+            [value]="CLONED_GENDER.FEMALE"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Others</ion-label>
+          <ion-radio
+            slot="start"
+            id="orgndr"
+            name="gender-others"
+            [value]="CLONED_GENDER.OTHERS"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+      <!-- <mat-radio-button
         id="mrgndr"
         name="gender-male"
         [value]="CLONED_GENDER.MALE"
@@ -52,7 +92,8 @@
         color="primary"
         >Others</mat-radio-button
       >
-    </mat-radio-group>
+     </mat-radio-group> -->
+    </ion-radio-group>
   </div>
   <ion-searchbar
     placeholder="Search..."
@@ -64,41 +105,44 @@
   <mat-list>
     <mat-card
       *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm;trackBy: trackByFn;"
-
     >
       <mat-card-title-group>
         <mat-card-title> {{(cartItem|toItem).itemName}}</mat-card-title>
-        <mat-card-subtitle style="color: red"
+        <mat-card-subtitle class="requiredcolor"
           >Price:{{(cartItem|toItem).itemSellValue.toFixed(2)}} Rs.
         </mat-card-subtitle>
 
         <div class="rowList2" *ngIf="cartItem.count>0">
           <div class="rowListinner">
-            <button
-              mat-stroked-button
+            <ion-button
+              fill="clear"
               color="primary"
               (click)="onModifyItem(cartItem.id,false)"
             >
               -
-            </button>
-            <input [value]="cartItem.count" class="inputClass" readonly />
-            <button
-              mat-stroked-button
+            </ion-button>
+            <ion-input
+              [value]="cartItem.count"
+              class="inputClass"
+              readonly
+            ></ion-input>
+            <ion-button
+              fill="clear"
               color="primary"
               (click)="onModifyItem(cartItem.id,true)"
             >
               +
-            </button>
+            </ion-button>
           </div>
         </div>
         <div class="rowList3" *ngIf="cartItem.count===0">
-          <button
-            mat-stroked-button
+          <ion-button
+            fill="clear"
             color="primary"
             (click)="onModifyItem(cartItem.id,true)"
           >
             ADD
-          </button>
+          </ion-button>
         </div>
       </mat-card-title-group>
     </mat-card>
@@ -113,15 +157,16 @@
         <!--  Total({{creatBillPage.listOfCartItem|subtotal:'count'}}): {{creatBillPage.listOfCartItem|subtotal}}
         Rs.-->
       </ion-title>
-      <!-- <button mat-raised-button color="primary" (click)="onReset()">Reset</button> -->
-      <button
-        mat-raised-button
+      <!-- <ion-button mat-raised-button color="primary" (click)="onReset()">Reset</ion-button> -->
+      <ion-button
+        fill="solid"
+        size="default"
         color="primary"
         [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.currentBiill.customerName?.trim().length===0"
         (click)="onNextScreen()"
       >
         Next
-      </button>
+      </ion-button>
     </ion-item>
   </ion-toolbar>
 </ion-footer>

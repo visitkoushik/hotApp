@@ -12,54 +12,60 @@
     <ion-input [(ngModel)]="companyName" type="text"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating"  style="color: red">PAN *</ion-label>
+    <ion-label position="floating" class="dangercolor">PAN *</ion-label>
     <ion-input [(ngModel)]="pan" type="text"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating"  style="color: red">TAN *</ion-label>
+    <ion-label position="floating" class="dangercolor">TAN *</ion-label>
     <ion-input [(ngModel)]="tan" type="text"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating"  style="color: red">User name *</ion-label>
+    <ion-label position="floating" class="dangercolor">User name *</ion-label>
     <ion-input
       [(ngModel)]="username"
       type="text"
       placeholder="Set admin user name, min length 6"
       minlength="6"
-      ></ion-input>
+    ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating"  style="color: red">Password *</ion-label>
+    <ion-label position="floating" class="dangercolor">Password *</ion-label>
     <ion-input
       [(ngModel)]="password"
       type="password"
       placeholder="Set admin Password , min length 8"
       minlength="8"
-      ></ion-input>
+    ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating"  style="color: red">Confirm Password *</ion-label>
+    <ion-label position="floating" class="dangercolor"
+      >Confirm Password *</ion-label
+    >
     <ion-input
       [(ngModel)]="confpassword"
       type="password"
       placeholder=""
       minlength="8"
-      ></ion-input>
+    ></ion-input>
   </ion-item>
-  <ion-label position="floating"  *ngIf="password!==confpassword" style="color: red"
-    >Pasword not match</ion-label>
+  <ion-label
+    position="floating"
+    *ngIf="password!==confpassword"
+    class="dangercolor"
+    >Pasword not match</ion-label
+  >
 </ion-content>
 <ion-footer>
   <ion-item>
     <ion-toolbar></ion-toolbar>
-    <button
-      mat-raised-button
+    <ion-button
+      size="default"
       color="primary"
       float-right
       (click)="onSave()"
       [disabled]="!isValid()"
     >
       Save
-    </button>
+    </ion-button>
   </ion-item>
 </ion-footer>

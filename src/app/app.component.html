@@ -1,4 +1,4 @@
-<ion-app>
+<!-- <ion-app>
   <ion-header mode="ios">
     <ion-toolbar class="app-toolbar" color="primary">
       <button
@@ -73,4 +73,82 @@
 
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
+</ion-app> -->
+<ion-app>
+  <ion-header mode="ios">
+    <ion-toolbar class="app-toolbar" color="primary">
+      <ion-button size="small" class="menuicon"  (click)="onBack()" *ngIf="pageEvent?.displayBackButton">
+        <mat-icon end>arrow_back_ios</mat-icon>
+      </ion-button>
+      <ion-title>{{ pageEvent?.title || "" }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button
+          class="menuicon"
+          *ngIf="!auth.isLoggedIn"
+          routerLink="/login"
+        >
+          <mat-icon end>lock</mat-icon>
+        </ion-button>
+        <ion-button class="menuicon" *ngIf="auth.isLoggedIn">
+          <mat-icon end>lock_open</mat-icon>
+        </ion-button>
+        <ion-menu-button
+          menu="main-menu"
+          *ngIf="pageEvent?.hideMenu !== true"
+        ></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="util.isLoading"
+    ></mat-progress-bar>
+  </ion-header>
+  <ion-menu menuId="main-menu" contentId="main" side="end">
+    <ion-content>
+      <div class="menuheader"></div>
+      <div class="menu-item">
+        <ion-list class="menuList">
+          <ion-menu-toggle>
+            <ion-item routerLink="/tab" routerLinkActive="active">
+              <mat-icon>create</mat-icon>
+              New Bill
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/tab-item" routerLinkActive="active">
+              <mat-icon>view_list</mat-icon>
+              Items
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/configures" routerLinkActive="active">
+              <mat-icon>view_module</mat-icon>
+              <span>Configure</span>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/reports" routerLinkActive="active">
+              <mat-icon>report</mat-icon>
+              <span>Reports & Bills</span>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/appsetting" routerLinkActive="active">
+              <mat-icon>settings</mat-icon>
+              <span>App Settings</span>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <mat-divider></mat-divider>
+            <ion-item (click)="appLogout()" [disabled]="!auth.isLoggedIn">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>LogOut</span>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </div>
+    </ion-content>
+  </ion-menu>
+
+  <ion-content> <ion-router-outlet id="main"></ion-router-outlet></ion-content>
 </ion-app>

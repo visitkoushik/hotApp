@@ -9,7 +9,7 @@
     ></ion-toggle>
   </ion-item>
   <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label style="color: red">Category Name *</mat-label>
+    <mat-label class="dangercolor">Category Name *</mat-label>
     <input
       matInput
       placeholder="Itme Name is mandatory"
@@ -64,13 +64,13 @@
       <ion-label>{{category.isAvailable?'Available':'Unavailable'}}</ion-label>
     </ion-item>
   </ion-list>
-  <button
+  <ion-button
     mat-fab
     style="position: absolute; bottom: 1rem; right: 1rem; z-index: 1"
     color="primary"
     [disabled]="isNotValid()"
     (click)="onSave()"
   >
-    <mat-icon>save</mat-icon>
-  </button>
+  <mat-icon>save</mat-icon>
+  </ion-button>
 </ion-content>

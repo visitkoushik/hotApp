@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'show-item-reports',
     loadChildren: () => import('./show-item-reports/show-item-reports.module').then( m => m.ShowItemReportsPageModule)
+  },
+  {
+    path: 'itemwise',
+    loadChildren: () => import('./itemwise/itemwise.module').then( m => m.ItemwisePageModule)
   }
 ];
 

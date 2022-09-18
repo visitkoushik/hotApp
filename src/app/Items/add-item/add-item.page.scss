@@ -1,3 +1,11 @@
+
+@import '../../../global.scss';
+.dangercolor{
+  color:$danger;
+}
+.primarycolor{
+  color:$primary;
+}
 .newbill-full-width {
   width: 100%;
 }

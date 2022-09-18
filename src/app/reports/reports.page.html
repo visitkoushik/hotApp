@@ -4,38 +4,45 @@
 <ion-content>
   <ion-item>
     <mat-label>Filter Report By</mat-label>
-    <mat-radio-group aria-label="" [(ngModel)]="filterDateBy">
-      <mat-radio-button
-        id="datebby"
-        name="datebby"
-        [value]="FILTERBY.DATE"
-        [checked]="filterDateBy===FILTERBY.DATE"
-        class="radiobutton"
-        color="primary"
-        (change)="onChangeFilterType()"
-        >Date Range</mat-radio-button
-      >
-      <mat-radio-button
-        id="month"
-        name="month"
-        [value]="FILTERBY.MONTH"
-        [checked]="filterDateBy===FILTERBY.MONTH"
-        class="radiobutton"
-        color="primary"
-        (change)="onChangeFilterType()"
-        >Month Range</mat-radio-button
-      >
-      <mat-radio-button
-        id="year"
-        name="year"
-        [value]="FILTERBY.YEAR"
-        [checked]="filterDateBy===FILTERBY.YEAR"
-        class="radiobutton"
-        color="primary"
-        (change)="onChangeFilterType()"
-        >Year Range</mat-radio-button
-      >
-    </mat-radio-group>
+    <ion-radio-group aria-label="" [(ngModel)]="filterDateBy">
+      <ion-item>
+        <ion-label>Date Range</ion-label>
+        <ion-radio
+     slot="start"
+          id="datebby"
+          name="datebby"
+          [value]="FILTERBY.DATE"
+          class="radiobutton"
+          color="primary"
+          (change)="onChangeFilterType()"
+        >
+        </ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Month Range</ion-label>
+        <ion-radio
+     slot="start"
+          id="month"
+          name="month"
+          [value]="FILTERBY.MONTH"
+          class="radiobutton"
+          color="primary"
+          (change)="onChangeFilterType()"
+        ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Year Range</ion-label>
+        <ion-radio
+     slot="start"
+          id="year"
+          name="year"
+          [value]="FILTERBY.YEAR"
+          class="radiobutton"
+          color="primary"
+          (change)="onChangeFilterType()"
+        ></ion-radio
+      ></ion-item>
+    </ion-radio-group>
   </ion-item>
   <mat-form-field
     color="primary"
@@ -46,7 +53,7 @@
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
       <input matStartDate placeholder="Start date" [(ngModel)]="startDate" />
-      <input matEndDate placeholder="End date" [(ngModel)]="endDate"  />
+      <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
@@ -89,13 +96,13 @@
 <ion-footer>
   <ion-item>
     <ion-title></ion-title>
-    <button
-      mat-raised-button
+    <ion-button
+      size="default"
       color="primary"
       float-right
       (click)="onNextScreen()"
     >
       Next
-    </button>
+    </ion-button>
   </ion-item>
 </ion-footer>

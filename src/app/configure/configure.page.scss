@@ -1,3 +1,10 @@
+@import '../../global.scss';
 .newbill-full-width {
   width: 100%;
+}
+.dangercolor{
+  color:$danger;
+}
+.primarycolor{
+  color:$primary;
 }

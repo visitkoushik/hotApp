@@ -7,6 +7,7 @@ import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
 import { SnackbarService } from './providers/snackbar.service';
+import { ThemeService } from './providers/theme.service';
 import { UtilService } from './providers/utilservice.service';
 
 @Component({
@@ -17,6 +18,7 @@ import { UtilService } from './providers/utilservice.service';
 export class AppComponent implements OnInit, OnChanges {
   pageEvent: any = null;
   isLoggedIn = false;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -25,11 +27,13 @@ export class AppComponent implements OnInit, OnChanges {
     public util: UtilService,
     private storage: AppStorageService,
     private snackbar: SnackbarService,
-    private cart: CartService
+    private cart: CartService,
+    private theme: ThemeService,
   ) {}
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+    this.theme.activeTheme('default');
     this.storage
       .getStorage(StoreName.TENANT)
       .then((e) => {

@@ -6,7 +6,8 @@ import { AddCategoryPage } from './add-category.page';
 const routes: Routes = [
   {
     path: '',
-    component: AddCategoryPage
+    component: AddCategoryPage,
+    data: { title: 'Category' },
   }
 ];
 

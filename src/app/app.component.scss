@@ -1,13 +1,53 @@
-.app-toolbar{
-    --background:  rgb(201, 121, 0);
+@import "../global.scss";
+
+.active {
+  border-left: 5px solid $primary;
+  color: $primary;
+
+  padding-left: 1rem;
 }
-.menuicon {
-    float: right;
 
+.menuheader {
+  height: 31%;
+  background: linear-gradient(
+    90deg,
+    var(--ion-color-primary) 0%,
+    var(--ion-color-primary) 100%
+  );
+  border-radius: 10px 10px 10px 50px;
+  box-shadow: 0px 1px 10px var(--ion-color-primary);
+  transform: rotate(-18deg);
+  margin-left: -2%;
+  margin-top: -39%;
+  margin-bottom: 34%;
+  width: 150%;
+}
+.menuList {
+  margin: 0;
+  mat-icon {
+    margin-right: 2rem;
   }
-
-  .active{
-    background-color:rgb(131, 131, 131);
-    color:#fff
+}
+ion-menu {
+  ion-content {
+    --background: #fff;
   }
+}
+// app-root{
+//   // background: url("../assets/bg.jpeg") no-repeat center center fixed;
+//   background-color: red;
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   background-size: cover;
 
+// }
+.searchbar-input.sc-ion-searchbar-md {
+    padding-left: unset;
+    padding-right: unset;
+    -webkit-padding-start: 55px;
+    padding-inline-start: 55px;
+    -webkit-padding-end: 55px;
+    padding-inline-end: 55px;
+    background: transparent;
+    box-shadow: 2px 2px 2px 2px;
+}

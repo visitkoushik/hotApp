@@ -21,6 +21,7 @@ export enum StoreName {
   BILL = 'bills',
   TENANT = 'tenant',
   ORDER = 'order',
+  THEME = 'selectedTheme'
 }
 
 export interface I_CreateBillPage {

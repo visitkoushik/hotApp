@@ -12,18 +12,18 @@
   >
     <mat-card-title-group>
       <mat-card-title> {{item.itemName}}</mat-card-title>
-      <mat-card-subtitle style="color: red"
+      <mat-card-subtitle color="dangercolor"
         >Status: {{item.isAvailable?'Available':'Unavailable'}}
       </mat-card-subtitle>
 
       <div class="rowList3" >
-        <button
-          mat-stroked-button
+        <ion-button
+          fill="outline"
           color="primary"
           (click)="onModifyItem(item)"
         >
           Update
-        </button>
+        </ion-button>
       </div>
     </mat-card-title-group>
   </mat-card>

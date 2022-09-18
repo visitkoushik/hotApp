@@ -55,7 +55,7 @@ const routes: Routes = [
       import('./appsetting/appsetting.module').then(
         (m) => m.AppsettingPageModule
       ),
-    canLoad: [AuthGaurdService],
+    // canLoad: [AuthGaurdService],
   },
   {
     path: 'login',

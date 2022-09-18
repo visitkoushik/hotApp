@@ -1,30 +1,30 @@
 <ion-header> </ion-header>
-<button
-  style="position: absolute; bottom: 1rem; right: 1rem; z-index: 1;"
+<ion-button
+  style="position: absolute; bottom: 1rem; right: 1rem; z-index: 1"
   mat-fab
   color="primary"
   (click)="onCancel()"
 >
   <mat-icon>home</mat-icon>
-</button>
+</ion-button>
 <ion-content>
   <ion-item>
-    <ion-label position="floating"  style="color: red">User Name *</ion-label>
+    <ion-label position="floating" color="danger">User Name *</ion-label>
     <ion-input [(ngModel)]="username" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating"  style="color: red">Passcode *</ion-label>
+    <ion-label position="floating" color="danger">Passcode *</ion-label>
     <ion-input type="password" [(ngModel)]="passcode"></ion-input>
   </ion-item>
   <div appearance="fill" class="divlogin">
-    <button
+    <ion-button
       mat-raised-button
       color="primary"
       (click)="onLogin()"
       [disabled]="passcode.trim()==='' || username.trim()===''"
     >
       Login
-    </button>
+    </ion-button>
   </div>
 </ion-content>

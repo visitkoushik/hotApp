@@ -1,9 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>appsetting</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <ion-item>
+    <ion-label>Select Theme:</ion-label>
+    <ion-select
+      color="primary"
+      class="fullwidth"
+      interface="popover"
+      [(ngModel)]="selectTheme"
+      (ionChange)="onThemeChange()"
+    >
+      <ion-select-option
+        color="primary"
+        [value]="theme.class"
+        *ngFor="let theme of themeColor; "
+      >
+        {{theme.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>

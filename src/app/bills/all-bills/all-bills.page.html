@@ -25,7 +25,7 @@
         <div style="width: 100%">
           <h5>{{billItem.gender|formatgender}}{{billItem.customerName}}</h5>
           <div>Bill Number:{{billItem.billnumber}}</div>
-          <div style="color: red">{{billItem.billDate|dateformat:'date'}}</div>
+          <div class="dangercolor">{{billItem.billDate|dateformat:'date'}}</div>
         </div>
 
         <!-- <mat-card-subtitle style="color: red">
@@ -35,10 +35,10 @@
       <mat-card-content class="rowAmount">
         {{billItem.itemPurchased|subtotal}}Rs.
       </mat-card-content>
-      <button mat-raised-button color="warn" class="paybutton" *ngIf="billItem.due>0"
-        (click)="onPayDue($event)">
+      <ion-button color="danger" class="paybutton" *ngIf="billItem.due>0"
+        (click)="onPayDue($event,billItem)">
         Due:{{billItem.due}}
-      </button>
+      </ion-button>
     </mat-card>
   </mat-list>
 </ion-content>

@@ -6,7 +6,8 @@ import { ItemListPage } from './item-list.page';
 const routes: Routes = [
   {
     path: '',
-    component: ItemListPage
+    component: ItemListPage,
+    data: { title: 'Item List' },
   }
 ];
 
