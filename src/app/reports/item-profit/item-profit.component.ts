@@ -58,14 +58,13 @@ export class ItemProfitComponent implements OnInit, OnChanges {
         break;
       case FILTER_BY.MONTH:
         this.start = transform(this.startDate, 'M');
-        this.end = transform(this.endDate, 'M');
+        this.end = transform(this.endDate, 'M','e');
         break;
       case FILTER_BY.YEAR:
         this.start = transform(this.startDate, 'Y');
-        this.end = transform(this.endDate, 'Y');
+        this.end = transform(this.endDate, 'Y','e');
         break;
     }
-
     this.reportResultBalance = [...this.filter()];
   }
 

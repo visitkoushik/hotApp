@@ -55,21 +55,23 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     this.filterDateBy = val.filterDateBy?.currentValue;
 
     const transform = new ConvertToFullDate().transform;
+
     switch (this.filterDateBy) {
       case FILTER_BY.DATE:
         this.start = new Date(this.startDate);
-        this.end =new Date(this.endDate);
+        this.end = new Date(this.endDate);
         break;
       case FILTER_BY.MONTH:
         this.start = transform(this.startDate, 'M');
-        this.end = transform(this.endDate, 'M');
+        this.end = transform(this.endDate, 'M', 'e');
         break;
       case FILTER_BY.YEAR:
         this.start = transform(this.startDate, 'Y');
-        this.end = transform(this.endDate, 'Y');
+        this.end = transform(this.endDate, 'Y', 'e');
         break;
     }
-
+    console.log(this.start.toLocaleString());
+    console.log(this.end.toLocaleString());
     this.reportResultBalance = [...this.filter()];
   }
 
@@ -97,7 +99,8 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.start <= new Date(bill.billDate) && this.end >= new Date(bill.billDate)
+          this.start <= new Date(bill.billDate) &&
+          this.end >= new Date(bill.billDate)
       );
     }
 
@@ -112,7 +115,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
         const arry =
           billWithDateHeader[
             MMM[billDate.getMonth()] +
-            billDate.getDate() +
+              billDate.getDate() +
               ', ' +
               billDate.getFullYear()
           ] || [];

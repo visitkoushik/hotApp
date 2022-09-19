@@ -6,7 +6,8 @@ import { ItemwisePage } from './itemwise.page';
 const routes: Routes = [
   {
     path: '',
-    component: ItemwisePage
+    component: ItemwisePage,
+    data: { title: 'Report & Billings',displayBackButton:true },
   }
 ];
 

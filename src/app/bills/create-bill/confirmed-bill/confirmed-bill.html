@@ -15,10 +15,11 @@
       (ngModelChange)="onChangePaid()"
     ></ion-input>
   </ion-item>
+  <ion-label style="margin-left:1rem" color="danger" *ngIf="currentBill.paid>currentBill.total">Can not be greater than total amount</ion-label>
   <ion-item>
     <ion-title></ion-title>
     <ion-button color="primary" float-right (click)="onDone()"  size="default"
-    [disabled]="currentBill.paid === undefined || currentBill.paid === null ">
+    [disabled]="currentBill.paid === undefined || currentBill.paid === null || currentBill.paid>currentBill.total">
       Confirm
     </ion-button>
   </ion-item>

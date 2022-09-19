@@ -82,25 +82,50 @@ export class ReportsPage implements OnInit {
   }
 
   onNextScreen = () => {
-    this.router.navigate(['report-tab'], {
-      relativeTo: this.activeRoute,
-      queryParams: {
-        filterDateBy: this.filterDateBy,
-        startDate:
-          this.filterDateBy === this.FILTERBY.DATE
-            ? this.startDate
-            : this.filterDateBy === this.FILTERBY.MONTH
-            ? this.startM
-            : this.startY,
-        endDate:
-          this.filterDateBy === this.FILTERBY.DATE
-            ? this.endDate
-            : this.filterDateBy === this.FILTERBY.MONTH
-            ? this.endM
-            : this.endY,
-        selectedReport: this.selectedReport,
-      },
-    });
+    if (
+      this.selectedReport &&
+      this.selectedReport.trim() === '-1'
+    ) {
+      this.router.navigate(['report-tab'], {
+        relativeTo: this.activeRoute,
+        queryParams: {
+          filterDateBy: this.filterDateBy,
+          startDate:
+            this.filterDateBy === this.FILTERBY.DATE
+              ? this.startDate
+              : this.filterDateBy === this.FILTERBY.MONTH
+              ? this.startM
+              : this.startY,
+          endDate:
+            this.filterDateBy === this.FILTERBY.DATE
+              ? this.endDate
+              : this.filterDateBy === this.FILTERBY.MONTH
+              ? this.endM
+              : this.endY,
+          selectedReport: this.selectedReport,
+        },
+      });
+    } else {
+      this.router.navigate(['itemwise'], {
+        relativeTo: this.activeRoute,
+        queryParams: {
+          filterDateBy: this.filterDateBy,
+          startDate:
+            this.filterDateBy === this.FILTERBY.DATE
+              ? this.startDate
+              : this.filterDateBy === this.FILTERBY.MONTH
+              ? this.startM
+              : this.startY,
+          endDate:
+            this.filterDateBy === this.FILTERBY.DATE
+              ? this.endDate
+              : this.filterDateBy === this.FILTERBY.MONTH
+              ? this.endM
+              : this.endY,
+          selectedReport: this.selectedReport,
+        },
+      });
+    }
   };
 
   onChangeItem = (value) => {};

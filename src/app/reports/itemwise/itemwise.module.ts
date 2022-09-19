@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ItemwisePageRoutingModule } from './itemwise-routing.module';
 
 import { ItemwisePage } from './itemwise.page';
+import { PipeModule } from 'src/app/pipe/pipe.module';
+import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ItemwisePageRoutingModule
+    ItemwisePageRoutingModule,
+    PipeModule,
+    MaterialModule
   ],
   declarations: [ItemwisePage]
 })

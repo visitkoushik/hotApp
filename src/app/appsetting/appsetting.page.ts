@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { StoreName } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
 import { ThemeService } from '../providers/theme.service';
@@ -18,13 +18,14 @@ export class AppsettingPage {
     { name: 'Blueberry', class: 'purple' },
   ];
 
-  public selectTheme = this.themeColor[0].class;
+  public selectTheme ;
 
   constructor(private theme: ThemeService, private store: AppStorageService) {
     this.dynamicTheme();
   }
   dynamicTheme = () => {
-    this.theme.activeTheme(this.theme.selectTheme);
+    this.selectTheme = this.theme.selectTheme || this.themeColor[0].class;
+    this.theme.activeTheme( this.selectTheme );
   };
   onThemeChange = async () => {
     await this.store
