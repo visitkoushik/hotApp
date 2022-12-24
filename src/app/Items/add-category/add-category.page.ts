@@ -12,9 +12,11 @@ import { StoreName } from 'src/model/util';
 })
 export class AddCategoryPage implements OnInit {
   public item: I_Category = {
+    categoryName: '',
+    id: null,
     categoryDiscount: 0,
     discountInPercent: false,
-    isAvailable: true,
+    available: false,
   } as I_Category;
   constructor(
     public cartServc: CartService,
@@ -30,30 +32,31 @@ export class AddCategoryPage implements OnInit {
   isNotValid = (): boolean => this.item.categoryName?.trim().length === 0;
   onSave = async () => {
     this.util.isLoading = true;
-    if (!this.item.categoryId) {
-      this.item.categoryId = Date.now()+ '';
+    if (!this.item.id) {
+      this.item.id = Date.now() + '';
       this.cartServc.categoryList.push({ ...this.item });
     } else {
       this.cartServc.categoryList = this.cartServc.categoryList.map((e) =>
-        e.categoryId === this.item.categoryId ? { ...this.item } : e
+        e.id === this.item.id ? { ...this.item } : e
       );
     }
 
     const i = {
       categoryDiscount: 0,
       discountInPercent: false,
-      isAvailable: true,
+      available: false,
     };
     this.item = { ...i } as I_Category;
 
-    await this.store.setStorage(StoreName.CATEGORY, [...this.cartServc.categoryList]);
+    await this.store.setStorage(StoreName.CATEGORY, [
+      ...this.cartServc.categoryList,
+    ]);
 
     this.util.isLoading = false;
   };
 
   oninputClick = (e) => e.target.select();
-  trackByFunction = (c: I_Category) => c.categoryId;
-
+  trackByFunction = (c: I_Category) => c.id;
   onClickCategoryItem = (i: I_Category) => {
     this.item = { ...i };
   };

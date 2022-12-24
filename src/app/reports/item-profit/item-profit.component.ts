@@ -32,7 +32,7 @@ export class ItemProfitComponent implements OnInit, OnChanges {
 
   public start: Date = null;
   public end: Date = null;
-
+  public transform = new ConvertToFullDate().transform;
   constructor(private cartServc: CartService) {}
 
   ngOnInit() {
@@ -50,19 +50,19 @@ export class ItemProfitComponent implements OnInit, OnChanges {
     this.selectedReport = val.selectedReport?.currentValue;
     this.filterDateBy = val.filterDateBy?.currentValue;
 
-    const transform = new ConvertToFullDate().transform;
+
     switch (this.filterDateBy) {
       case FILTER_BY.DATE:
         this.start = new Date(this.startDate);
         this.end = new Date(this.endDate);
         break;
       case FILTER_BY.MONTH:
-        this.start = transform(this.startDate, 'M');
-        this.end = transform(this.endDate, 'M','e');
+        this.start = this.transform(this.startDate, 'M') as Date;
+        this.end = this.transform(this.endDate, 'M','e') as Date;
         break;
       case FILTER_BY.YEAR:
-        this.start = transform(this.startDate, 'Y');
-        this.end = transform(this.endDate, 'Y','e');
+        this.start = this.transform(this.startDate, 'Y') as Date;
+        this.end = this.transform(this.endDate, 'Y','e') as Date;
         break;
     }
     this.reportResultBalance = [...this.filter()];
@@ -79,7 +79,7 @@ export class ItemProfitComponent implements OnInit, OnChanges {
       'Jun',
       'Jul',
       'Aug',
-      'Sept',
+      'Sep',
       'Oct',
       'Nov',
       'Dec',
@@ -87,12 +87,13 @@ export class ItemProfitComponent implements OnInit, OnChanges {
     if (this.selectedReport && this.selectedReport !== '-1') {
       //TODO later
     } else {
-      allBills = [...this.cartServc.allBiills];
+      allBills = [...this.cartServc.allBiills].filter(b=>b.status);
     }
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.start <= bill.billDate && this.end >= bill.billDate
+        this.transform(this.start.toString()) <= this.transform(bill.billDate.toString()) &&
+            this.transform(this.end.toString()) >= this.transform(bill.billDate.toString())
       );
     }
     const billWithIDHeader: {
@@ -102,35 +103,31 @@ export class ItemProfitComponent implements OnInit, OnChanges {
     };
     for (const bill of allBills) {
       bill.itemPurchased.forEach((cartItem: I_CartItem) => {
-        const item = this.cartServc.mainItems.find((i) => i.itemId === cartItem.items);
-        if (billWithIDHeader[item.itemId]) {
-          billWithIDHeader[item.itemId] = {
+        const item =  {...cartItem.items} ;
+        if (billWithIDHeader[item.id]) {
+          billWithIDHeader[item.id] = {
             item,
-            count: billWithIDHeader[item.itemId].count + cartItem.count,
+            count: billWithIDHeader[item.id].count + cartItem.count,
             sellvalue:
-              (item.itemSellValue - item.itemSellDiscount) *
+              (item.itemPrice.sellingAmount - item.discount) *
               cartItem.count +
-              billWithIDHeader[item.itemId].sellvalue,
+              billWithIDHeader[item.id].sellvalue,
           };
         } else {
-          billWithIDHeader[item.itemId] = {
+          billWithIDHeader[item.id] = {
             item,
             count: cartItem.count,
             sellvalue:
-              (item.itemSellValue - item.itemSellDiscount) *
+              (item.itemPrice.priceAmount - item.discount) *
               cartItem.count,
           };
         }
       });
     }
-    // const itemids = Object.keys(billWithIDHeader);
-    // const allItem = Object.values(billWithIDHeader).map((e, i) => ({
-    //   ...e,
-    //   order: i + 1,
-    // }));
+
     const allItem = this.cartServc.mainItems.map((e: I_Items, i: number) => {
-      if (billWithIDHeader[e.itemId]) {
-        return {...billWithIDHeader[e.itemId],order: i+1};
+      if (billWithIDHeader[e.id]) {
+        return {...billWithIDHeader[e.id],order: i+1};
       } else {
         return {
           item: e,

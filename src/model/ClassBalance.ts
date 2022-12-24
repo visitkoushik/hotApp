@@ -20,6 +20,8 @@ export class ReportBalance {
     this.bills = [...billlist];
   }
 
+
+
   public getTheBalance = (cartsrvc: CartService): I_ReportResult[] => this.bills.map((b: I_Bill) => {
       const cb = new ClassBill(b);
       const purchase =cb.getPurchaseCost(cartsrvc);

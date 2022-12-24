@@ -45,23 +45,22 @@ export class AddItemPage implements OnInit {
   oninputClick = (e) => e.target.select();
   setDefault = () => {
     this.item = {
-      catergoryId: '-1',
-      itemId: null,
+      category: '-1',
+      id: null,
       itemName: '',
-      itemPurchaseValue: 0,
-      itemSellDiscount: 0,
-      itemSellValue: 0,
-      discountInPercent: false,
-      isAvailable: true,
+      itemPrice: { priceAmount: 0, sellingAmount: 0 },
+      discount: 0,
+      isDiscountInPercentage: false,
+      available: true,
     } as I_Items;
   };
 
   isNotValid = (): boolean =>
-    this.item.itemPurchaseValue === 0 ||
-    this.item.itemSellValue === 0 ||
+    this.item.itemPrice.priceAmount === 0 ||
+    this.item.itemPrice.sellingAmount === 0 ||
     this.item?.itemName?.trim().length === 0 ||
-    !this.item.catergoryId ||
-    this.item.catergoryId === '-1';
+    !this.item.category ||
+    this.item.category === '-1';
 
   onSave = async () => {
     let allreadySavedItems: I_Items[] = [] as I_Items[];
@@ -78,15 +77,15 @@ export class AddItemPage implements OnInit {
 
     if (
       allreadySavedItems.findIndex(
-        (e) => this.item.itemId && e.itemId === this.item.itemId
+        (e) => this.item.id && e.id === this.item.id
       ) === -1
     ) {
       //Check if the saved Item list has item with the specific id
-      this.item = { ...this.item, itemId: `${Date.now()}` };
+      this.item = { ...this.item };
       newSavedItems = [...allreadySavedItems, this.item];
     } else {
       newSavedItems = allreadySavedItems.map((e) =>
-        this.item.itemId && e.itemId === this.item.itemId ? this.item : e
+        this.item.id && e.id === this.item.id ? this.item : e
       );
     }
 
@@ -112,5 +111,5 @@ export class AddItemPage implements OnInit {
       });
   };
 
-  onChangeItem = (value) => (this.item.catergoryId = value);
+  onChangeItem = (value) => (this.item.category = value);
 }

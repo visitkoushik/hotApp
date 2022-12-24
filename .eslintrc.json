@@ -14,6 +14,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@typescript-eslint/naming-convention": "on",
         "@angular-eslint/component-class-suffix": [
           "error",
           {

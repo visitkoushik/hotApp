@@ -4,17 +4,17 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'dateconvert',
 })
 export class ConvertToFullDate implements PipeTransform {
-
-  transform(value: string, ...args: any[]): Date {
-
+  transform(value: string, ...args: any[]): Date|undefined {
+    if(!value){
+      return undefined;
+    }
     if (args && args[0]) {
       if (args[0] === 'Y') {
         if (args[1] === 'e') {
           return new Date(+value, 11, 31);
         }
         return new Date(+value, 0, 1);
-      }
-      if (args[0] === 'M') {
+      } else if (args[0] === 'M') {
         const year = +value.split('/')[1];
         let febDateofLeapyear = 28;
         if (year % 4 === 0 && year % 400 !== 0) {
@@ -43,7 +43,7 @@ export class ConvertToFullDate implements PipeTransform {
           'Jun',
           'Jul',
           'Aug',
-          'Sept',
+          'Sep',
           'Oct',
           'Nov',
           'Dec',
@@ -56,5 +56,8 @@ export class ConvertToFullDate implements PipeTransform {
         return new Date(year, monthindex, 1);
       }
     }
+
+    const v = new Date(value);
+    return new Date(v.getFullYear(), v.getMonth(), v.getDate());
   }
 }

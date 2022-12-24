@@ -147,3 +147,9 @@ io-col{
   background-color: transparent !important;
   box-shadow: 2px 2px 2px 2px $primary;
 }
+.inputClass.sc-ion-input-md-h.sc-ion-input-md-s.md.has-value.hydrated{
+  background: transparent;
+  --background: transparent;
+  color: $primary;
+ --color: $primary;
+}

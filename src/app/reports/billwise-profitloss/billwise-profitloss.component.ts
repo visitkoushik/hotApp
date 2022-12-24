@@ -57,11 +57,11 @@ export class BillWiseProfitlossComponent implements OnInit, OnChanges {
         this.cartServc.allBiills.filter(
           (bill: I_Bill) =>
             bill.itemPurchased.findIndex(
-              (e: I_CartItem) => e.items === this.selectedReport
+              (e: I_CartItem) => e.items.id === this.selectedReport
             ) > -1
         ) || [];
     } else {
-      allBills = [...this.cartServc.allBiills];
+      allBills = [...this.cartServc.allBiills].filter(b=>b.status);
     }
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(

@@ -21,7 +21,15 @@ export enum StoreName {
   BILL = 'bills',
   TENANT = 'tenant',
   ORDER = 'order',
-  THEME = 'selectedTheme'
+  THEME = 'selectedTheme',
+}
+
+export enum ApiEndPoint {
+  ITEM_ADD = 'item/add',
+  ITEM_LIST = 'item/lists',
+  CATEGORY_ADD = 'category/add',
+  CATEGORY_LIST = 'category/lists',
+  METADATA = 'metadata',
 }
 
 export interface I_CreateBillPage {
@@ -61,14 +69,14 @@ export class UtilClass {
     itemPurchased
       .filter((e) => e.count > 0)
       .forEach((e: I_CartItem) => {
-        const item = cartsrvc.mainItems.find((i) => i.itemId === e.items);
+        const item = e.items;
         if (item) {
           price =
             price +
             e.count *
-              (item.discountInPercent
-                ? (item.itemSellValue * (100 - item.itemSellDiscount)) / 100
-                : item.itemSellValue - item.itemSellDiscount);
+              (item.isDiscountInPercentage
+                ? (item.itemPrice.sellingAmount * (100 - item.discount)) / 100
+                : item.itemPrice.sellingAmount - item.discount);
         }
       });
     return +price.toFixed(2);

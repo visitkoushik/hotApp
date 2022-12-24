@@ -17,11 +17,11 @@
   <ion-list>
     <ion-item *ngFor="let cartItem of data.listItem ">
       <div style="width: 100%">
-        <h3>{{(cartItem|toItem).itemName}}</h3>
+        <h3>{{cartItem.items.itemName}}</h3>
         <span style="float: left"> Qty. {{cartItem.count}}</span>
-        <span style="float: right;" class="dangercolor">
-          Total:{{((cartItem|toItem).itemSellValue *
-          cartItem.count).toFixed(2)}} Rs.</span
+        <span style="float: right" class="dangercolor">
+          Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
+          Rs.</span
         >
       </div>
     </ion-item>
@@ -29,17 +29,13 @@
 </ion-content>
 <ion-footer collapse="fade">
   <ion-item>
-
-
-    <ion-item>
-      <ion-label position="floating">Discount</ion-label>
-      <ion-input
-        placeholder="Ex:20.00"
-        type="number"
-        [(ngModel)]="data.discount"
-        (ngModelChange)="onChange()"
-      ></ion-input>
-    </ion-item>
+    <ion-label position="floating">Discount</ion-label>
+    <ion-input
+      placeholder="Ex:20.00"
+      type="number"
+      [(ngModel)]="data.discount"
+      (ngModelChange)="onChange()"
+    ></ion-input>
   </ion-item>
   <ion-toolbar>
     <ion-title>
@@ -51,7 +47,6 @@
       </ion-item>
     </ion-title>
     <ion-button
-
       color="primary"
       (click)="onNext()"
       style="float: right; margin: 0 1rem"

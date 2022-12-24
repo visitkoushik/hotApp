@@ -41,10 +41,10 @@ export class ReportsPage implements OnInit {
   public maxDate: Date = null;
 
   constructor(
+    public util: UtilService,
     private cartServc: CartService,
     private activeRoute: ActivatedRoute,
     private router: Router,
-    private util: UtilService,
     private storage: AppStorageService
   ) {
     this.router.events.subscribe(
@@ -79,13 +79,20 @@ export class ReportsPage implements OnInit {
 
   ngOnInit() {
     this.allItems = [...this.cartServc.mainItems];
+    this.util.isLoading = true;
+    this.storage
+      .getStorage(StoreName.BILL)
+      .then((e) => {
+        this.util.isLoading = !true;
+        [...this.cartServc.allBiills] = [...e];
+      })
+      .catch((e) => {
+        this.util.isLoading = !true;
+      });
   }
 
   onNextScreen = () => {
-    if (
-      this.selectedReport &&
-      this.selectedReport.trim() === '-1'
-    ) {
+    if (this.selectedReport && this.selectedReport.trim() === '-1') {
       this.router.navigate(['report-tab'], {
         relativeTo: this.activeRoute,
         queryParams: {

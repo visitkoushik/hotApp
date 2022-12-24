@@ -23,10 +23,10 @@
       aria-label="Gender"
       [(ngModel)]="creatBillPage.currentBiill.gender"
     >
-    <ion-row col="">
+    <ion-row no-padding>
 
-      <ion-col size="4">
-        <ion-item>
+      <!-- <ion-col size="4" no-padding> -->
+        <ion-item no-padding>
           <ion-label>Male</ion-label>
           <ion-radio
             slot="start"
@@ -37,10 +37,10 @@
             color="primary"
           ></ion-radio>
         </ion-item>
-      </ion-col>
-      <ion-col size="4">
-        <ion-item>
-          <ion-label>Female</ion-label>
+      <!-- </ion-col>
+      <ion-col size="4" no-padding> -->
+        <ion-item no-padding>
+          <ion-label no-padding>Female</ion-label>
           <ion-radio
             slot="start"
             id="frgndr"
@@ -48,11 +48,12 @@
             [value]="CLONED_GENDER.FEMALE"
             class="radiobutton"
             color="primary"
+            no-padding
           ></ion-radio>
         </ion-item>
-      </ion-col>
-      <ion-col size="4">
-        <ion-item>
+      <!-- </ion-col>
+      <ion-col size="4" no-padding> -->
+        <ion-item no-padding>
           <ion-label>Others</ion-label>
           <ion-radio
             slot="start"
@@ -63,7 +64,7 @@
             color="primary"
           ></ion-radio>
         </ion-item>
-      </ion-col>
+      <!-- </ion-col> -->
       </ion-row>
       <!-- <mat-radio-button
         id="mrgndr"
@@ -107,9 +108,9 @@
       *ngFor="let cartItem of creatBillPage.listOfCartItem | filter: creatBillPage.filterTerm;trackBy: trackByFn;"
     >
       <mat-card-title-group>
-        <mat-card-title> {{(cartItem|toItem).itemName}}</mat-card-title>
+        <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
         <mat-card-subtitle class="requiredcolor"
-          >Price:{{(cartItem|toItem).itemSellValue.toFixed(2)}} Rs.
+          >Price:{{cartItem.items.itemSellValue.toFixed(2)}} Rs.
         </mat-card-subtitle>
 
         <div class="rowList2" *ngIf="cartItem.count>0">

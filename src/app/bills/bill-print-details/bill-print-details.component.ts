@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { UtilService } from 'src/app/providers/utilservice.service';
@@ -34,4 +36,5 @@ export class BillPrintDetailsComponent implements OnInit, OnChanges {
         ? Object.keys(this.currentBillPrint.Items[0])
         : null;
   }
+
 }

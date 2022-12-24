@@ -45,10 +45,10 @@ export class CartService {
     icreatPage.currentBiill.due = 0;
     icreatPage.currentBiill.discount = 0;
     icreatPage.listOfCartItem = this.mainItems
-      .filter((e) => e.isAvailable)
+      .filter((e) => e.available)
       .map<I_CartItem>((itm: I_Items, inx: number) => ({
         id: inx + 1 + '',
-        items: itm.itemId,
+        items: { ...itm },
         count: 0,
       }));
     icreatPage.filterTerm = '';
@@ -56,20 +56,22 @@ export class CartService {
   };
 
   public updateDefaultBill = () => {
-    const listOfCartItem = this.mainItems
-      .filter((e) => e.isAvailable)
+    const listOfCartItem: I_CartItem[] = this.mainItems
+      .filter((e) => e.available)
       .map<I_CartItem>((itm: I_Items, inx: number) => {
-        const cartItem = this.createBillPageRef.listOfCartItem.find(
-          (e) => e.items === itm.itemId
+        const cartItem: I_CartItem = this.createBillPageRef.listOfCartItem.find(
+          (e) => e.items.id === itm.id
         );
 
-        return cartItem
-          ? { ...cartItem, items: itm.itemId }
-          : {
-              id: inx + 1 + '',
-              items: itm.itemId,
-              count: 0,
-            };
+        return (
+          cartItem
+            ? { ...cartItem, items: { ...itm } }
+            : {
+                id: inx + 1 + '',
+                items: { ...itm },
+                count: 0,
+              }
+        ) as I_CartItem;
       });
     this.createBillPageRef = {
       ...this.createBillPageRef,

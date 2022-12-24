@@ -6,11 +6,10 @@ import { DateformatPipe } from './dateformat.pipe';
 import { BalanceSheetPipe } from './balance.pipe';
 import { ConvertToFullDate } from './convert-to-fulldate';
 import { ShortDatePipe } from './short-date.pipe';
-import { ToItemPipe } from './to-item.pipe';
-
+import { MenuPipe } from './menu.pipe';
 
 @NgModule({
-  declarations:[
+  declarations: [
     SubtotalPipe,
     FilterPipe,
     FormatGenderPipe,
@@ -18,9 +17,9 @@ import { ToItemPipe } from './to-item.pipe';
     BalanceSheetPipe,
     ConvertToFullDate,
     ShortDatePipe,
-    ToItemPipe
+    MenuPipe,
   ],
-  exports:[
+  exports: [
     SubtotalPipe,
     FilterPipe,
     FormatGenderPipe,
@@ -28,9 +27,7 @@ import { ToItemPipe } from './to-item.pipe';
     BalanceSheetPipe,
     ConvertToFullDate,
     ShortDatePipe,
-    ToItemPipe
-
+    MenuPipe,
   ],
 })
-
-export class PipeModule{}
+export class PipeModule {}

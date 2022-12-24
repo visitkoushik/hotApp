@@ -1,11 +1,11 @@
 <ion-content>
-  <ion-item *ngIf="item.categoryId">
+  <ion-item *ngIf="item.id">
     <ion-label>Is in Stock?</ion-label>
     <ion-toggle
       slot="end"
       name="apple"
       color="primary"
-      [(ngModel)]="item.isAvailable"
+      [(ngModel)]="item.available"
     ></ion-toggle>
   </ion-item>
   <mat-form-field class="newbill-full-width" appearance="fill">
@@ -61,7 +61,7 @@
       (click)="onClickCategoryItem(category)"
     >
       <ion-title> {{category.categoryName}}</ion-title>
-      <ion-label>{{category.isAvailable?'Available':'Unavailable'}}</ion-label>
+      <ion-label>{{category.available ?'Available':'Unavailable'}}</ion-label>
     </ion-item>
   </ion-list>
   <ion-button

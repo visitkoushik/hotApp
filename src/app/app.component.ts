@@ -1,11 +1,16 @@
 import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
-import { StoreName } from 'src/model/util';
+import { HttpRespObject } from 'src/model/httpRespModel';
+import { I_MetaData } from 'src/model/metadata';
+import { ApiEndPoint, StoreName } from 'src/model/util';
 import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
+import { HttpService } from './providers/http.service';
 import { SnackbarService } from './providers/snackbar.service';
 import { ThemeService } from './providers/theme.service';
 import { UtilService } from './providers/utilservice.service';
@@ -18,6 +23,7 @@ import { UtilService } from './providers/utilservice.service';
 export class AppComponent implements OnInit, OnChanges {
   pageEvent: any = null;
   isLoggedIn = false;
+  metaData: I_MetaData = null;
 
   constructor(
     private router: Router,
@@ -29,27 +35,32 @@ export class AppComponent implements OnInit, OnChanges {
     private snackbar: SnackbarService,
     private cart: CartService,
     private theme: ThemeService,
-  ) {}
+    private platform: Platform,
+    private httpClient: HttpService
+  ) {
+    this.platform
+      .ready()
+      .then((e) => {
+        this.platform.backButton.subscribeWithPriority(9999, () => {
+          document.addEventListener(
+            'backbutton',
+            (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            },
+            false
+          );
+        });
+      })
+      .catch((e) => {});
+  }
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+    this.metaData = this.util.metaData;
     this.theme.activeTheme('default');
-    this.storage
-      .getStorage(StoreName.TENANT)
-      .then((e) => {
-        this.util.tenantDetail = { ...e };
-
-        if (
-          this.util.tenantDetail?.tan?.trim().length > 0 ||
-          this.util.tenantDetail?.pan?.trim().length > 0
-        ) {
-          this.router.navigateByUrl('/tab');
-        }
-      })
-      .catch((e) => {
-        this.snackbar.openSnackBar('Please set Tenant detail');
-      });
-
+    // this.fetchMetaData();
+    this.fetchTenantInfo();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -78,4 +89,38 @@ export class AppComponent implements OnInit, OnChanges {
     this.auth.isLoggedIn = false;
     this.auth.redirectUrl = '';
   };
+
+  fetchBills = () => {
+    this.storage
+      .getStorage(StoreName.BILL)
+      .then((e) => {
+        this.util.isLoading = !true;
+        [...this.cart.allBiills] = [...e];
+      })
+      .catch((e) => {
+        this.util.isLoading = !true;
+      });
+  };
+
+  fetchTenantInfo = () => {
+    this.util.isLoading = true;
+    this.storage
+      .getStorage(StoreName.TENANT)
+      .then(async (e) => {
+        this.util.tenantDetail = { ...e };
+        await this.fetchBills();
+        this.util.isLoading = true;
+        if (
+          this.util.tenantDetail?.tan?.trim().length > 0 ||
+          this.util.tenantDetail?.pan?.trim().length > 0
+        ) {
+          this.router.navigateByUrl('/tab');
+        }
+      })
+      .catch((e) => {
+        this.util.isLoading = true;
+        this.snackbar.openSnackBar('Please set Tenant detail');
+      });
+  };
+
 }

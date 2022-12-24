@@ -1,11 +1,11 @@
 <ion-content>
-  <ion-item *ngIf="item.itemId?.length>0">
+  <ion-item *ngIf="item.id?.length>0">
     <ion-label>Is in Stock?</ion-label>
     <ion-toggle
       slot="end"
       name="apple"
       color="primary"
-      [(ngModel)]="item.isAvailable"
+      [(ngModel)]="item.available"
     ></ion-toggle>
   </ion-item>
   <mat-form-field class="newbill-full-width" appearance="fill">
@@ -22,7 +22,7 @@
     <mat-label class="dangercolor">Select category *</mat-label>
 
     <mat-select
-      [(ngModel)]="item.catergoryId"
+      [(ngModel)]="item.category"
       name="report"
       disableOptionCentering
       panelClass="myPanelClass"
@@ -31,7 +31,7 @@
       <mat-option value="-1" selected>Slect One Item</mat-option>
       <mat-option
         *ngFor="let category of cartsrvc.categoryList"
-        [value]="category.categoryId"
+        [value]="category.id"
       >
         {{category.categoryName}}
       </mat-option>
@@ -44,7 +44,7 @@
       matInput
       placeholder="Purchasing amount is mandatory"
       type="number"
-      [(ngModel)]="item.itemPurchaseValue"
+      [(ngModel)]="item.itemPrice.priceAmount"
       min="0"
       (click)="oninputClick($event)"
     />
@@ -55,14 +55,14 @@
       matInput
       placeholder="Selling amount is mandatory"
       type="number"
-      [(ngModel)]="item.itemSellValue"
+      [(ngModel)]="item.itemPrice.sellingAmount"
       min="0"
       (click)="oninputClick($event)"
     />
   </mat-form-field>
   <mat-checkbox
     class="example-margin"
-    [(ngModel)]="item.discountInPercent"
+    [(ngModel)]="item.isDiscountInPercentage"
     style="margin: 0 1rem"
     color="primary"
     >Discount in Percentage
@@ -70,14 +70,14 @@
   <mat-form-field
     class="newbill-full-width"
     appearance="fill"
-    *ngIf="item.discountInPercent"
+    *ngIf="item.isDiscountInPercentage"
   >
     <mat-label>Discount percentage</mat-label>
     <input
       matInput
       placeholder="Discount on the Item"
       type="number"
-      [(ngModel)]="item.itemSellDiscount"
+      [(ngModel)]="item.discount"
       max="100"
       (click)="oninputClick($event)"
     />
@@ -85,14 +85,14 @@
   <mat-form-field
     class="newbill-full-width"
     appearance="fill"
-    *ngIf="!item.discountInPercent"
+    *ngIf="!item.isDiscountInPercentage"
   >
     <mat-label>Discount Amount </mat-label>
     <input
       matInput
       placeholder="Discount on the Item"
       type="number"
-      [(ngModel)]="item.itemSellDiscount"
+      [(ngModel)]="item.discount"
       (click)="oninputClick($event)"
     />
   </mat-form-field>

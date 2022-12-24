@@ -8,7 +8,7 @@
       <ion-item>
         <ion-label>Date Range</ion-label>
         <ion-radio
-     slot="start"
+          slot="start"
           id="datebby"
           name="datebby"
           [value]="FILTERBY.DATE"
@@ -21,7 +21,7 @@
       <ion-item>
         <ion-label>Month Range</ion-label>
         <ion-radio
-     slot="start"
+          slot="start"
           id="month"
           name="month"
           [value]="FILTERBY.MONTH"
@@ -33,7 +33,7 @@
       <ion-item>
         <ion-label>Year Range</ion-label>
         <ion-radio
-     slot="start"
+          slot="start"
           id="year"
           name="year"
           [value]="FILTERBY.YEAR"
@@ -83,16 +83,30 @@
       (selectionChange)="onChangeItem($event.value)"
     >
       <mat-option value="-1" selected>All</mat-option>
-      <mat-option *ngFor="let item of allItems" [value]="item.itemId">
+      <mat-option *ngFor="let item of allItems" [value]="item.id">
         {{item.itemName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <ion-label
-    >{{startM}}{{startY}}{{startDate}}-{{endM}}{{endY}}{{endDate}}</ion-label
-  >
+<!--
+    <h5>Selected Range:</h5>
+    <ion-item>
+    <ion-label *ngIf="filterDateBy===FILTERBY.YEAR">
+      {{(startY|dateconvert:'Y')?.toLocaleDateString()}} -
+      {{(endY|dateconvert:'Y':'e')?.toLocaleDateString()}}</ion-label
+    >
+    <ion-label *ngIf="filterDateBy===FILTERBY.MONTH">
+      {{(startM|dateconvert:'M')?.toLocaleDateString()}} -
+      {{(endM|dateconvert:'M':'e')?.toLocaleDateString()}}
+    </ion-label>
+    <ion-label *ngIf="filterDateBy===FILTERBY.DATE">
+      {{startDate?.toLocaleDateString()}} -
+      {{endDate?.toLocaleDateString()}}</ion-label
+    >
+  </ion-item>-->
 </ion-content>
+
 <ion-footer>
   <ion-item>
     <ion-title></ion-title>
@@ -101,6 +115,7 @@
       color="primary"
       float-right
       (click)="onNextScreen()"
+      [disabled]="util.isLoading"
     >
       Next
     </ion-button>

@@ -10,7 +10,6 @@ import { ClassBill, I_Print } from 'src/model/billClass';
   styleUrls: ['./existingbill.page.scss'],
 })
 export class ExistingbillPage implements OnInit {
-
   public currentBill: ClassBill = null;
   public currentBillPrint: I_Print = null;
   public currentBillPrintStr: string = null;
@@ -23,7 +22,7 @@ export class ExistingbillPage implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((p) => {
-      const ibill= JSON.parse(p.data);
+      const ibill = JSON.parse(p.data);
       this.currentBill = new ClassBill(ibill);
       this.currentBillPrint = this.currentBill.getPrintValue(this.cartService);
       this.currentBillPrintStr = JSON.stringify(this.currentBillPrint);
@@ -34,5 +33,7 @@ export class ExistingbillPage implements OnInit {
     });
   }
 
+  onDelete = ($event) => {
 
+  };
 }

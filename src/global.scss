@@ -39,10 +39,19 @@ ion-content {
 }
 ion-item,
 ion-toolbar,
-ion-footer   {
+ion-footer {
   --background: transparent;
+  // --background: #ffffff74;
 }
 mat-card,
-mat-list {
+mat-list ,
+ion-list{
   background: transparent;
+  // background: #ffffff74;
 }
+.mat-table,.searchbar-input.sc-ion-searchbar-md,
+.searchbar-input.sc-ion-searchbar-md   {
+  background: #ffffff74;
+}
+
+

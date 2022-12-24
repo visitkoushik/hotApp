@@ -1,12 +1,13 @@
+import { I_Category } from './category';
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface I_Items {
-  catergoryId: string;
+  category: string | I_Category;
   itemName: string;
-  itemId: string;
-  itemPurchaseValue: number;
-  itemSellValue: number;
-  itemSellDiscount: number;
-  discountInPercent: boolean;
-  isAvailable?: boolean;
-}
+  id: string;
+  itemPrice: { priceAmount: number; sellingAmount: number };
 
+  discount: number;
+  isDiscountInPercentage: boolean;
+  available: boolean;
+}

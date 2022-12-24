@@ -14,6 +14,8 @@ import { YearPickerComponent } from './custom-mat-picker/year-picker/year-picker
 import { SaveService } from './providers/save.service';
 import { AuthService } from './providers/auth/auth.service';
 import { AppStorageModule } from './app-storage/app-storage.module';
+import { PlatformModule } from '@angular/cdk/platform';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,14 +26,15 @@ import { AppStorageModule } from './app-storage/app-storage.module';
     BrowserAnimationsModule,
     MaterialModule,
     PipeModule,
-    AppStorageModule
-
+    AppStorageModule,
+    PlatformModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    CartService ,
+    CartService,
     SaveService,
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })

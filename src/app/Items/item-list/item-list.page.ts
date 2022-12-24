@@ -13,7 +13,7 @@ export class ItemListPage implements OnInit {
   constructor(public cartsrvc: CartService, private router: Router) {}
 
   ngOnInit() {}
-  trackByFn = (inx, item: I_Items) => item.itemId;
+  trackByFn = (inx, item: I_Items) => item.id;
 
   onModifyItem = (item: I_Items) => {
     this.router.navigate(['/tab-item/add-item'], {

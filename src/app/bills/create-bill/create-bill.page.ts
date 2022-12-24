@@ -11,7 +11,7 @@ import { I_CartItem } from 'src/model/cartItem';
 import { I_Items } from 'src/model/items';
 import { GENDER, I_CreateBillPage, StoreName } from 'src/model/util';
 import { CartService } from '../../providers/cart-service.service';
-import * as itemList from '../../../model/itemList.json';
+
 import { AppStorageService } from '../../app-storage/app-storage.service';
 @Component({
   selector: 'app-create-bill',

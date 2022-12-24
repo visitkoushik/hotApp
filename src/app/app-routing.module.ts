@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AppStorageService } from './app-storage/app-storage.service';
+import { OwnerGaurdService } from './employee/ownergurd.service';
 import { AuthGaurdService } from './providers/auth/auth-gaurd.service';
 import { AuthService } from './providers/auth/auth.service';
 import { TanGaurdService } from './providers/company/tan-gaurd.service';
@@ -15,13 +16,15 @@ const routes: Routes = [
   {
     path: 'tab',
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
-    canLoad: [TanGaurdService],
-    providers: [TanGaurdService]
+    canLoad: [OwnerGaurdService],
+    providers: [OwnerGaurdService],
   },
   {
     path: 'allbills',
     loadChildren: () =>
-      import('./bills/all-bills/all-bills.module').then((m) => m.AllBillsPageModule),
+      import('./bills/all-bills/all-bills.module').then(
+        (m) => m.AllBillsPageModule
+      ),
   },
   {
     path: 'createbill',
@@ -34,7 +37,11 @@ const routes: Routes = [
     path: 'configure',
     loadChildren: () =>
       import('./configure/configure.module').then((m) => m.ConfigurePageModule),
-
+  },
+  {
+    path: 'employee',
+    loadChildren: () =>
+      import('./employee/employee.module').then((m) => m.EmployeePageModule),
   },
 
   {
@@ -64,22 +71,39 @@ const routes: Routes = [
   },
   {
     path: 'tab-item',
-    loadChildren: () => import('./items/tab-item/tab-item.module').then( m => m.TabItemPageModule),
-    canLoad: [AuthGaurdService]
+    loadChildren: () =>
+      import('./items/tab-item/tab-item.module').then(
+        (m) => m.TabItemPageModule
+      ),
+    canLoad: [AuthGaurdService],
   },
   {
     path: 'add-item',
-    loadChildren: () => import('./items/add-item/add-item.module').then( m => m.AddItemPageModule),
-    canLoad: [AuthGaurdService]
+    loadChildren: () =>
+      import('./items/add-item/add-item.module').then(
+        (m) => m.AddItemPageModule
+      ),
+    canLoad: [AuthGaurdService],
   },
   {
     path: 'item-list',
-    loadChildren: () => import('./items/item-list/item-list.module').then( m => m.ItemListPageModule),
-    canLoad: [AuthGaurdService]
+    loadChildren: () =>
+      import('./items/item-list/item-list.module').then(
+        (m) => m.ItemListPageModule
+      ),
+    canLoad: [AuthGaurdService],
   },
   {
     path: 'add-category',
-    loadChildren: () => import('./items/add-category/add-category.module').then( m => m.AddCategoryPageModule)
+    loadChildren: () =>
+      import('./items/add-category/add-category.module').then(
+        (m) => m.AddCategoryPageModule
+      ),
+  },
+  {
+    path: 'employee',
+    loadChildren: () =>
+      import('./employee/employee.module').then((m) => m.EmployeePageModule),
   },
 ];
 

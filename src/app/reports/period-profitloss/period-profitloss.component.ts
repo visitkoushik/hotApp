@@ -37,7 +37,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
 
   public start: Date = null;
   public end: Date = null;
-
+  public transform = new ConvertToFullDate().transform;
   constructor(private cartServc: CartService) {}
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     this.selectedReport = val.selectedReport?.currentValue;
     this.filterDateBy = val.filterDateBy?.currentValue;
 
-    const transform = new ConvertToFullDate().transform;
+
 
     switch (this.filterDateBy) {
       case FILTER_BY.DATE:
@@ -62,12 +62,12 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
         this.end = new Date(this.endDate);
         break;
       case FILTER_BY.MONTH:
-        this.start = transform(this.startDate, 'M');
-        this.end = transform(this.endDate, 'M', 'e');
+        this.start = this.transform(this.startDate, 'M') as Date;
+        this.end = this.transform(this.endDate, 'M', 'e') as Date;
         break;
       case FILTER_BY.YEAR:
-        this.start = transform(this.startDate, 'Y');
-        this.end = transform(this.endDate, 'Y', 'e');
+        this.start = this.transform(this.startDate, 'Y') as Date;
+        this.end = this.transform(this.endDate, 'Y', 'e') as Date;
         break;
     }
     console.log(this.start.toLocaleString());
@@ -86,7 +86,7 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
       'Jun',
       'Jul',
       'Aug',
-      'Sept',
+      'Sep',
       'Oct',
       'Nov',
       'Dec',
@@ -94,13 +94,15 @@ export class PeriodProfitlossComponent implements OnInit, OnChanges {
     if (this.selectedReport && this.selectedReport !== '-1') {
       //TODO later
     } else {
-      allBills = [...this.cartServc.allBiills];
+      allBills = [...this.cartServc.allBiills].filter(b=>b.status);
     }
     if (this.endDate && this.startDate) {
       allBills = allBills.filter(
         (bill: I_Bill) =>
-          this.start <= new Date(bill.billDate) &&
-          this.end >= new Date(bill.billDate)
+
+
+          this.transform(this.start.toString()) <= this.transform(new Date(bill.billDate).toString()) &&
+          this.transform(this.end.toString()) >= this.transform(new Date(bill.billDate).toString())
       );
     }
 

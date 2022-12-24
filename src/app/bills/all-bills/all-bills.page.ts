@@ -7,6 +7,7 @@ import {
   Router,
 } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AlertService } from 'src/app/providers/alert.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { I_Bill } from 'src/model/bill';
 import { ClassBill } from 'src/model/billClass';
@@ -31,6 +32,7 @@ export class AllBillsPage implements OnInit {
     private storage: AppStorageService,
     private util: UtilService,
     private alrtCtrl: AlertController,
+    private alertSrvc: AlertService,
     private snackbar: SnackbarService
   ) {
     this.currentDate = new Date();
@@ -61,7 +63,10 @@ export class AllBillsPage implements OnInit {
     this.setMaxDate();
     this.fetchBills();
     this.activeRoute.queryParams.subscribe((p) => {
-      this.allBills = [...this.cartService.allBiills];
+      // this.allBills = [...this.cartService.allBiills];
+      this.allBills = [...this.cartService.allBiills].filter(
+        (itm) => itm.status
+      );
     });
   }
 
@@ -75,22 +80,30 @@ export class AllBillsPage implements OnInit {
   fetchBills = () => {
     this.storage
       .getStorage(StoreName.BILL)
-      .then((e) => {
+      .then(async (e) => {
         this.util.isLoading = !true;
         [...this.cartService.allBiills] = [...e];
-        this.onChangeDate();
+
+       this.allBills =  await this.updateBills();
       })
       .catch((e) => {
         this.util.isLoading = !true;
       });
   };
 
-  onChangeDate = () => {
-    this.allBills = [...this.cartService.allBiills].filter(
-      (itm) =>
-        new Date(itm.billDate).toLocaleDateString() ===
-        new Date(this.currentDate).toLocaleDateString()
-    );
+  updateBills = (): Promise<I_Bill[]> =>
+    new Promise((res) => {
+
+      const allBills = [...this.cartService.allBiills]?.filter(
+        (itm) =>itm.status &&
+          new Date(itm.billDate).toLocaleDateString() ===
+            new Date(this.currentDate).toLocaleDateString()
+      );
+      res(allBills || []);
+    });
+
+  onChangeDate = async () => {
+    this.allBills = await this.updateBills();
   };
 
   trackByFn = (inx, item: I_Bill) => item.billID;
@@ -100,6 +113,29 @@ export class AllBillsPage implements OnInit {
     this.presentAlert(bill);
   };
 
+  onDelete = (e, bill: I_Bill) => {
+    e.stopPropagation();
+    this.alertSrvc.presentAlert(
+      this.alrtCtrl,
+      'Confirm Delete',
+      'Are you sure, you want to delete the bill? ',
+      { ok: 'Yes', cancel: 'No' },
+      async () => {
+        // eslint-disable-next-line no-underscore-dangle
+
+        this.cartService.allBiills = this.cartService.allBiills.map(
+          (b: I_Bill) =>
+            b.billID === bill.billID ? { ...b, status: false } : b
+        );
+
+        await this.storage.setStorage(StoreName.BILL, [
+          ...this.cartService.allBiills,
+        ]);
+       this.allBills = await this.updateBills();
+      },
+      () => {}
+    );
+  };
   setMaxDate = () => {
     this.maxDate = new Date();
   };
@@ -127,7 +163,9 @@ export class AllBillsPage implements OnInit {
       .setStorage(StoreName.BILL, [...this.cartService.allBiills])
       .catch((err) => this.snackbar.openSnackBar('Error update data'));
   };
+
   noHandler = () => {};
+
   async presentAlert(bill: I_Bill) {
     const alert = await this.alrtCtrl.create({
       header: 'Please enter amount',

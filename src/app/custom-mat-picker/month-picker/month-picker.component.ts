@@ -32,7 +32,7 @@ export class MonthPickerComponent implements OnInit {
     // console.log(normalizedMonth, datepicker, mesIni);
     this.mclick++;
     if (this.mclick === 1) {
-      this.startMonth = `${normalizedMonth.toLocaleDateString('default', {
+      this.startMonth = `${normalizedMonth.toLocaleDateString('en', {
         month: 'short',
       })}/${normalizedMonth.getFullYear()}`;
       mesIni.value = this.startMonth;
@@ -55,16 +55,16 @@ export class MonthPickerComponent implements OnInit {
         clearInterval(inter);
       }, 50);
     } else if (this.mclick === 2) {
-      this.endMonth = `${normalizedMonth.toLocaleDateString('default', {
+      this.endMonth = `${normalizedMonth.toLocaleDateString('en', {
         month: 'short',
       })}/${normalizedMonth.getFullYear()}`;
 
       const stMon: Date = this.convertFullDate.transform(this.startMonth, [
         'M',
-      ]);
+      ]) as Date;
       const enMon: Date = this.convertFullDate.transform(this.startMonth, [
         'M',
-      ]);
+      ]) as Date;
 
       if (stMon > enMon) {
         const startMonth1 = this.startMonth;

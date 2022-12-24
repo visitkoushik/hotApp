@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { I_MetaData } from 'src/model/metadata';
 import { I_TenantDetails } from 'src/model/util';
 
 @Injectable({
@@ -7,7 +8,8 @@ import { I_TenantDetails } from 'src/model/util';
 export class UtilService {
   public gvtTax = 0;
   public storeBilling: any;
-  public isLoading=false;
+  public isLoading = false;
   public tenantDetail: I_TenantDetails;
+  public metaData: I_MetaData;
   constructor() {}
 }

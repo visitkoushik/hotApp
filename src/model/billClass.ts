@@ -5,6 +5,8 @@ import { GENDER, UtilClass } from './util';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface I_Print {
   // eslint-disable-next-line @typescript-eslint/naming-convention
+  BillID: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   Date: Date;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   Name: string;
@@ -44,8 +46,7 @@ export class ClassBill {
     status: boolean,
     discount: number,
     paid: number,
-    total: number,
-
+    total: number
   );
   constructor(
     itemPurchased?: I_CartItem[] | I_Bill,
@@ -56,7 +57,7 @@ export class ClassBill {
     status?: boolean,
     discount?: number,
     paid?: number,
-    total?: number,
+    total?: number
   ) {
     if (!Array.isArray(itemPurchased) && this.isBillObject(itemPurchased)) {
       this.bill = { ...itemPurchased };
@@ -71,9 +72,9 @@ export class ClassBill {
       this.bill.billID = Date.now() + '';
       this.bill.billDate = new Date();
       this.bill.tax = 0;
-      this.bill.paid=paid;
-      this.bill.total=total;
-      this.bill.due = this.bill.total-this.bill.paid;
+      this.bill.paid = paid;
+      this.bill.total = total;
+      this.bill.due = this.bill.total - this.bill.paid;
     }
   }
 
@@ -115,8 +116,8 @@ export class ClassBill {
   getPurchaseCost = (cartServc: CartService): number => {
     let price = 0;
     this.bill.itemPurchased.forEach((e: I_CartItem) => {
-      const item = cartServc.mainItems.find((i) => i.itemId === e.items);
-      price = price + e.count * (item?.itemPurchaseValue||0);
+      const item = e.items;
+      price = price + e.count * (item?.itemPrice.priceAmount || 0);
     });
     return +price.toFixed(2);
   };
@@ -126,23 +127,27 @@ export class ClassBill {
     const purchaseTotal: number = this.getPurchaseCost(cartServc);
     const printableItemList = this.bill.itemPurchased.map(
       (e: I_CartItem, inx: number) => {
-        const item = cartServc.mainItems.find((i) => i.itemId === e.items);
+        const item = e.items;
         return {
           item: inx + 1,
           itemName: item.itemName,
           qty: e.count,
-          rate: item.itemSellValue,
-          disc: item.discountInPercent
-            ? item.itemSellDiscount + '%'
-            : item.itemSellDiscount + 'Rs',
-          price: item.discountInPercent
-            ? (e.count * item.itemSellValue * (100 - item.itemSellDiscount)) /
+          rate: item.itemPrice.sellingAmount,
+          disc: item.isDiscountInPercentage
+            ? item.discount + '%'
+            : item.discount + 'Rs',
+          price: item.isDiscountInPercentage
+            ? (e.count *
+                item.itemPrice.sellingAmount *
+                (100 - item.itemPrice.sellingAmount)) /
               100
-            : e.count * (item.itemSellValue - item.itemSellDiscount),
+            : e.count * (item.itemPrice.sellingAmount - item.discount),
         };
       }
     );
     return {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      BillID: this.bill.billID,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Date: this.bill.billDate,
       // eslint-disable-next-line @typescript-eslint/naming-convention

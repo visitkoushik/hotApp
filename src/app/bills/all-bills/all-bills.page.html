@@ -39,6 +39,10 @@
         (click)="onPayDue($event,billItem)">
         Due:{{billItem.due}}
       </ion-button>
+      <ion-button color="danger" class="paybutton" fill="clear" *ngIf="billItem.due===0"
+        (click)="onDelete($event,billItem)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
     </mat-card>
   </mat-list>
 </ion-content>

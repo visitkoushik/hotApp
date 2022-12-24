@@ -1,6 +1,7 @@
 <ion-content *ngIf="currentBillPrint && displayedColumns">
   <app-bill-print-details
   [data]="currentBillPrintStr"
+  (deleteEvent)="onDelete($event)"
 ></app-bill-print-details>
 </ion-content>
 
