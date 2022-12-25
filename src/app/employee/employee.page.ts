@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { I_Employee } from 'src/model/employee';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
@@ -17,8 +17,7 @@ export class EmployeePage implements OnInit {
   public update: boolean = false;
   public emp: I_Employee = {} as I_Employee;
   ionicForm: FormGroup;
-
-
+  public isSubmitted:boolean = false;
   constructor(
     private forBuilder: FormBuilder,
     public utilsrvc: UtilService,
@@ -63,9 +62,14 @@ export class EmployeePage implements OnInit {
       userType: [defaultUserType, [Validators.required]],
       roles: [defaultRoles, [Validators.required]],
       salary: ['0', [Validators.required, Validators.pattern('^[0-9]+$')]],
-    });
+      passcode: ['', [Validators.required, Validators.minLength(8)]],
+      passRept: ['', [Validators.required, Validators.minLength(8)]],
+      userName: ['', [Validators.required]],
+    }, { validator: this.matchPassword('passcode','passRept') });
   }
-
+  get errorControl() {
+    return this.ionicForm.controls;
+  }
   fetchMetaData = () => {
     this.utilsrvc.isLoading = true;
 
@@ -84,15 +88,34 @@ export class EmployeePage implements OnInit {
         this.utilsrvc.isLoading = false;
       });
   };
+  matchPassword(firstControl, secondControl): ValidatorFn {
 
-  submitForm() {
+    return (control: AbstractControl): ValidationErrors | null => {
 
+      const password = control.get(firstControl).value;
+      const confirm = control.get(secondControl).value;
+
+      if (password != confirm) { return { 'noMatch': true } }
+
+      return null
+
+    }
   }
+  submitForm() {}
   onSave() {
-    console.log(this.ionicForm.value);
+    this.isSubmitted = true;
+    this.utilsrvc.isLoading = true;
+    this.httpClient
+      .post(ApiEndPoint.EMPLOYEE_ADD, this.ionicForm.value)
+      .then((e) => {
+        this.utilsrvc.isLoading = false;
+      })
+      .catch((e) => {
+        this.utilsrvc.isLoading = false;
+      });
   }
 
-  isValid = ():boolean=>{
+  isValid = (): boolean => {
     return this.ionicForm.valid;
-  }
+  };
 }

@@ -13,4 +13,6 @@ export interface I_Employee {
   dateOfJoin: Date;
   salary: number;
   isCurrent: boolean;
+  passcode: string;
+  userName: string;
 }
