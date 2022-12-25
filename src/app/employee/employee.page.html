@@ -1,9 +1,141 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>employee</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <form [formGroup]="ionicForm"   novalidate>
+    <ion-item>
+      <ion-label position="floating" class="required">First name</ion-label>
+      <ion-input formControlName="firstName" type="text" required></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Middle name</ion-label>
+      <ion-input formControlName="middleName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Last name</ion-label>
+      <ion-input formControlName="lastName" type="text"></ion-input>
+    </ion-item>
+
+    <div class="gender">
+      <ion-radio-group
+        aria-label="Gender"
+        name="gender"
+        formControlName="gender"
+      >
+        <ion-row no-padding>
+          <ion-item
+            no-padding
+            *ngFor="let gender of utilsrvc.metaData?.genders"
+            class="itemradio"
+          >
+            <ion-label>{{gender.name}}</ion-label>
+            <ion-radio
+              slot="start"
+              id="mrgndr"
+              [value]="gender.value"
+              class="radiobutton"
+              color="primary"
+            ></ion-radio>
+          </ion-item>
+        </ion-row>
+      </ion-radio-group>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating" class="required">Mobile number</ion-label>
+      <ion-input
+        formControlName="mobileNumbers"
+        type="tel"
+        maxlength="10"
+        required="true"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="required">E-mail</ion-label>
+      <ion-input formControlName="email" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="required">User Type</ion-label>
+      <ion-select placeholder="Select" formControlName="userType">
+        <ion-select-option
+          [value]="ut.value"
+          *ngFor="let ut of utilsrvc.metaData?.userType; let i = index"
+          >{{ut.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating" class="required">User Roles</ion-label>
+      <ion-select placeholder="Select" formControlName="roles">
+        <ion-select-option
+          [value]="role.value"
+          *ngFor="let role of utilsrvc.metaData?.roles; let i = index"
+          >{{role.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <mat-form-field class="newbill-full-width" appearance="fill">
+      <mat-label>Date of Birth</mat-label>
+      <input
+        formControlName="dateOfBirth"
+        matInput
+        [matDatepicker]="dob"
+        [min]="minDate"
+        [max]="maxDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+      <mat-datepicker #dob></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="newbill-full-width" appearance="fill">
+      <mat-label>Date of Join</mat-label>
+      <input
+        formControlName="dateOfJoin"
+        matInput
+        [matDatepicker]="doj"
+        [min]="minDate"
+        [max]="maxDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
+      <mat-datepicker #doj></mat-datepicker>
+    </mat-form-field>
+
+    <ion-item>
+      <ion-label position="floating" class="required">Salary</ion-label>
+      <ion-input formControlName="salary" type="number" required></ion-input>
+    </ion-item>
+
+    <div *ngIf="update">
+      <mat-form-field class="newbill-full-width" appearance="fill">
+        <mat-label>Date of Exit</mat-label>
+        <input
+          formControlName="dateOfExist"
+          matInput
+          [matDatepicker]="doe"
+          [min]="minDate"
+          [max]="maxDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="doe"></mat-datepicker-toggle>
+        <mat-datepicker #doe></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
 </ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-toolbar></ion-toolbar>
+    <ion-button
+      size="default"
+      color="primary"
+      float-right
+      (click)="onSave()"
+      [disabled]="!isValid()"
+    >
+      Save
+    </ion-button>
+  </ion-item>
+</ion-footer>
