@@ -1,14 +1,14 @@
 <ion-tabs color="primary">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="add-item">
+    <ion-tab-button tab="add-item" *ngIf="this.ITEM_ADD">
       <ion-icon name="create"></ion-icon>
       <ion-label>Add Item</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="item-list">
+    <ion-tab-button tab="item-list"  *ngIf="this.ITEM_READ">
       <ion-icon name="basket"></ion-icon>
       <ion-label>All Items</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="add-category">
+    <ion-tab-button tab="add-category" *ngIf="this.CATEGORY_READ">
       <ion-icon name="book"></ion-icon>
       <ion-label>Categories</ion-label>
     </ion-tab-button>

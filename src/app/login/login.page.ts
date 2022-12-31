@@ -37,8 +37,8 @@ export class LoginPage implements OnInit {
         }
       })
       .catch((e) => {
-        console.log(e);
-        this.snackbar.openSnackBar('Login Failed');
+        // console.log(e.error.error);
+        this.snackbar.openSnackBar(e);
         this.util.isLoading = false;
       });
   };

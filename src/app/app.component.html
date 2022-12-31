@@ -13,12 +13,12 @@
       <ion-buttons slot="end">
         <ion-button
           class="menuicon"
-          *ngIf="!auth.isLoggedIn"
+          *ngIf="!auth.isLoggedIn && pageEvent?.hideLogin !== true"
           routerLink="/login"
         >
           <mat-icon end>lock</mat-icon>
         </ion-button>
-        <ion-button class="menuicon" *ngIf="auth.isLoggedIn">
+        <ion-button class="menuicon" *ngIf="auth.isLoggedIn && pageEvent?.hideLogin !== true">
           <mat-icon end>lock_open</mat-icon>
         </ion-button>
         <ion-menu-button

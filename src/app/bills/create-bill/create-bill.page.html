@@ -1,7 +1,6 @@
 <ion-header>
   <ion-item>
-    <ion-label position="floating" color="danger"
-      >Customer Name *</ion-label>
+    <ion-label position="floating" color="danger">Customer Name *</ion-label>
     <ion-input
       placeholder="Customer Name is mandatory"
       [(ngModel)]="creatBillPage.currentBiill.customerName"
@@ -9,7 +8,7 @@
     ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating" >Customer contact</ion-label>
+    <ion-label position="floating">Customer contact</ion-label>
     <ion-input
       matInput
       placeholder="Ex:1234567890"
@@ -23,7 +22,7 @@
       aria-label="Gender"
       [(ngModel)]="creatBillPage.currentBiill.gender"
     >
-    <ion-row no-padding>
+      <ion-row no-padding>
         <ion-item no-padding>
           <ion-label>Male</ion-label>
           <ion-radio
@@ -75,7 +74,7 @@
       <mat-card-title-group>
         <mat-card-title> {{cartItem.items.itemName}}</mat-card-title>
         <mat-card-subtitle class="requiredcolor"
-          >Price:{{cartItem.items.itemSellValue.toFixed(2)}} Rs.
+          >Price:{{cartItem.items.itemPrice.sellingAmount.toFixed(2)}} Rs.
         </mat-card-subtitle>
 
         <div class="rowList2" *ngIf="cartItem.count>0">

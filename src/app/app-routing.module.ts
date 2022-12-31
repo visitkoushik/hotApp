@@ -16,8 +16,7 @@ const routes: Routes = [
   {
     path: 'tab',
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
-    canLoad: [OwnerGaurdService],
-    providers: [OwnerGaurdService],
+    canLoad: [AuthGaurdService]
   },
   {
     path: 'allbills',
@@ -62,12 +61,13 @@ const routes: Routes = [
       import('./appsetting/appsetting.module').then(
         (m) => m.AppsettingPageModule
       ),
-    // canLoad: [AuthGaurdService],
+
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
+      canLoad: [OwnerGaurdService],
   },
   {
     path: 'tab-item',

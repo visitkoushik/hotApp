@@ -1,60 +1,62 @@
 <ion-content>
-  <ion-item *ngIf="item.id">
-    <ion-label>Is in Stock?</ion-label>
-    <ion-toggle
-      slot="end"
-      name="apple"
-      color="primary"
-      [(ngModel)]="item.available"
-    ></ion-toggle>
-  </ion-item>
-  <mat-form-field class="newbill-full-width" appearance="fill">
-    <mat-label class="dangercolor">Category Name *</mat-label>
-    <input
-      matInput
-      placeholder="Itme Name is mandatory"
-      [(ngModel)]="item.categoryName"
-      type="text"
-      (click)="oninputClick($event)"
-    />
-  </mat-form-field>
+  <span *ngIf="this.CATEGORY_ADD">
+    <ion-item *ngIf="item.id">
+      <ion-label>Is in Stock?</ion-label>
+      <ion-toggle
+        slot="end"
+        name="apple"
+        color="primary"
+        [(ngModel)]="item.available"
+      ></ion-toggle>
+    </ion-item>
+    <mat-form-field class="newbill-full-width" appearance="fill">
+      <mat-label class="dangercolor">Category Name *</mat-label>
+      <input
+        matInput
+        placeholder="Itme Name is mandatory"
+        [(ngModel)]="item.categoryName"
+        type="text"
+        (click)="oninputClick($event)"
+      />
+    </mat-form-field>
 
-  <mat-checkbox
-    class="example-margin"
-    [(ngModel)]="item.discountInPercent"
-    style="margin: 0 1rem"
-    color="primary"
-    >Discount in Percentage
-  </mat-checkbox>
-  <mat-form-field
-    class="newbill-full-width"
-    appearance="fill"
-    *ngIf="item.discountInPercent"
-  >
-    <mat-label>Discount percentage</mat-label>
-    <input
-      matInput
-      placeholder="Discount on the Item"
-      type="number"
-      [(ngModel)]="item.categoryDiscount"
-      max="100"
-      (click)="oninputClick($event)"
-    />
-  </mat-form-field>
-  <mat-form-field
-    class="newbill-full-width"
-    appearance="fill"
-    *ngIf="!item.discountInPercent"
-  >
-    <mat-label>Discount Amount </mat-label>
-    <input
-      matInput
-      placeholder="Discount on the Item"
-      type="number"
-      [(ngModel)]="item.categoryDiscount"
-      (click)="oninputClick($event)"
-    />
-  </mat-form-field>
+    <mat-checkbox
+      class="example-margin"
+      [(ngModel)]="item.discountInPercent"
+      style="margin: 0 1rem"
+      color="primary"
+      >Discount in Percentage
+    </mat-checkbox>
+    <mat-form-field
+      class="newbill-full-width"
+      appearance="fill"
+      *ngIf="item.discountInPercent"
+    >
+      <mat-label>Discount percentage</mat-label>
+      <input
+        matInput
+        placeholder="Discount on the Item"
+        type="number"
+        [(ngModel)]="item.categoryDiscount"
+        max="100"
+        (click)="oninputClick($event)"
+      />
+    </mat-form-field>
+    <mat-form-field
+      class="newbill-full-width"
+      appearance="fill"
+      *ngIf="!item.discountInPercent"
+    >
+      <mat-label>Discount Amount </mat-label>
+      <input
+        matInput
+        placeholder="Discount on the Item"
+        type="number"
+        [(ngModel)]="item.categoryDiscount"
+        (click)="oninputClick($event)"
+      />
+    </mat-form-field>
+  </span>
   <ion-list>
     <ion-item
       *ngFor="let category of cartServc.categoryList; "
@@ -71,6 +73,6 @@
     [disabled]="isNotValid()"
     (click)="onSave()"
   >
-  <mat-icon>save</mat-icon>
+    <mat-icon>save</mat-icon>
   </ion-button>
 </ion-content>

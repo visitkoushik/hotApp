@@ -5,15 +5,18 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
+import { HttpService } from 'src/app/providers/http.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
+import { AppResponse } from 'src/model/AppResponse';
 import { I_Category } from 'src/model/category';
 import { I_Items } from 'src/model/items';
-import { StoreName } from 'src/model/util';
+import { ApiEndPoint, StoreName } from 'src/model/util';
 
 @Component({
   selector: 'app-add-item',
@@ -23,24 +26,58 @@ import { StoreName } from 'src/model/util';
 export class AddItemPage implements OnInit {
   public item: I_Items = {} as I_Items;
   public categoryList: I_Category[] = [] as I_Category[];
+  public ITEM_ADD: boolean = false;
+  public ITEM_UPDATE: boolean = false;
+  public ITEM_READ: boolean = false;
+  public CATEGORY_READ: boolean = false;
 
   constructor(
     private storage: AppStorageService,
     private snackbar: SnackbarService,
     public cartsrvc: CartService,
     private utisrvc: UtilService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private httpClient: HttpService
   ) {}
 
   ngOnInit() {
-    this.categoryList = this.cartsrvc.categoryList;
-    this.activeRoute.queryParams.subscribe((p) => {
-      if (p && p.data) {
-        this.item = JSON.parse(p.data);
-      } else {
-        this.setDefault();
+    this.ITEM_ADD =
+      this.utisrvc.metaData.accessRight.findIndex((e) => e === 'ITEM_ADD') > -1;
+    this.ITEM_UPDATE =
+      this.utisrvc.metaData.accessRight.findIndex((e) => e === 'ITEM_UPDATE') >
+      -1;
+    this.ITEM_READ =
+      this.utisrvc.metaData.accessRight.findIndex((e) => e === 'ITEM_READ') >
+      -1;
+    this.CATEGORY_READ =
+      this.utisrvc.metaData.accessRight.findIndex(
+        (e) => e === 'CATEGORY_READ'
+      ) > -1;
+debugger
+    if (this.ITEM_ADD) {
+      this.setDefault();
+
+      if (this.CATEGORY_READ) {
+        this.httpClient
+          .get(ApiEndPoint.CATEGORY_LIST,"available=true")
+          .then((e: AppResponse<I_Category[]>) => {
+            debugger
+            this.categoryList = e.responseObject;
+          })
+          .catch((e: AppResponse<string>) => {
+            // this.snackbar.openSnackBar('')
+
+          });
       }
-    });
+    }
+    // this.categoryList = this.cartsrvc.categoryList;
+    // this.activeRoute.queryParams.subscribe((p) => {
+    //   if (p && p.data) {
+    //     this.item = JSON.parse(p.data);
+    //   } else {
+    //     this.setDefault();
+    //   }
+    // });
   }
   oninputClick = (e) => e.target.select();
   setDefault = () => {
@@ -62,7 +99,7 @@ export class AddItemPage implements OnInit {
     !this.item.category ||
     this.item.category === '-1';
 
-  onSave = async () => {
+  onSave_LoclStore = async () => {
     let allreadySavedItems: I_Items[] = [] as I_Items[];
     let newSavedItems: I_Items[] = [] as I_Items[];
     this.utisrvc.isLoading = true;
@@ -89,7 +126,7 @@ export class AddItemPage implements OnInit {
       );
     }
 
-    this.storage
+    /*this.storage
       .setStorage(StoreName.ITEM, newSavedItems)
       .then((e) => {
         this.utisrvc.isLoading = false;
@@ -108,8 +145,28 @@ export class AddItemPage implements OnInit {
       .catch((e) => {
         this.utisrvc.isLoading = false;
         this.snackbar.openSnackBar('Error on item Saved ');
-      });
+      });*/
   };
 
+   onSave = async () => {
+    let newSavedItems: I_Items = { ...this.item };
+    this.utisrvc.isLoading = true;
+
+    this.httpClient
+      .post(ApiEndPoint.ITEM_ADD, newSavedItems)
+      .then((e: AppResponse<I_Items>) => {
+        const newSavedItems = e.responseObject;
+        this.cartsrvc.mainItems=[...this.cartsrvc.mainItems, newSavedItems]
+        this.snackbar.openSnackBar('Successfuly Saved');
+        this.setDefault();
+        this.utisrvc.isLoading = false;
+      })
+      .catch((e: AppResponse<I_Items>) => {
+        this.snackbar.openSnackBar(e.error);
+        this.setDefault();
+        this.utisrvc.isLoading = false;
+
+      });
+  };
   onChangeItem = (value) => (this.item.category = value);
 }

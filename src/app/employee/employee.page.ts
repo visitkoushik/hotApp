@@ -4,6 +4,7 @@ import { I_Employee } from 'src/model/employee';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
 import { HttpService } from '../providers/http.service';
+import { SnackbarService } from '../providers/snackbar.service';
 import { UtilService } from '../providers/utilservice.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class EmployeePage implements OnInit {
   constructor(
     private forBuilder: FormBuilder,
     public utilsrvc: UtilService,
-    private httpClient: HttpService
+    private httpClient: HttpService,
+    private snackBar:SnackbarService
   ) {}
 
   ngOnInit() {
@@ -112,6 +114,7 @@ export class EmployeePage implements OnInit {
       })
       .catch((e) => {
         this.utilsrvc.isLoading = false;
+        this.snackBar.openSnackBar(e.error.error);
       });
   }
 

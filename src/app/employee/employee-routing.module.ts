@@ -6,7 +6,8 @@ import { EmployeePage } from './employee.page';
 const routes: Routes = [
   {
     path: '',
-    component: EmployeePage
+    component: EmployeePage,
+    data: { title: 'Add Employee', hideLogin:true },
   }
 ];
 

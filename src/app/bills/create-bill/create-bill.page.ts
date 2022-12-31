@@ -23,15 +23,14 @@ export class CreateBillPage implements OnInit {
   CLONED_GENDER = GENDER;
   creatBillPage: I_CreateBillPage = null;
   constructor(
-    private storeServic: AppStorageService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
-    private storage: AppStorageService,
     private router: Router
   ) {
+    this.fetchData();
     this.cartService.setDefaultBill();
     this.creatBillPage = { ...this.cartService.createBillPageRef };
-    this.fetchData();
+
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
@@ -105,20 +104,29 @@ export class CreateBillPage implements OnInit {
   trackByFn = (inx: number, item: I_CartItem) => item.id;
 
   private fetchData = () => {
-    this.storage
-      .getStorage(StoreName.ITEM)
-      .then((e) => {
-        this.cartService.mainItems = [...e];
-        if (!this.cartService.createBillPageRef || !this.cartService.createBillPageRef.currentBiill) {
-          this.cartService.setDefaultBill();
-        } else {
-          this.cartService.updateDefaultBill();
-        }
-        this.creatBillPage = { ...this.cartService.createBillPageRef };
-      })
-      .catch((e) => {});
+    // this.storage
+    //   .getStorage(StoreName.ITEM)
+    //   .then((e) => {
+    //     this.cartService.mainItems = [...e];
+    //     if (!this.cartService.createBillPageRef || !this.cartService.createBillPageRef.currentBiill) {
+    //       this.cartService.setDefaultBill();
+    //     } else {
+    //       this.cartService.updateDefaultBill();
+    //     }
+    //     this.creatBillPage = { ...this.cartService.createBillPageRef };
+    //   })
+    //   .catch((e) => {});
+
+    this.cartService.getAllItem(true, () => {
+      if (
+        !this.cartService.createBillPageRef ||
+        !this.cartService.createBillPageRef.currentBiill
+      ) {
+        this.cartService.setDefaultBill();
+      } else {
+        this.cartService.updateDefaultBill();
+      }
+      this.creatBillPage = { ...this.cartService.createBillPageRef };
+    });
   };
-
-
-
 }

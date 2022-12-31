@@ -109,7 +109,7 @@ export class ClassBill {
   }
 
   getTotal = (cartServc: CartService): number =>
-    UtilClass.Get_Total(cartServc, this.bill.itemPurchased);
+    UtilClass.Get_Total(cartServc, this.bill.itemPurchased).price;
   getItemCount = (): number =>
     UtilClass.Get_Item_Count(this.bill.itemPurchased);
 

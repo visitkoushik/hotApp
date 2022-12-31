@@ -20,8 +20,8 @@
         <h3>{{cartItem.items.itemName}}</h3>
         <span style="float: left"> Qty. {{cartItem.count}}</span>
         <span style="float: right" class="dangercolor">
-          Total:{{(cartItem.items.itemSellValue * cartItem.count).toFixed(2)}}
-          Rs.</span
+          Total:{{(cartItem.items.itemPrice.sellingAmount *
+          cartItem.count).toFixed(2)}} Rs.</span
         >
       </div>
     </ion-item>
@@ -41,8 +41,9 @@
     <ion-title>
       <ion-item>
         <ion-label style="color: green">
-          Total({{data.listItem|subtotal}}) - Discount({{data.discount}}) =
-          {{data.listItem|subtotal: 'price':data.discount+""}} Rs.</ion-label
+          Total({{data.listItem|subtotal}}) - Discount({{data.listItem|subtotal:
+          'discount':data.discount+""}}) = {{data.listItem|subtotal:
+          'price':data.discount+""}} Rs.</ion-label
         >
       </ion-item>
     </ion-title>

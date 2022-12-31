@@ -31,6 +31,7 @@ export enum ApiEndPoint {
   CATEGORY_ADD = 'category/add',
   CATEGORY_LIST = 'category/lists',
   METADATA = 'metadata',
+  LOGIN = 'auth/login',
 }
 
 export interface I_CreateBillPage {
@@ -61,10 +62,12 @@ export class UtilClass {
   static Get_Total = (
     cartsrvc: CartService,
     itemPurchased: I_CartItem[]
-  ): number => {
+  ): { price: number; totalDiscount: number } => {
+    debugger;
     let price = 0;
+    let totalDiscount = 0;
     if (!Array.isArray(itemPurchased)) {
-      return price;
+      return { price, totalDiscount };
     }
 
     itemPurchased
@@ -72,6 +75,14 @@ export class UtilClass {
       .forEach((e: I_CartItem) => {
         const item = e.items;
         if (item) {
+          item.discount = item.discount || 0;
+          item.isDiscountInPercentage = item.isDiscountInPercentage == true;
+          totalDiscount =
+            totalDiscount +
+            e.count *
+              (item.isDiscountInPercentage
+                ? (item.itemPrice.sellingAmount * item.discount) / 100
+                : item.discount);
           price =
             price +
             e.count *
@@ -80,7 +91,10 @@ export class UtilClass {
                 : item.itemPrice.sellingAmount - item.discount);
         }
       });
-    return +price.toFixed(2);
+    return {
+      price: +price.toFixed(2),
+      totalDiscount: +totalDiscount.toFixed(2),
+    };
   };
 
   static Get_Item_Count = (itemPurchased: I_CartItem[]): number => {

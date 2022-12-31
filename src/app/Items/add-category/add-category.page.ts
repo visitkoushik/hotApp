@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
+import { HttpService } from 'src/app/providers/http.service';
+import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
+import { AppResponse } from 'src/model/AppResponse';
 import { I_Category } from 'src/model/category';
-import { StoreName } from 'src/model/util';
+import { ApiEndPoint, StoreName } from 'src/model/util';
 
 @Component({
   selector: 'app-add-category',
@@ -18,19 +21,25 @@ export class AddCategoryPage implements OnInit {
     discountInPercent: false,
     available: false,
   } as I_Category;
+  CATEGORY_ADD: boolean = false;
   constructor(
     public cartServc: CartService,
     private store: AppStorageService,
-    private util: UtilService
+    private util: UtilService,
+    private httpService: HttpService,
+    private snacbar:SnackbarService
   ) {}
 
   async ngOnInit() {
     // this.cartServc.categoryList =
     //   (await this.store.getStorage('category').catch((e) => {})) ||
     //   ([] as I_Category[]);
+    this.CATEGORY_ADD =
+      this.util.metaData.accessRight.findIndex((e) => e === 'CATEGORY_ADD') >
+      -1;
   }
   isNotValid = (): boolean => this.item.categoryName?.trim().length === 0;
-  onSave = async () => {
+  onSave_backup = async () => {
     this.util.isLoading = true;
     if (!this.item.id) {
       this.item.id = Date.now() + '';
@@ -53,6 +62,20 @@ export class AddCategoryPage implements OnInit {
     ]);
 
     this.util.isLoading = false;
+  };
+
+  onSave = () => {
+    this.util.isLoading = true;
+    this.httpService
+      .post(ApiEndPoint.CATEGORY_ADD, { ...this.item })
+      .then((e: AppResponse<I_Category>) => {
+        this.util.isLoading = false;
+         this.snacbar.openSnackBar('Successfuly Saved');
+      })
+      .catch((e: AppResponse<I_Category>) => {
+        this.snacbar.openSnackBar(e.error);
+        this.util.isLoading = false;
+      });
   };
 
   oninputClick = (e) => e.target.select();
