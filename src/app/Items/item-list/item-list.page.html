@@ -7,21 +7,25 @@
 </ion-header>
 
 <ion-content>
-  <mat-card
-    *ngFor="let item of cartsrvc.mainItems| filter: filterTerm; "
-  >
+  <ion-item>
+    <ion-label>Include out of stock items</ion-label>
+    <ion-toggle
+      slot="end"
+      name="apple"
+      color="primary"
+      (ionChange)="onChangeIncludeStock($event)"
+      [(ngModel)]="includeOutOfStockItem"
+    ></ion-toggle>
+  </ion-item>
+  <mat-card *ngFor="let item of allItems| filter: filterTerm; ">
     <mat-card-title-group>
       <mat-card-title> {{item.itemName}}</mat-card-title>
       <mat-card-subtitle color="dangercolor"
-        >Status: {{item.isAvailable?'Available':'Unavailable'}}
+        >Status: {{item.available?'Available':'Unavailable'}}
       </mat-card-subtitle>
 
-      <div class="rowList3" >
-        <ion-button
-          fill="outline"
-          color="primary"
-          (click)="onModifyItem(item)"
-        >
+      <div class="rowList3">
+        <ion-button fill="outline" color="primary" (click)="onModifyItem(item)">
           Update
         </ion-button>
       </div>

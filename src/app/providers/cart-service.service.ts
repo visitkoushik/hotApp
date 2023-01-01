@@ -21,7 +21,7 @@ export class CartService {
   public createBillPageRef: I_CreateBillPage = null;
   public mainItems: I_Items[] = [];
   public allBiills: I_Bill[] = [] as I_Bill[];
-  public categoryList: I_Category[] = [] as I_Category[];
+  // public categoryList: I_Category[] = [] as I_Category[];
   public globalOrderNumber = 0;
 
   public maxDate;

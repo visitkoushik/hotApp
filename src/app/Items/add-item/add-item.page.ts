@@ -53,31 +53,22 @@ export class AddItemPage implements OnInit {
       this.utisrvc.metaData.accessRight.findIndex(
         (e) => e === 'CATEGORY_READ'
       ) > -1;
-debugger
+    debugger;
     if (this.ITEM_ADD) {
       this.setDefault();
 
       if (this.CATEGORY_READ) {
-        this.httpClient
-          .get(ApiEndPoint.CATEGORY_LIST,"available=true")
-          .then((e: AppResponse<I_Category[]>) => {
-            debugger
-            this.categoryList = e.responseObject;
-          })
-          .catch((e: AppResponse<string>) => {
-            // this.snackbar.openSnackBar('')
-
-          });
+        this.getCategory();
       }
+
+      this.activeRoute.queryParams.subscribe((p) => {
+        if (p && p.data) {
+          this.item = JSON.parse(p.data);
+        } else {
+          this.setDefault();
+        }
+      });
     }
-    // this.categoryList = this.cartsrvc.categoryList;
-    // this.activeRoute.queryParams.subscribe((p) => {
-    //   if (p && p.data) {
-    //     this.item = JSON.parse(p.data);
-    //   } else {
-    //     this.setDefault();
-    //   }
-    // });
   }
   oninputClick = (e) => e.target.select();
   setDefault = () => {
@@ -147,16 +138,23 @@ debugger
         this.snackbar.openSnackBar('Error on item Saved ');
       });*/
   };
-
-   onSave = async () => {
+  onChangeItem = (value) => (this.item.category = value);
+  onSave = async () => {
     let newSavedItems: I_Items = { ...this.item };
-    this.utisrvc.isLoading = true;
+    if (newSavedItems.id) {
+      this.updateItem();
+    } else {
+      this.addItem();
+    }
+  };
 
+  private addItem = () => {
+    this.utisrvc.isLoading = true;
     this.httpClient
-      .post(ApiEndPoint.ITEM_ADD, newSavedItems)
+      .post(ApiEndPoint.ITEM_ADD, { ...this.item })
       .then((e: AppResponse<I_Items>) => {
         const newSavedItems = e.responseObject;
-        this.cartsrvc.mainItems=[...this.cartsrvc.mainItems, newSavedItems]
+        this.cartsrvc.mainItems = [...this.cartsrvc.mainItems, newSavedItems];
         this.snackbar.openSnackBar('Successfuly Saved');
         this.setDefault();
         this.utisrvc.isLoading = false;
@@ -165,8 +163,45 @@ debugger
         this.snackbar.openSnackBar(e.error);
         this.setDefault();
         this.utisrvc.isLoading = false;
-
       });
   };
-  onChangeItem = (value) => (this.item.category = value);
+  private updateItem = () => {
+    this.utisrvc.isLoading = true;
+    this.httpClient
+      .put(ApiEndPoint.ITEM_UPDATE, this.item.id, {
+        ...this.item,
+        category:
+          typeof this.item.category !== 'string'
+            ? this.item.category.id
+            : this.item.category,
+      })
+      .then((e: AppResponse<I_Items>) => {
+        const newSavedItems = e.responseObject;
+        this.cartsrvc.mainItems = this.cartsrvc.mainItems.map((e: I_Items) =>
+          e.id === newSavedItems.id ? newSavedItems : e
+        );
+        this.snackbar.openSnackBar('Successfuly updated');
+        this.setDefault();
+        this.utisrvc.isLoading = false;
+      })
+      .catch((e: AppResponse<I_Items>) => {
+        this.snackbar.openSnackBar(e.error);
+        this.setDefault();
+        this.utisrvc.isLoading = false;
+      });
+  };
+
+  getCategory() {
+    this.utisrvc.isLoading = true;
+    this.httpClient
+      .get(ApiEndPoint.CATEGORY_LIST, 'available=true')
+      .then((e: AppResponse<I_Category[]>) => {
+        this.utisrvc.isLoading = false;
+        this.categoryList = e.responseObject;
+      })
+      .catch((e: AppResponse<string>) => {
+        this.utisrvc.isLoading = false;
+        this.snackbar.openSnackBar(e.error);
+      });
+  }
 }

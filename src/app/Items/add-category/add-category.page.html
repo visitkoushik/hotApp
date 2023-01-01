@@ -59,7 +59,7 @@
   </span>
   <ion-list>
     <ion-item
-      *ngFor="let category of cartServc.categoryList; "
+      *ngFor="let category of this.categoryList; "
       (click)="onClickCategoryItem(category)"
     >
       <ion-title> {{category.categoryName}}</ion-title>

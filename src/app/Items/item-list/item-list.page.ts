@@ -10,9 +10,15 @@ import { I_Items } from 'src/model/items';
 })
 export class ItemListPage implements OnInit {
   public filterTerm = '';
+  public includeOutOfStockItem: boolean = false;
+
+  public allItems: I_Items[] = [];
+
   constructor(public cartsrvc: CartService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getItemList();
+  }
   trackByFn = (inx, item: I_Items) => item.id;
 
   onModifyItem = (item: I_Items) => {
@@ -20,4 +26,13 @@ export class ItemListPage implements OnInit {
       queryParams: { data: JSON.stringify(item) },
     });
   };
+  onChangeIncludeStock = (event) => {
+    this.getItemList();
+  };
+
+  private getItemList=()=>{
+    this.cartsrvc.getAllItem(this.includeOutOfStockItem ? null : true, () => {
+      this.allItems = this.cartsrvc.mainItems;
+    });
+  }
 }

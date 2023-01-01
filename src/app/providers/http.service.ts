@@ -30,6 +30,12 @@ export class HttpService {
     return this.http.post(_url, body, this.getCustomHeaders()).toPromise();
   };
 
+  public put = (api: ApiEndPoint, id: string, body: any): Promise<any> => {
+    const _url = this.baseUrl + api.replace(':id', id);
+
+    return this.http.put(_url, body, this.getCustomHeaders()).toPromise();
+  };
+
   fetchMetaData = async (onfail?: Function): Promise<boolean> => {
     debugger;
     this.util.isLoading = true;

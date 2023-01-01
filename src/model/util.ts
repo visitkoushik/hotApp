@@ -26,9 +26,12 @@ export enum StoreName {
 
 export enum ApiEndPoint {
   ITEM_ADD = 'item/add',
+  ITEM_UPDATE = 'item/:id',
   EMPLOYEE_ADD = 'employee/add',
+  EMPLOYEE_UPDATE = 'employee/:id',
   ITEM_LIST = 'item/lists',
   CATEGORY_ADD = 'category/add',
+  CATEGORY_UPDATE = 'category/:id',
   CATEGORY_LIST = 'category/lists',
   METADATA = 'metadata',
   LOGIN = 'auth/login',
