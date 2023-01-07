@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: 'tab',
     loadChildren: () => import('./tab/tab.module').then((m) => m.TabPageModule),
-    canLoad: [AuthGaurdService]
+    canLoad: [AuthGaurdService],
   },
   {
     path: 'allbills',
@@ -61,13 +61,12 @@ const routes: Routes = [
       import('./appsetting/appsetting.module').then(
         (m) => m.AppsettingPageModule
       ),
-
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
-      canLoad: [OwnerGaurdService],
+    canLoad: [OwnerGaurdService],
   },
   {
     path: 'tab-item',
@@ -107,11 +106,9 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    canLoad: [AuthGaurdService],
   },
 ];
 

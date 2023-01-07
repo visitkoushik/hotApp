@@ -29,6 +29,8 @@ export enum ApiEndPoint {
   ITEM_UPDATE = 'item/:id',
   EMPLOYEE_ADD = 'employee',
   EMPLOYEE_UPDATE = 'employee/:id',
+  EMPLOYEE_PROFILE = 'employee/profile',
+  EMPLOYEE_LIST = 'employee/:id',
   ITEM_LIST = 'item',
   CATEGORY_ADD = 'category',
   CATEGORY_UPDATE = 'category/:id',

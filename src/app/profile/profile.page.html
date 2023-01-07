@@ -1,9 +1,109 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-item>
+    <ion-label position="floating" class="required">First name</ion-label>
+    <ion-input
+      [(ngModel)]="profile.firstName"
+      type="text"
+      required
+      readonly="true"
+    ></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label position="floating">Middle name</ion-label>
+    <ion-input
+      [(ngModel)]="profile.middleName"
+      type="text"
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Last name</ion-label>
+    <ion-input
+      [(ngModel)]="profile.lastName"
+      type="text"
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Gender</ion-label>
+    <ion-input
+      [(ngModel)]="profile.gender"
+      type="text"
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Date of Birth</mat-label>
+    <!-- #docregion toggle -->
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="profile.dateOfBirth"
+      readonly="true"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="true"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <!-- #enddocregion toggle -->
+  </mat-form-field>
+
+  <ion-item>
+    <ion-label position="floating" class="required">Mobile number</ion-label>
+    <ion-input
+      [(ngModel)]="profile.mobileNumbers"
+      type="tel"
+      maxlength="10"
+      required="true"
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" class="required">E-mail</ion-label>
+    <ion-input
+      [(ngModel)]="profile.email"
+      type="text"
+      required
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Date of Joining</mat-label>
+    <!-- #docregion toggle -->
+    <input
+      matInput
+      [matDatepicker]="picker1"
+      [(ngModel)]="profile.dateOfJoin"
+      readonly="true"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker1" [disabled]="true"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+    <!-- #enddocregion toggle -->
+  </mat-form-field>
+  <ion-item>
+    <ion-label position="floating" class="required">User Type</ion-label>
+    <ion-input
+      [(ngModel)]="profile.userType"
+      type="text"
+      required
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" class="required">User Roles</ion-label>
+    <ion-input
+      [(ngModel)]="profile.roles"
+      type="text"
+      required
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+  <div appearance="fill" class="divchnagePass">
+    <ion-button mat-raised-button color="primary"> Change Password </ion-button>
+  </div>
 </ion-content>
