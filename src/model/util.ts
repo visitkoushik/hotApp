@@ -25,16 +25,22 @@ export enum StoreName {
 }
 
 export enum ApiEndPoint {
-  ITEM_ADD = 'item/add',
+  ITEM_ADD = 'item',
   ITEM_UPDATE = 'item/:id',
-  EMPLOYEE_ADD = 'employee/add',
+  EMPLOYEE_ADD = 'employee',
   EMPLOYEE_UPDATE = 'employee/:id',
-  ITEM_LIST = 'item/lists',
-  CATEGORY_ADD = 'category/add',
+  ITEM_LIST = 'item',
+  CATEGORY_ADD = 'category',
   CATEGORY_UPDATE = 'category/:id',
-  CATEGORY_LIST = 'category/lists',
+  CATEGORY_LIST = 'category',
+
   METADATA = 'metadata',
   LOGIN = 'auth/login',
+  BILL_ADD = 'billing',
+  BILL_UPDATE = 'billing/:id',
+  BILL_UPDATE_PAYDUE = 'billing/paydue/:id',
+  BILL_LIST = 'billing',
+  BILL_DELETE = 'billing/:id',
 }
 
 export interface I_CreateBillPage {

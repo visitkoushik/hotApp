@@ -20,4 +20,6 @@ export class SubtotalPipe implements PipeTransform {
         : UtilClass.Get_Total(this.cartsrvc, value).price - adjust + '';
     return price;
   }
+
+
 }

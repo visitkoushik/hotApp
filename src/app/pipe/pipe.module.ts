@@ -7,6 +7,7 @@ import { BalanceSheetPipe } from './balance.pipe';
 import { ConvertToFullDate } from './convert-to-fulldate';
 import { ShortDatePipe } from './short-date.pipe';
 import { MenuPipe } from './menu.pipe';
+import { ProfitCalculator } from './profitCalulator.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MenuPipe } from './menu.pipe';
     BalanceSheetPipe,
     ConvertToFullDate,
     ShortDatePipe,
+    ProfitCalculator,
     MenuPipe,
   ],
   exports: [
@@ -27,6 +29,7 @@ import { MenuPipe } from './menu.pipe';
     BalanceSheetPipe,
     ConvertToFullDate,
     ShortDatePipe,
+    ProfitCalculator,
     MenuPipe,
   ],
 })

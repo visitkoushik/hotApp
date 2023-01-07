@@ -18,7 +18,10 @@
         >
           <mat-icon end>lock</mat-icon>
         </ion-button>
-        <ion-button class="menuicon" *ngIf="auth.isLoggedIn && pageEvent?.hideLogin !== true">
+        <ion-button
+          class="menuicon"
+          *ngIf="auth.isLoggedIn && pageEvent?.hideLogin !== true"
+        >
           <mat-icon end>lock_open</mat-icon>
         </ion-button>
         <ion-menu-button
@@ -67,7 +70,9 @@
               <span>Reports & Bills</span>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'appsettings'">
+          <ion-menu-toggle
+            *ngIf="util.metaData?.menuItems | menu : 'appsettings'"
+          >
             <ion-item routerLink="/appsetting" routerLinkActive="active">
               <mat-icon>settings</mat-icon>
               <span>App Settings</span>
@@ -77,6 +82,13 @@
             <ion-item routerLink="/employee" routerLinkActive="active">
               <mat-icon>create</mat-icon>
               Employee
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'profile'">
+            <mat-divider></mat-divider>
+            <ion-item routerLink="/profile" routerLinkActive="active">
+              <mat-icon>person</mat-icon>
+              Profile
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>

@@ -14,8 +14,8 @@ export class HttpService {
 
   constructor(private http: HttpClient, private util: UtilService) {}
 
-  public get = (api: ApiEndPoint, query?: string): Promise<any> => {
-    const _url = this.baseUrl + api + (query ? '?' + query : '');
+  public get = (api: ApiEndPoint, query?: string,id?: string,): Promise<any> => {
+    const _url = this.baseUrl + api +(id ? '/' + id : '') + (query ? '?' + query : '');
     const headers = new HttpHeaders();
     headers.set('content-type', 'application/json');
     if (this.util.userLogin && this.util.userLogin.authCode) {
@@ -34,6 +34,12 @@ export class HttpService {
     const _url = this.baseUrl + api.replace(':id', id);
 
     return this.http.put(_url, body, this.getCustomHeaders()).toPromise();
+  };
+
+  public delete = (api: ApiEndPoint, id: string): Promise<any> => {
+    const _url = this.baseUrl + api.replace(':id', id);
+
+    return this.http.delete(_url, this.getCustomHeaders()).toPromise();
   };
 
   fetchMetaData = async (onfail?: Function): Promise<boolean> => {

@@ -8,6 +8,7 @@ import { I_TenantDetails } from 'src/model/util';
 })
 export class UtilService {
   public gvtTax = 0;
+  public maxPageCount=1;
   public storeBilling: any;
   public isLoading = false;
   public tenantDetail: I_TenantDetails;
