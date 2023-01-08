@@ -38,12 +38,6 @@ const routes: Routes = [
       import('./configure/configure.module').then((m) => m.ConfigurePageModule),
   },
   {
-    path: 'employee',
-    loadChildren: () =>
-      import('./employee/employee.module').then((m) => m.EmployeePageModule),
-  },
-
-  {
     path: 'configures',
     loadChildren: () =>
       import('./configure/configure.module').then((m) => m.ConfigurePageModule),
@@ -102,12 +96,19 @@ const routes: Routes = [
   {
     path: 'employee',
     loadChildren: () =>
-      import('./employee/employee.module').then((m) => m.EmployeePageModule),
+      import('./employee/addEmployee/employee-add.module').then(
+        (m) => m.EmployeeAddPageModule
+      ),
   },
   {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    canLoad: [AuthGaurdService],
+  },
+  {
+    path: 'employee-tab',
+    loadChildren: () => import('./employee/employee-tab/employee-tab.module').then( m => m.EmployeeTabPageModule),
     canLoad: [AuthGaurdService],
   },
 ];

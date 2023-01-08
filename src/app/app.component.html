@@ -49,25 +49,25 @@
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'bill'">
             <ion-item routerLink="/tab" routerLinkActive="active">
               <mat-icon>create</mat-icon>
-              Bills
+              {{ util.metaData?.menuItems | menu : "bill" : "true" }}
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'item'">
             <ion-item routerLink="/tab-item" routerLinkActive="active">
               <mat-icon>view_list</mat-icon>
-              Items
+              {{ util.metaData?.menuItems | menu : "item" : "true" }}
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'config'">
             <ion-item routerLink="/configures" routerLinkActive="active">
               <mat-icon>view_module</mat-icon>
-              <span>Configure</span>
+              <span> {{ util.metaData?.menuItems | menu : "config" : "true" }}</span>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'reports'">
             <ion-item routerLink="/reports" routerLinkActive="active">
               <mat-icon>report</mat-icon>
-              <span>Reports & Bills</span>
+              <span>{{ util.metaData?.menuItems | menu : "reports" : "true" }}</span>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle
@@ -75,20 +75,20 @@
           >
             <ion-item routerLink="/appsetting" routerLinkActive="active">
               <mat-icon>settings</mat-icon>
-              <span>App Settings</span>
+              <span>{{ util.metaData?.menuItems | menu : "appsettings" : "true" }}</span>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'emp'">
-            <ion-item routerLink="/employee" routerLinkActive="active">
+            <ion-item routerLink="/employee-tab" routerLinkActive="active">
               <mat-icon>create</mat-icon>
-              Employee
+              {{ util.metaData?.menuItems | menu : "emp" : "true" }}
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'profile'">
             <mat-divider></mat-divider>
             <ion-item routerLink="/profile" routerLinkActive="active">
               <mat-icon>person</mat-icon>
-              Profile
+              {{ util.metaData?.menuItems | menu : "profile" : "true" }}
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>

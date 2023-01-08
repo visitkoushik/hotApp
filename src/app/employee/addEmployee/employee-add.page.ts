@@ -3,16 +3,16 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { I_Employee } from 'src/model/employee';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
-import { HttpService } from '../providers/http.service';
-import { SnackbarService } from '../providers/snackbar.service';
-import { UtilService } from '../providers/utilservice.service';
+import { HttpService } from '../../providers/http.service';
+import { SnackbarService } from '../../providers/snackbar.service';
+import { UtilService } from '../../providers/utilservice.service';
 
 @Component({
   selector: 'app-employee',
-  templateUrl: './employee.page.html',
-  styleUrls: ['./employee.page.scss'],
+  templateUrl: './employee-add.page.html',
+  styleUrls: ['./employee-add.page.scss'],
 })
-export class EmployeePage implements OnInit {
+export class EmployeeAddPage implements OnInit {
   public minDate = new Date(1950, 0, 1);
   public maxDate = new Date();
   public update: boolean = false;
