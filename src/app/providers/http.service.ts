@@ -15,7 +15,8 @@ export class HttpService {
   constructor(private http: HttpClient, private util: UtilService) {}
 
   public get = (api: ApiEndPoint, query?: string,id?: string,): Promise<any> => {
-    const _url = this.baseUrl + api +(id ? '/' + id : '') + (query ? '?' + query : '');
+    const idToFetch = (id ? '/' + id : '');
+    const _url = this.baseUrl + api.replace(':id',idToFetch)  + (query ? '?' + query : '');
     const headers = new HttpHeaders();
     headers.set('content-type', 'application/json');
     if (this.util.userLogin && this.util.userLogin.authCode) {
@@ -43,7 +44,6 @@ export class HttpService {
   };
 
   fetchMetaData = async (onfail?: Function): Promise<boolean> => {
-    debugger;
     this.util.isLoading = true;
     const metadataResp: HttpRespObject = await this.get(ApiEndPoint.METADATA);
     this.util.isLoading = !true;

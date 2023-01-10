@@ -48,6 +48,7 @@ export class AllBillsPage implements OnInit {
     private httpServic: HttpService
   ) {
     this.currentMaxPage = this.util.maxPageCount;
+    this.currentDate = new Date();
     this.BILLING_READ =
       this.util.metaData.accessRight.findIndex((e) => e === 'BILLING_READ') >
       -1;
@@ -58,7 +59,6 @@ export class AllBillsPage implements OnInit {
     this.BILLING_UPDATE =
       this.util.metaData.accessRight.findIndex((e) => e === 'BILLING_UPDATE') >
       -1;
-    this.currentDate = new Date();
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
@@ -82,13 +82,7 @@ export class AllBillsPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.activeRoute.queryParams.subscribe((p) => {
-    //   // this.allBills = [...this.cartService.allBiills];
-    //   this.allBills = [...this.cartService.allBiills].filter(
-    //     (itm) => itm.status
-    //   );
-    // });
-    debugger;
+
     this.setMaxDate();
     this.fetchBills();
   }

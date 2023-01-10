@@ -58,7 +58,6 @@ export class AuthService {
 
           if (e.status == 1) {
             this.util.userLogin = { ...e.responseObject };
-            debugger
             await this.httpClient.fetchMetaData();
             this.isLoggedIn = true;
             resolve('Login success');

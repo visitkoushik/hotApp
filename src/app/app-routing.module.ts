@@ -101,6 +101,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'employee-list',
+    loadChildren: () =>
+      import('./employee/employee-list/employee-list.module').then(
+        (m) => m.EmployeeListPageModule
+      ),
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfilePageModule),
@@ -110,6 +117,10 @@ const routes: Routes = [
     path: 'employee-tab',
     loadChildren: () => import('./employee/employee-tab/employee-tab.module').then( m => m.EmployeeTabPageModule),
     canLoad: [AuthGaurdService],
+  },
+  {
+    path: 'update-employee',
+    loadChildren: () => import('./employee/update-employee/update-employee.module').then( m => m.UpdateEmployeePageModule)
   },
 ];
 

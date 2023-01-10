@@ -16,6 +16,7 @@ import { AuthService } from './providers/auth/auth.service';
 import { AppStorageModule } from './app-storage/app-storage.module';
 import { PlatformModule } from '@angular/cdk/platform';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppStorageModule,
     PlatformModule,
     HttpClientModule,
+    CommonModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

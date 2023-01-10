@@ -87,7 +87,6 @@ export class AddCategoryPage implements OnInit {
   // };
 
   onSave = () => {
-    debugger
     if (this.item.id) {
       this.updateCategory();
     } else {

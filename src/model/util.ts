@@ -74,7 +74,6 @@ export class UtilClass {
     cartsrvc: CartService,
     itemPurchased: I_CartItem[]
   ): { price: number; totalDiscount: number } => {
-    debugger;
     let price = 0;
     let totalDiscount = 0;
     if (!Array.isArray(itemPurchased)) {

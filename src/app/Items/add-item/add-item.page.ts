@@ -53,7 +53,6 @@ export class AddItemPage implements OnInit {
       this.utisrvc.metaData.accessRight.findIndex(
         (e) => e === 'CATEGORY_READ'
       ) > -1;
-    debugger;
     if (this.ITEM_ADD) {
       this.setDefault();
 

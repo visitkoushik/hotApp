@@ -1,3 +1,5 @@
+import { GENDER } from "./util";
+
 export interface I_Employee {
   firstName: string;
   lastName: string;
@@ -5,7 +7,7 @@ export interface I_Employee {
   mobileNumbers: string;
   email: string;
   primaryAddressIndex: number;
-  gender: string;
+  gender: GENDER;
   roles: string;
   dateOfBirth: Date;
   userType: string;
@@ -15,4 +17,5 @@ export interface I_Employee {
   isCurrent: boolean;
   passcode: string;
   userName: string;
+  login?:{userName: string};
 }

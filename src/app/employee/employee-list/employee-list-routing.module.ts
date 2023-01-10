@@ -7,8 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: EmployeeListPage,
-    data: { title: 'Employee List', hideLogin:true },
-  }
+    data: { title: 'Employee List', hideLogin: true },
+  },
+  {
+    path: 'update-employee',
+    loadChildren: () =>
+      import('../update-employee/update-employee-routing.module').then(
+        (m) => m.UpdateEmployeePageRoutingModule
+      ),
+  },
 ];
 
 @NgModule({

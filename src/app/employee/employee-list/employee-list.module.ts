@@ -15,10 +15,10 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    FormsModule,
     MaterialModule,
     PipeModule,
     EmployeeListPageRoutingModule
+
   ],
   declarations: [EmployeeListPage]
 })

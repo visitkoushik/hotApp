@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EmployeeTabPageRoutingModule } from './employee-tab-routing.module';
+import { UpdateEmployeePageRoutingModule } from './update-employee-routing.module';
 
-import { EmployeeTabPage } from './employee-tab.page';
+import { UpdateEmployeePage } from './update-employee.page';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
 
@@ -15,11 +15,11 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    MaterialModule,
     ReactiveFormsModule,
+    MaterialModule,
     PipeModule,
-    EmployeeTabPageRoutingModule,
+    UpdateEmployeePageRoutingModule
   ],
-  declarations: [EmployeeTabPage]
+  declarations: [UpdateEmployeePage]
 })
-export class EmployeeTabPageModule {}
+export class UpdateEmployeePageModule {}
