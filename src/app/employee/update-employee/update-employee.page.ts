@@ -7,6 +7,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/providers/http.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
@@ -14,6 +15,7 @@ import { UtilService } from 'src/app/providers/utilservice.service';
 import { I_Employee } from 'src/model/employee';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @Component({
   selector: 'app-update-employee',
@@ -32,7 +34,8 @@ export class UpdateEmployeePage implements OnInit {
     public utilsrvc: UtilService,
     private httpClient: HttpService,
     private snackBar: SnackbarService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -134,10 +137,21 @@ export class UpdateEmployeePage implements OnInit {
       });
   }
 
-
   isValid = (): boolean => {
     return this.ionicForm.valid;
   };
 
-  onChangePassCode() {}
+  onChangePassCode = () => {
+    this.openDialog();
+  };
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { userName: this.emp.login.userName };
+
+    this.dialog.open(ResetPasswordComponent, dialogConfig);
+  }
 }

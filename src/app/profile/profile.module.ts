@@ -9,6 +9,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 import { ProfilePage } from './profile.page';
 import { PipeModule } from '../pipe/pipe.module';
 import { MaterialModule } from '../material.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -16,9 +17,9 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     IonicModule,
     PipeModule,
+    MaterialModule,
     ProfilePageRoutingModule,
-    MaterialModule
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage, ChangePasswordComponent],
 })
 export class ProfilePageModule {}

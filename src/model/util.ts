@@ -43,6 +43,9 @@ export enum ApiEndPoint {
   BILL_UPDATE_PAYDUE = 'billing/paydue/:id',
   BILL_LIST = 'billing',
   BILL_DELETE = 'billing/:id',
+
+  RESETPASSWORD = 'employee/resetpassword',
+  CHANGEASSWORD = 'employee/changepassword',
 }
 
 export interface I_CreateBillPage {

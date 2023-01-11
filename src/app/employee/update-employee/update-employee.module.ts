@@ -9,6 +9,7 @@ import { UpdateEmployeePageRoutingModule } from './update-employee-routing.modul
 import { UpdateEmployeePage } from './update-employee.page';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     PipeModule,
     UpdateEmployeePageRoutingModule
   ],
-  declarations: [UpdateEmployeePage]
+  declarations: [UpdateEmployeePage, ResetPasswordComponent]
 })
 export class UpdateEmployeePageModule {}

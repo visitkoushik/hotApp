@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppResponse } from 'src/model/AppResponse';
 import { I_Profile } from 'src/model/Profile';
 import { ApiEndPoint } from 'src/model/util';
 import { HttpService } from '../providers/http.service';
 import { SnackbarService } from '../providers/snackbar.service';
 import { UtilService } from '../providers/utilservice.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +18,8 @@ export class ProfilePage implements OnInit {
   constructor(
     public utilsrvc: UtilService,
     private httpClient: HttpService,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -31,5 +34,18 @@ export class ProfilePage implements OnInit {
         this.snackBar.openSnackBar(e.error);
         this.utilsrvc.isLoading = false;
       });
+  }
+
+  onChangePassCode = () => {
+    this.openDialog();
+  };
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 }
