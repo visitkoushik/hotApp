@@ -86,8 +86,20 @@ export class AppComponent implements OnInit, OnChanges {
     }
   };
   appLogout = () => {
-    this.auth.isLoggedIn = false;
-    this.auth.redirectUrl = '';
+    // this.auth.isLoggedIn = false;
+    // this.auth.redirectUrl = '';
+    this.util.isLoading = true;
+
+    this.httpClient
+      .post(ApiEndPoint.LOGOUT, {})
+      .then((e) => {
+        this.util.isLoading = false;
+        this.isLoggedIn = false;
+        this.router.navigate(['/login']);
+      })
+      .catch((e) => {
+        this.util.isLoading = false;
+      });
   };
 
   fetchBills = () => {
@@ -122,5 +134,4 @@ export class AppComponent implements OnInit, OnChanges {
         this.snackbar.openSnackBar('Please set Tenant detail');
       });
   };
-
 }

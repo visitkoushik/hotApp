@@ -37,7 +37,6 @@ export enum ApiEndPoint {
   CATEGORY_LIST = 'category',
 
   METADATA = 'metadata',
-  LOGIN = 'auth/login',
   BILL_ADD = 'billing',
   BILL_UPDATE = 'billing/:id',
   BILL_UPDATE_PAYDUE = 'billing/paydue/:id',
@@ -46,6 +45,9 @@ export enum ApiEndPoint {
 
   RESETPASSWORD = 'employee/resetpassword',
   CHANGEASSWORD = 'employee/changepassword',
+
+  LOGIN = 'auth/login',
+  LOGOUT = 'auth/logout'
 }
 
 export interface I_CreateBillPage {

@@ -31,20 +31,32 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {}
 
   resetPasscod = () => {
+    this.util.isLoading = true;
+
     this.httpService
       .post(ApiEndPoint.RESETPASSWORD, {
         userName: this.userName,
         newPassword: this.passCode,
       })
       .then((e) => {
+        this.util.isLoading = false;
+
         this.snacBar.openSnackBar('Passwword changed');
         this.dialogRef.close();
-        this.onSave.emit({ password: this.passCode, status: 'Passwword changed' });
+        this.onSave.emit({
+          password: this.passCode,
+          status: 'Passwword changed',
+        });
       })
-      .catch((e) => this.snacBar.openSnackBar(e.error.error));
+      .catch((e) => {
+        this.util.isLoading = false;
 
+        this.snacBar.openSnackBar(e.error.error);
+      });
   };
   cancel = () => {
+    this.util.isLoading = false;
+
     this.dialogRef.close();
     this.onCancel.emit({ status: 'Action canceled' });
   };

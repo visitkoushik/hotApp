@@ -26,20 +26,25 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {}
 
   changePasscod = () => {
+    this.util.isLoading = true;
     this.httpService
       .post(ApiEndPoint.CHANGEASSWORD, {
         oldPassword: this.oldPassword,
         newPassword: this.passCode,
       })
       .then((e) => {
+        this.util.isLoading = false;
         this.snacBar.openSnackBar('Passwword changed');
         this.dialogRef.close();
       })
       .catch((e) => {
+        this.util.isLoading = false;
         this.snacBar.openSnackBar(e.error.error);
       });
   };
   cancel = () => {
+    this.util.isLoading = false;
+
     this.dialogRef.close();
   };
 }

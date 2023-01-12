@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
 import { ConfiremdBillPage } from './confirmed-bill';
-import { ConfiremedbillPageRoutingModule } from './confirmed-routing.module copy';
+import { ConfiremedbillPageRoutingModule } from './confirmed-routing.module';
 import { BillPrintDetailsModule } from '../../bill-print-details/bill-print-details.module';
 
 

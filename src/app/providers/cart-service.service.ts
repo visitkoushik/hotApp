@@ -58,7 +58,7 @@ export class CartService {
     icreatPage.listOfCartItem = this.mainItems
       .filter((e) => e.available)
       .map<I_CartItem>((itm: I_Items, inx: number) => ({
-        id: inx + 1 + '',
+        id: itm.id,
         items: { ...itm },
         count: 0,
       }));

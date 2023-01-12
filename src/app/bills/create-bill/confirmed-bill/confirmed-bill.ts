@@ -58,7 +58,7 @@ export class ConfiremdBillPage implements OnInit {
       () => {
         // eslint-disable-next-line no-underscore-dangle
         this.uploadBill();
-
+        // this.done();
       },
       () => {}
     );
@@ -72,16 +72,15 @@ export class ConfiremdBillPage implements OnInit {
         .post(ApiEndPoint.BILL_ADD, billReq)
         .then((e) => {
           this.snack.openSnackBar('Bill is created');
+          this.cartService.setDefaultBill();
           this.router.navigateByUrl('/tab/createbill');
-
           this.util.isLoading = false;
         })
         .catch((e) => {
           this.snack.openSnackBar('Something went wrong');
           this.util.isLoading = false;
         });
-    }
-    else{
+    } else {
       this.snack.openSnackBar('Operation not permitted');
     }
   };

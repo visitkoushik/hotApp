@@ -34,6 +34,7 @@ export class CreateBillPage implements OnInit {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
+          this.fetchData();
           this.creatBillPage = { ...this.cartService.createBillPageRef };
         }
 
