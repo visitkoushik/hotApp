@@ -7,6 +7,36 @@
     [endDate]="endDate"
     [selectedReport]="selectedReport"
     [filterDateBy]="filterDateBy"
+    [iReportsResp]="iReportsResp"
     *ngIf="selectedReport==='-1'"
   ></app-period-profitloss>
 </ion-content>
+<ion-footer>
+
+  <h6 class="resultstyle">
+    Total Sell: {{ iReportsResp?.totalSell.toFixed(2) }}
+  </h6>
+  <h6 class="resultstyle">
+    Total Cost: {{ iReportsResp?.totalCost.toFixed(2) }}
+  </h6>
+  <h6 class="resultstyle">
+    UnPaid Amount: {{ iReportsResp?.unPaid.toFixed(2) }}
+  </h6>
+  <h5 class="resultstyle">
+    Total Profit: {{ iReportsResp?.profit.toFixed(2) }}
+  </h5>
+
+  <mat-paginator
+    *ngIf="iReportsResp?.totalPage"
+    #paginator
+    class="demo-paginator"
+    (page)="handlePageEvent($event)"
+    [length]="iReportsResp?.totalPage"
+    [pageSize]="this.currentMaxPage"
+    [showFirstLastButtons]="true"
+    [hidePageSize]="true"
+    [pageIndex]="0"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ion-footer>

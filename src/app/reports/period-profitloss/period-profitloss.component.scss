@@ -2,24 +2,29 @@ table {
   width: 100%;
   box-shadow: none;
 }
-.resultstyle{
+.resultstyle {
   display: block;
   text-align: right;
-  padding-right:16px;
+  padding-right: 16px;
 }
 
 th.mat-header-cell {
   text-align: center;
   font-weight: bold;
+  text-align: center;
+  border-right: 1px solid black;
+}
+td.mat-cell {
+  text-align: center;
+  border-right: 1px solid black;
 }
 th.mat-header-cell:last-of-type,
 th.mat-header-cell:first-of-type,
 td.mat-cell:last-of-type,
-td.mat-cell:first-of-type
- {
+td.mat-cell:first-of-type {
   padding: 0;
 }
-th.mat-header-cell ,
+th.mat-header-cell,
 th.mat-header-cell {
   border-bottom: 1px solid currentColor;
 }
@@ -31,17 +36,17 @@ th.mat-header-cell {
   border-right: 1px solid currentColor;
 }
 
-.mat-column-orderDate
-{
+.mat-column-orderDate {
   width: 30vw;
   text-align: center;
   padding: 0;
   border-right: 1px solid currentColor;
 }
-.mat-column-profit,.mat-column-allSellValue,.mat-column-allPurchaseValue {
+.mat-column-profit,
+.mat-column-allSellValue,
+.mat-column-allPurchaseValue {
   width: 20vw;
   text-align: center;
   padding: 0;
   border-right: 1px solid currentColor;
 }
-

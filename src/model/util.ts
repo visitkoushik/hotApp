@@ -47,7 +47,11 @@ export enum ApiEndPoint {
   CHANGEASSWORD = 'employee/changepassword',
 
   LOGIN = 'auth/login',
-  LOGOUT = 'auth/logout'
+  LOGOUT = 'auth/logout',
+
+  REPORT_BILLWISE = 'reports/billwise',
+  REPORT_ITEMWISE = 'reports/itemwise',
+
 }
 
 export interface I_CreateBillPage {

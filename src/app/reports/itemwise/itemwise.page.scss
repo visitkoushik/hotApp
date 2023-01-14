@@ -28,13 +28,13 @@ th.mat-header-cell {
   padding: 0;
   border-right: 1px solid currentColor;
 }
-.mat-column-count,.mat-column-date {
+.mat-column-itemCount,.mat-column-date {
   width: 15vw;
   text-align: center;
   padding: 0;
   border-right: 1px solid currentColor;
 }
-.mat-column-selltotal, .mat-column-profit{
+.mat-column-sellingAmount, .mat-column-total{
   width: 25vw;
   text-align: center;
   padding: 0;
