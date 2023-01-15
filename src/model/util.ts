@@ -22,6 +22,8 @@ export enum StoreName {
   TENANT = 'tenant',
   ORDER = 'order',
   THEME = 'selectedTheme',
+  PAGEBILL = 'pageBill',
+  PAGEREPORT = 'pageReport',
 }
 
 export enum ApiEndPoint {

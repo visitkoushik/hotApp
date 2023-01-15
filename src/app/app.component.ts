@@ -133,5 +133,22 @@ export class AppComponent implements OnInit, OnChanges {
         this.util.isLoading = true;
         this.snackbar.openSnackBar('Please set Tenant detail');
       });
+
+    this.storage
+      .getStorage(StoreName.PAGEBILL)
+      .then((e) => {
+        this.util.maxPageCount = +e;
+      })
+      .catch((e) => {
+        this.util.maxPageCount = 10;
+      });
+    this.storage
+      .getStorage(StoreName.PAGEREPORT)
+      .then((e) => {
+        this.util.maxPageCountReport = +e;
+      })
+      .catch((e) => {
+        this.util.maxPageCountReport = 20;
+      });
   };
 }

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-list>
   <ion-item>
     <ion-label>Select Theme:</ion-label>
     <ion-select
@@ -17,4 +17,40 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-</ion-content>
+  <ion-item>
+    <ion-label>Per page record in Bill:</ion-label>
+    <ion-select
+      color="primary"
+      class="fullwidth"
+      interface="popover"
+      [(ngModel)]="selectPageSettingBill"
+      (ionChange)="onBillChange()"
+    >
+      <ion-select-option
+        color="primary"
+        [value]="pb.value"
+        *ngFor="let pb of pageSettingBill; "
+      >
+        {{pb.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Per page record in Report:</ion-label>
+    <ion-select
+      color="primary"
+      class="fullwidth"
+      interface="popover"
+      [(ngModel)]="selectPageSettingReport"
+      (ionChange)="onReportChange()"
+    >
+      <ion-select-option
+        color="primary"
+        [value]="pr.value"
+        *ngFor="let pr of pageSettingReport; "
+      >
+        {{pr.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>

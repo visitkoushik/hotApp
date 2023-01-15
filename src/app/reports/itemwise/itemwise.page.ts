@@ -76,7 +76,9 @@ export class ItemwisePage implements OnInit {
     private httpService: HttpService,
     private snackBar: SnackbarService,
     private router: Router
-  ) {}
+  ) {
+    this.currentMaxPage = this.util.maxPageCountReport;
+  }
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((p) => {
@@ -84,7 +86,7 @@ export class ItemwisePage implements OnInit {
       this.endDate = p.endDate;
       this.selectedReport = p.selectedReport;
       this.filterDateBy = +p.filterDateBy;
-
+      this.currentMaxPage = this.util.maxPageCountReport;
       const shortDate = new ShortDatePipe();
       const stdt = shortDate.transform(new Date(this.startDate));
       const nddt = shortDate.transform(new Date(this.endDate));

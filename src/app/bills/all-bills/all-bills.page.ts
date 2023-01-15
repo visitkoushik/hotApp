@@ -63,6 +63,7 @@ export class AllBillsPage implements OnInit {
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
           // this.util.isLoading = true;
+          this.currentMaxPage = this.util.maxPageCount;
           this.setMaxDate();
           this.fetchBills();
         }

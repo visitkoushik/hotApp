@@ -9,8 +9,8 @@ import { UtilService } from './utilservice.service';
   providedIn: 'root',
 })
 export class HttpService {
-  // private baseUrl: string = 'https://hot.cyclic.app/';
-  private baseUrl: string = 'http://localhost:8010/';
+  private baseUrl: string = 'https://hot.cyclic.app/';
+  // private baseUrl: string = 'http://localhost:8010/';
 
   constructor(private http: HttpClient, private util: UtilService) {}
 

@@ -33,7 +33,9 @@ export class ShowReportsPage implements OnInit {
     private util: UtilService,
     private snackBar: SnackbarService,
     private alertCtrl: AlertController
-  ) {}
+  ) {
+    this.currentMaxPage = this.util.maxPageCountReport;
+  }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((p) => {
@@ -41,7 +43,7 @@ export class ShowReportsPage implements OnInit {
       this.endDate = p.endDate;
       this.selectedReport = p.selectedReport;
       this.filterDateBy = +p.filterDateBy;
-
+      this.currentMaxPage = this.util.maxPageCountReport;
       const shortDate = new ShortDatePipe();
       const stdt = shortDate.transform(new Date(this.startDate));
       const nddt = shortDate.transform(new Date(this.endDate));
