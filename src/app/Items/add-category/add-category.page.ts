@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { HttpService } from 'src/app/providers/http.service';
@@ -29,8 +35,30 @@ export class AddCategoryPage implements OnInit {
     private store: AppStorageService,
     private util: UtilService,
     private httpService: HttpService,
-    private snackbar: SnackbarService
-  ) {}
+    private snackbar: SnackbarService,
+    private router: Router
+  ) {
+    this.router.events.subscribe(
+      (event: NavigationStart | NavigationEnd | NavigationError) => {
+        if (event instanceof NavigationStart) {
+          // this.util.isLoading = true;
+
+          this.getCategory();
+        }
+
+        if (event instanceof NavigationEnd) {
+          // Hide loading indicator
+        }
+
+        if (event instanceof NavigationError) {
+          // Hide loading indicator
+
+          // Present error to user
+          console.log(event.error);
+        }
+      }
+    );
+  }
 
   async ngOnInit() {
     // this.cartServc.categoryList =
@@ -52,8 +80,8 @@ export class AddCategoryPage implements OnInit {
     this.httpService
       .get(ApiEndPoint.CATEGORY_LIST, 'available=true')
       .then((e: AppResponse<I_Category[]>) => {
+        this.categoryList = [...e.responseObject];
         this.util.isLoading = false;
-        this.categoryList = e.responseObject;
       })
       .catch((e: AppResponse<string>) => {
         this.util.isLoading = false;
@@ -92,7 +120,7 @@ export class AddCategoryPage implements OnInit {
     } else {
       this.addCategory();
     }
-    this.getCategory();
+
   };
 
   private addCategory = () => {
@@ -102,6 +130,7 @@ export class AddCategoryPage implements OnInit {
       .then((e: AppResponse<I_Category>) => {
         this.util.isLoading = false;
         this.snackbar.openSnackBar('Successfuly Saved');
+        this.getCategory();
       })
       .catch((e: AppResponse<I_Category>) => {
         this.snackbar.openSnackBar(e.error);
@@ -116,6 +145,7 @@ export class AddCategoryPage implements OnInit {
       .then((e: AppResponse<I_Category>) => {
         this.util.isLoading = false;
         this.snackbar.openSnackBar('Successfuly Updated');
+        this.getCategory();
       })
       .catch((e: AppResponse<I_Category>) => {
         this.snackbar.openSnackBar(e.error);

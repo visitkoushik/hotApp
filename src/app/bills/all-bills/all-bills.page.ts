@@ -114,6 +114,7 @@ export class AllBillsPage implements OnInit {
   fetchBillsfromServer = async (page: number): Promise<I_Bill[]> => {
     this.allBills = [];
     if (this.BILLING_READ) {
+      this.util.isLoading=true;
       const dt = this.convertDate(new Date(this.currentDate));
       const appResp: AppResponse<I_BillResp> = await this.httpServic.get(
         ApiEndPoint.BILL_LIST,
@@ -163,13 +164,14 @@ export class AllBillsPage implements OnInit {
           }
         );
         this.allBills = [...iBill];
+        this.util.isLoading=false;
         return iBill;
       }
     }
     this.snackbar.openSnackBar(
       `You don't have permission to read Billing List`
     );
-
+    this.util.isLoading=false;
     return [] as I_Bill[];
   };
 

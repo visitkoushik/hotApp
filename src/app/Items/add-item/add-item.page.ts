@@ -7,7 +7,13 @@ import {
 } from '@angular/core';
 import { async } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { AppStorageService } from 'src/app/app-storage/app-storage.service';
 import { CartService } from 'src/app/providers/cart-service.service';
 import { HttpService } from 'src/app/providers/http.service';
@@ -37,7 +43,8 @@ export class AddItemPage implements OnInit {
     public cartsrvc: CartService,
     private utisrvc: UtilService,
     private activeRoute: ActivatedRoute,
-    private httpClient: HttpService
+    private httpClient: HttpService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -53,21 +60,23 @@ export class AddItemPage implements OnInit {
       this.utisrvc.metaData.accessRight.findIndex(
         (e) => e === 'CATEGORY_READ'
       ) > -1;
+    if (this.CATEGORY_READ) {
+      this.getCategory();
+    }
     if (this.ITEM_ADD) {
       this.setDefault();
+    }
 
+    this.activeRoute.queryParams.subscribe((p) => {
       if (this.CATEGORY_READ) {
         this.getCategory();
       }
-
-      this.activeRoute.queryParams.subscribe((p) => {
-        if (p && p.data) {
-          this.item = JSON.parse(p.data);
-        } else {
-          this.setDefault();
-        }
-      });
-    }
+      if (p && p.data) {
+        this.item = JSON.parse(p.data);
+      } else {
+        this.setDefault();
+      }
+    });
   }
   oninputClick = (e) => e.target.select();
   setDefault = () => {
@@ -115,27 +124,6 @@ export class AddItemPage implements OnInit {
         this.item.id && e.id === this.item.id ? this.item : e
       );
     }
-
-    /*this.storage
-      .setStorage(StoreName.ITEM, newSavedItems)
-      .then((e) => {
-        this.utisrvc.isLoading = false;
-        this.snackbar.openSnackBar('Item Saved');
-        this.cartsrvc.mainItems = [...newSavedItems];
-        if (
-          !this.cartsrvc.createBillPageRef ||
-          !this.cartsrvc.createBillPageRef.currentBiill
-        ) {
-          this.cartsrvc.setDefaultBill();
-        } else {
-          this.cartsrvc.updateDefaultBill();
-        }
-        this.setDefault();
-      })
-      .catch((e) => {
-        this.utisrvc.isLoading = false;
-        this.snackbar.openSnackBar('Error on item Saved ');
-      });*/
   };
   onChangeItem = (value) => (this.item.category = value);
   onSave = async () => {
@@ -190,13 +178,18 @@ export class AddItemPage implements OnInit {
       });
   };
 
-  getCategory() {
+  getCategory(callback?: Function) {
     this.utisrvc.isLoading = true;
+    this.categoryList =[];
     this.httpClient
       .get(ApiEndPoint.CATEGORY_LIST, 'available=true')
       .then((e: AppResponse<I_Category[]>) => {
         this.utisrvc.isLoading = false;
-        this.categoryList = e.responseObject;
+
+        this.categoryList = [...e.responseObject];
+        if (callback) {
+          callback();
+        }
       })
       .catch((e: AppResponse<string>) => {
         this.utisrvc.isLoading = false;

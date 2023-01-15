@@ -98,10 +98,14 @@ export class CartService {
     let promise: Promise<AppResponse<I_Items[]>>;
 
     this.utilService.isLoading = true;
-    if (availableStatus === null) {
-      promise = this.httpService.get(ApiEndPoint.ITEM_LIST);
-    } else {
+    if (
+      availableStatus === null ||
+      availableStatus === undefined ||
+      availableStatus === true
+    ) {
       promise = this.httpService.get(ApiEndPoint.ITEM_LIST, 'available=true');
+    } else {
+      promise = this.httpService.get(ApiEndPoint.ITEM_LIST);
     }
 
     promise
