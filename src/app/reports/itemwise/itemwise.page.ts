@@ -135,8 +135,7 @@ export class ItemwisePage implements OnInit {
     this.httpService
       .post(ApiEndPoint.REPORT_ITEMWISE, { ...report })
       .then((appResp: AppResponse<any>) => {
-        console.log(appResp.responseObject);
-        debugger;
+
 
         this.iReportsResp = { ...appResp.responseObject };
         this.totalProfit=0;

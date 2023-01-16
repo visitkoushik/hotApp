@@ -172,7 +172,7 @@ export class ReportsPage implements OnInit {
     this.httpServc
       .post(ApiEndPoint.REPORT_BILLWISE, { ...report })
       .then((appResp: AppResponse<I_ReportsResp>) => {
-        console.log(appResp.responseObject);
+
         this.util.iReportsResp = { ...appResp.responseObject };
         this.util.isLoading = false;
         if (callback) {

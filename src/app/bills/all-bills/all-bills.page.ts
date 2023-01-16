@@ -339,7 +339,7 @@ export class AllBillsPage implements OnInit {
       .padStart(2, '0')}T00:00:00.000Z`;
   };
   handlePageEvent = (ev:PageEvent) => {
-    console.log(ev);
+
     this.fetchBills(ev.pageIndex+1);
   };
 }
