@@ -139,9 +139,11 @@ export class ItemwisePage implements OnInit {
         debugger;
 
         this.iReportsResp = { ...appResp.responseObject };
+        this.totalProfit=0;
         this.reportResultBalance = this.iReportsResp.billList.map(
           (e: I_ItemReport, inx) => {
             this.itemName = e.itemName;
+            this.totalProfit += e.total;
             return { ...e, order: inx + 1 };
           }
         );

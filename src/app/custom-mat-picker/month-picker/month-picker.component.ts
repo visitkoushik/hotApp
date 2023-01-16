@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ConvertToFullDate } from 'src/app/pipe/convert-to-fulldate';
 
@@ -7,14 +16,15 @@ import { ConvertToFullDate } from 'src/app/pipe/convert-to-fulldate';
   templateUrl: './month-picker.component.html',
   styleUrls: ['./month-picker.component.scss'],
 })
-export class MonthPickerComponent implements OnInit {
+export class MonthPickerComponent implements OnInit, AfterViewInit {
   @Input() label: string;
   @Input() startMonth: string;
   @Input() endMonth: string;
 
   @Output() startMonthChange = new EventEmitter<string>();
   @Output() endMonthChange = new EventEmitter<string>();
-
+  @ViewChild('mesIni') mesIni: ElementRef<HTMLInputElement>;
+  @ViewChild('mesFin') mesFin: ElementRef<HTMLInputElement>;
   convertFullDate = new ConvertToFullDate();
   mclick = 0;
 
@@ -22,12 +32,51 @@ export class MonthPickerComponent implements OnInit {
   ngOnInit() {
     this.maxDate = new Date();
   }
+  ngAfterViewInit(): void {
+    if (!this.startMonth || !this.endMonth) {
+      return;
+    }
+    setTimeout(() => {
+      this.mesIni.nativeElement.value = this.startMonth.trim();
+      this.startMonthChange.emit(this.startMonth);
 
+      document
+        .getElementsByClassName('monthtoggle')[0]
+        .getElementsByTagName('input')[1]
+        .focus();
+      var inter = setInterval(() => {
+        clearInterval(inter);
+        setTimeout(() => {
+          if (this.startMonth > this.endMonth) {
+            const startMonth1 = this.startMonth;
+            const endMonth1 = this.endMonth;
+
+            this.startMonth = endMonth1;
+            this.endMonth = startMonth1;
+
+            this.mesIni.nativeElement.value = this.startMonth.trim();
+            this.startMonthChange.emit(this.startMonth);
+
+            this.mesFin.nativeElement.value = this.endMonth.trim();
+            this.endMonthChange.emit(this.endMonth);
+          }
+
+          this.mesIni.nativeElement.value = this.startMonth.trim();
+          this.mesFin.nativeElement.value = this.endMonth.trim();
+          this.endMonthChange.emit(this.endMonth);
+
+          this.mclick = 0;
+          document
+            .getElementsByClassName('monthtoggle')[0]
+            .getElementsByTagName('input')[1]
+            .blur();
+        }, 0);
+      }, 10);
+    }, 0);
+  }
   public chosenHandler(
     normalizedMonth: Date,
-    datepicker: MatDatepicker<any>,
-    mesIni: any,
-    mesFin: any
+    datepicker: MatDatepicker<any>
   ): void {
     // console.log(normalizedMonth, datepicker, mesIni);
     this.mclick++;
@@ -35,7 +84,7 @@ export class MonthPickerComponent implements OnInit {
       this.startMonth = `${normalizedMonth.toLocaleDateString('en', {
         month: 'short',
       })}/${normalizedMonth.getFullYear()}`;
-      mesIni.value = this.startMonth;
+      this.mesIni.nativeElement.value = this.startMonth;
       this.startMonthChange.emit(this.startMonth);
       datepicker.close();
       //It can improve
@@ -73,13 +122,13 @@ export class MonthPickerComponent implements OnInit {
         this.startMonth = endMonth1;
         this.endMonth = startMonth1;
 
-        mesIni.value = this.startMonth;
+        this.mesIni.nativeElement.value = this.startMonth;
         this.startMonthChange.emit(this.startMonth);
-        mesFin.value = this.startMonth;
+        this.mesFin.nativeElement.value = this.startMonth;
         this.endMonthChange.emit(this.endMonth);
       }
 
-      mesFin.value = this.endMonth;
+      this.mesFin.nativeElement.value = this.endMonth;
       this.endMonthChange.emit(this.endMonth);
       datepicker.close();
       this.mclick = 0;

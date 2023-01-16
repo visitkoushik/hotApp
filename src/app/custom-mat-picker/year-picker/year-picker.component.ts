@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
@@ -6,7 +15,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
   templateUrl: './year-picker.component.html',
   styleUrls: ['./year-picker.component.scss'],
 })
-export class YearPickerComponent implements OnInit {
+export class YearPickerComponent implements OnInit, AfterViewInit {
   @Input() label: string;
   @Input() startYear: string;
   @Input() endYear: string;
@@ -14,23 +23,71 @@ export class YearPickerComponent implements OnInit {
   @Output() startYearChange = new EventEmitter<string>();
   @Output() endYearChange = new EventEmitter<string>();
 
+  @ViewChild('mesIni') edlIni: ElementRef<HTMLInputElement>;
+  @ViewChild('mesFin') edlFin: ElementRef<HTMLInputElement>;
+
   mclick = 0;
   public maxDate: Date = null;
+
   ngOnInit() {
     this.maxDate = new Date();
-  }
 
+  }
+  ngAfterViewInit(): void {
+
+    if (!this.startYear || !this.endYear) {
+      return;
+    }
+    setTimeout(() => {
+      this.edlIni.nativeElement.value = this.startYear.trim();
+      this.startYearChange.emit(this.startYear);
+
+      document
+        .getElementsByClassName('yeartoggle')[0]
+        .getElementsByTagName('input')[1]
+        .focus();
+      var inter = setInterval(() => {
+        clearInterval(inter);
+        setTimeout(() => {
+          if (this.startYear > this.endYear) {
+            const startYear1 = this.startYear;
+            const endYear1 = this.endYear;
+
+            this.startYear = endYear1;
+            this.endYear = startYear1;
+
+
+            this.edlIni.nativeElement.value = this.startYear.trim();
+            this.startYearChange.emit(this.startYear);
+
+            this.edlFin.nativeElement.value = this.endYear.trim();
+            this.endYearChange.emit(this.endYear);
+          }
+
+
+          this.edlIni.nativeElement.value = this.startYear.trim();
+          this.edlFin.nativeElement.value = this.endYear.trim();
+          this.endYearChange.emit(this.endYear);
+
+          this.mclick = 0;
+          document
+            .getElementsByClassName('yeartoggle')[0]
+            .getElementsByTagName('input')[1]
+            .blur();
+        }, 0);
+      }, 10);
+    }, 0);
+  }
   public chosenHandler(
     normalizedMonth: Date,
-    datepicker: MatDatepicker<any>,
-    mesIni: any,
-    mesFin: any
+    datepicker: MatDatepicker<any>
   ): void {
     // console.log(normalizedMonth, datepicker, mesIni);
     this.mclick++;
     if (this.mclick === 1) {
       this.startYear = `${normalizedMonth.getFullYear()}`;
-      mesIni.value = this.startYear;
+
+      this.edlIni.nativeElement.value = this.startYear.trim();
       this.startYearChange.emit(this.startYear);
       datepicker.close();
       //It can improve
@@ -59,14 +116,19 @@ export class YearPickerComponent implements OnInit {
         this.startYear = endYear1;
         this.endYear = startYear1;
 
-        mesIni.value = this.startYear;
+
+        this.edlIni.nativeElement.value = this.startYear.trim();
         this.startYearChange.emit(this.startYear);
-        mesFin.value = this.startYear;
+
+        this.edlFin.nativeElement.value = this.endYear.trim();
         this.endYearChange.emit(this.endYear);
       }
 
-      mesFin.value = this.endYear;
+
+      this.edlIni.nativeElement.value = this.startYear.trim();
+      this.edlFin.nativeElement.value = this.endYear.trim();
       this.endYearChange.emit(this.endYear);
+
       datepicker.close();
       this.mclick = 0;
     }

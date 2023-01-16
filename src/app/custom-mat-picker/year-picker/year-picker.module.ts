@@ -9,7 +9,14 @@ import { PipeModule } from '../../pipe/pipe.module';
 @NgModule({
   declarations: [YearPickerComponent],
 
-  imports: [CommonModule, MaterialModule,PipeModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    PipeModule,
+    FormsModule,
+    IonicModule,
+    ReactiveFormsModule,
+  ],
   exports: [YearPickerComponent],
 })
 export class YearPickerModule {}

@@ -173,7 +173,6 @@ export class ReportsPage implements OnInit {
       .post(ApiEndPoint.REPORT_BILLWISE, { ...report })
       .then((appResp: AppResponse<I_ReportsResp>) => {
         console.log(appResp.responseObject);
-        debugger;
         this.util.iReportsResp = { ...appResp.responseObject };
         this.util.isLoading = false;
         if (callback) {
@@ -184,5 +183,36 @@ export class ReportsPage implements OnInit {
         console.log(e);
         this.util.isLoading = false;
       });
+  };
+
+  shouldNextDisable = (): boolean => {
+    let isDisable = true;
+    let paramObj: { startDate: any; endDate: any } = {} as {
+      startDate: any;
+      endDate: any;
+    };
+
+    paramObj = {
+      startDate:
+        this.filterDateBy === this.FILTERBY.DATE
+          ? this.startDate
+          : this.filterDateBy === this.FILTERBY.MONTH
+          ? this.startM
+          : this.startY,
+      endDate:
+        this.filterDateBy === this.FILTERBY.DATE
+          ? this.endDate
+          : this.filterDateBy === this.FILTERBY.MONTH
+          ? this.endM
+          : this.endY,
+    };
+
+    isDisable =
+      paramObj?.endDate === null ||
+      paramObj?.startDate === null ||
+      paramObj?.endDate === '' ||
+      paramObj?.startDate === '';
+
+    return isDisable;
   };
 }

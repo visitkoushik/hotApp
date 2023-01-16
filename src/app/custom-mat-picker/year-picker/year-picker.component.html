@@ -1,14 +1,8 @@
 <mat-form-field appearance="fill" class="yeartoggle">
   <mat-label>{{ label }}</mat-label>
   <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-    <input
-      matStartDate
-      placeholder="Start Year"
-      formControlName="mesIni"
-      #mesIni
-    />
-
-    <input matEndDate placeholder="End Year" formControlName="mesFin" #mesFin />
+    <input matStartDate placeholder="Start Year" #mesIni />
+    <input matEndDate placeholder="End Year" #mesFin />
   </mat-date-range-input>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker
@@ -16,7 +10,7 @@
     #picker
     disabled="false"
     startView="multi-year"
-    (yearSelected)="chosenHandler($event, picker, mesIni, mesFin)"
+    (yearSelected)="chosenHandler($event, picker)"
     (click)="(true)"
   >
   </mat-date-range-picker>

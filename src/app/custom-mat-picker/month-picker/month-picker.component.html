@@ -4,14 +4,12 @@
     <input
       matStartDate
       placeholder="Start Month"
-      formControlName="mesIni"
       #mesIni
     />
 
     <input
       matEndDate
       placeholder="End Month"
-      formControlName="mesFin"
       #mesFin
     />
   </mat-date-range-input>
@@ -21,7 +19,7 @@
     #picker
     disabled="false"
     startView="multi-year"
-    (monthSelected)="chosenHandler($event, picker, mesIni, mesFin)"
+    (monthSelected)="chosenHandler($event, picker)"
     (click)="(true)"
   >
   </mat-date-range-picker>

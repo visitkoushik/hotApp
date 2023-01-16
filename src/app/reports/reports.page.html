@@ -115,6 +115,7 @@
       color="primary"
       float-right
       (click)="onNextScreen()"
+      [disabled]="shouldNextDisable()"
     >
       Next
     </ion-button>
