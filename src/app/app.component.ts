@@ -88,13 +88,16 @@ export class AppComponent implements OnInit, OnChanges {
   appLogout = () => {
     // this.auth.isLoggedIn = false;
     // this.auth.redirectUrl = '';
-    this.util.isLoading = true;
-
+    this.util.isLoading = true
     this.httpClient
       .post(ApiEndPoint.LOGOUT, {})
-      .then((e) => {
+      .then(async (e) => {
         this.util.isLoading = false;
-        this.isLoggedIn = false;
+        this.util.onAppLogout(this.auth);
+        await this.storage.setStorage(StoreName.LOGIN, {
+          userLogin: null,
+          isLoggedIn: false,
+        });
         this.router.navigate(['/login']);
       })
       .catch((e) => {

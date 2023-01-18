@@ -3,20 +3,27 @@ import { I_MetaData } from 'src/model/metadata';
 import { I_ReportsResp } from 'src/model/ReportFilterResp';
 import { I_UserLogin } from 'src/model/userLogin';
 import { I_TenantDetails } from 'src/model/util';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilService {
   public gvtTax = 0;
-  public maxPageCount:number;
-  public maxPageCountReport:number;
+  public maxPageCount: number;
+  public maxPageCountReport: number;
   public storeBilling: any;
   public isLoading = false;
   public tenantDetail: I_TenantDetails;
-  public metaData: I_MetaData;
+  public metaData: I_MetaData = null;
   public userLogin: I_UserLogin;
   public iReportsResp: I_ReportsResp;
   constructor() {}
 
+  public onAppLogout = (auth: AuthService) => {
+    this.userLogin = null;
+    auth.isLoggedIn = false;
+    auth.isLoggedIn = false;
+    auth.redirectUrl = '/';
+  };
 }

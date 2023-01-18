@@ -78,8 +78,6 @@ export class ShowReportsPage implements OnInit {
     this.httpServc
       .post(ApiEndPoint.REPORT_BILLWISE, { ...report })
       .then((appResp: AppResponse<I_ReportsResp>) => {
-
-        debugger;
         this.iReportsResp = { ...appResp.responseObject };
 
         this.util.isLoading = false;

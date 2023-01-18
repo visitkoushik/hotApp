@@ -24,7 +24,7 @@
         >Status: {{item.available?'Available':'Unavailable'}}
       </mat-card-subtitle>
 
-      <div class="rowList3">
+      <div class="rowList3" *ngIf="ITEM_UPDATE">
         <ion-button fill="outline" color="primary" (click)="onModifyItem(item)">
           Update
         </ion-button>

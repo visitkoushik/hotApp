@@ -7,6 +7,7 @@ import {
   Router,
 } from '@angular/router';
 import { CartService } from 'src/app/providers/cart-service.service';
+import { UtilService } from 'src/app/providers/utilservice.service';
 import { I_Items } from 'src/model/items';
 
 @Component({
@@ -19,8 +20,16 @@ export class ItemListPage implements OnInit {
   public includeOutOfStockItem: boolean = false;
 
   public allItems: I_Items[] = [];
+  ITEM_ADD: boolean;
+  ITEM_UPDATE: boolean;
+  ITEM_READ: boolean;
+  CATEGORY_READ: boolean;
 
-  constructor(public cartsrvc: CartService, private router: Router) {
+  constructor(
+    public cartsrvc: CartService,
+    private router: Router,
+    private util: UtilService
+  ) {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
         if (event instanceof NavigationStart) {
@@ -44,6 +53,13 @@ export class ItemListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ITEM_ADD =
+      this.util.metaData.accessRight.findIndex((e) => e === 'ITEM_ADD') > -1;
+    this.ITEM_UPDATE =
+      this.util.metaData.accessRight.findIndex((e) => e === 'ITEM_UPDATE') > -1;
+    this.ITEM_READ =
+      this.util.metaData.accessRight.findIndex((e) => e === 'ITEM_READ') > -1;
+
     this.getItemList();
   }
   trackByFn = (inx, item: I_Items) => item.id;

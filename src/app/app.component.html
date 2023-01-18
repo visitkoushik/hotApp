@@ -61,13 +61,17 @@
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'config'">
             <ion-item routerLink="/configures" routerLinkActive="active">
               <mat-icon>view_module</mat-icon>
-              <span> {{ util.metaData?.menuItems | menu : "config" : "true" }}</span>
+              <span>
+                {{ util.metaData?.menuItems | menu : "config" : "true" }}</span
+              >
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'reports'">
             <ion-item routerLink="/reports" routerLinkActive="active">
               <mat-icon>report</mat-icon>
-              <span>{{ util.metaData?.menuItems | menu : "reports" : "true" }}</span>
+              <span>{{
+                util.metaData?.menuItems | menu : "reports" : "true"
+              }}</span>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle
@@ -75,7 +79,9 @@
           >
             <ion-item routerLink="/appsetting" routerLinkActive="active">
               <mat-icon>settings</mat-icon>
-              <span>{{ util.metaData?.menuItems | menu : "appsettings" : "true" }}</span>
+              <span>{{
+                util.metaData?.menuItems | menu : "appsettings" : "true"
+              }}</span>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'emp'">
@@ -101,6 +107,17 @@
         </ion-list>
       </div>
     </ion-content>
+    <ion-footer>
+      <ion-item *ngIf="this.util.metaData?.profile"
+        >{{ this.util.metaData.profile.gender | formatgender
+        }} {{ this.util.metaData.profile.firstName.charAt(0)}}.{{
+          this.util.metaData.profile.middleName
+            ? this.util.metaData.profile.middleName.charAt(0) + "."
+            : ""
+        }}
+        {{ this.util.metaData.profile.lastName }}</ion-item
+      >
+    </ion-footer>
   </ion-menu>
 
   <ion-content> <ion-router-outlet id="main"></ion-router-outlet></ion-content>

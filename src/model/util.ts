@@ -5,9 +5,9 @@ import { I_Items } from './items';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export enum GENDER {
-  FEMALE,
-  MALE,
-  OTHERS,
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHERS = 'OTHERS',
 }
 export enum FILTER_BY {
   DATE = 1,
@@ -24,6 +24,7 @@ export enum StoreName {
   THEME = 'selectedTheme',
   PAGEBILL = 'pageBill',
   PAGEREPORT = 'pageReport',
+  LOGIN = 'loginstore'
 }
 
 export enum ApiEndPoint {

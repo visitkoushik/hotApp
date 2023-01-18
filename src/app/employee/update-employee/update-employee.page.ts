@@ -84,7 +84,6 @@ export class UpdateEmployeePage implements OnInit {
 
     this.activeRoute.queryParams.subscribe((p) => {
       if (p.data) {
-        debugger;
         this.emp = JSON.parse(p.data);
         this.ionicForm.get('firstName').setValue(this.emp.firstName);
         this.ionicForm.get('middleName').setValue(this.emp.middleName);

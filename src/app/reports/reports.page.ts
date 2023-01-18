@@ -19,7 +19,7 @@ import { CartService } from '../providers/cart-service.service';
 import { HttpService } from '../providers/http.service';
 import { SnackbarService } from '../providers/snackbar.service';
 import { UtilService } from '../providers/utilservice.service';
-
+import { Browser } from '@capacitor/browser';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.page.html',
@@ -81,7 +81,6 @@ export class ReportsPage implements OnInit {
   }
 
   onNextScreen = () => {
-    debugger;
     if (this.selectedReport && this.selectedReport.trim() === '-1') {
       const paramObj = {
         filterDateBy: this.filterDateBy,
@@ -172,7 +171,6 @@ export class ReportsPage implements OnInit {
     this.httpServc
       .post(ApiEndPoint.REPORT_BILLWISE, { ...report })
       .then((appResp: AppResponse<I_ReportsResp>) => {
-
         this.util.iReportsResp = { ...appResp.responseObject };
         this.util.isLoading = false;
         if (callback) {
@@ -214,5 +212,11 @@ export class ReportsPage implements OnInit {
       paramObj?.startDate === '';
 
     return isDisable;
+  };
+
+  openBrowser = () => {
+    Browser.open({ url: this.httpServc.baseUrl+'reports/' })
+      .then((e) => console.log(e))
+      .catch((e) => console.log(e));
   };
 }

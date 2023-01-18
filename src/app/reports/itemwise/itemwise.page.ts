@@ -116,7 +116,6 @@ export class ItemwisePage implements OnInit {
     );
   }
   fetchData = (pageIndex?: number) => {
-    debugger;
     this.fetchFilterBill({
       startDate: this.startDate,
       endDate: this.endDate,

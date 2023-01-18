@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddItemDisplayGuard } from './add-item.guard';
 
 import { TabItemPage } from './tab-item.page';
 
@@ -36,9 +37,15 @@ const routes: Routes = [
         ],
       },
 
+      // {
+      //   path: '',
+      //   redirectTo: '/tab-item/add-item',
+      //   pathMatch: 'full',
+      //   canLoad: [AddItemDisplayGuard],
+      // },
       {
         path: '',
-        redirectTo: '/tab-item/add-item',
+        redirectTo: '/tab-item/item-list',
         pathMatch: 'full',
       },
     ],

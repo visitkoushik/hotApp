@@ -88,26 +88,11 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-  <!--
-    <h5>Selected Range:</h5>
-    <ion-item>
-    <ion-label *ngIf="filterDateBy===FILTERBY.YEAR">
-      {{(startY|dateconvert:'Y')?.toLocaleDateString()}} -
-      {{(endY|dateconvert:'Y':'e')?.toLocaleDateString()}}</ion-label
-    >
-    <ion-label *ngIf="filterDateBy===FILTERBY.MONTH">
-      {{(startM|dateconvert:'M')?.toLocaleDateString()}} -
-      {{(endM|dateconvert:'M':'e')?.toLocaleDateString()}}
-    </ion-label>
-    <ion-label *ngIf="filterDateBy===FILTERBY.DATE">
-      {{startDate?.toLocaleDateString()}} -
-      {{endDate?.toLocaleDateString()}}</ion-label
-    >
-  </ion-item>-->
 </ion-content>
 
 <ion-footer>
+  <ion-button expand="block" color="medium" (click)="openBrowser()">Advance</ion-button>
+  <mat-divider></mat-divider>
   <ion-item>
     <ion-title></ion-title>
     <ion-button

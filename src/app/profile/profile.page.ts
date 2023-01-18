@@ -28,6 +28,7 @@ export class ProfilePage implements OnInit {
       .get(ApiEndPoint.EMPLOYEE_PROFILE)
       .then((e: AppResponse<I_Profile>) => {
         this.profile = { ...e.responseObject };
+        this.utilsrvc.metaData.profile = { ...this.profile };
         this.utilsrvc.isLoading = false;
       })
       .catch((e: AppResponse<any>) => {
