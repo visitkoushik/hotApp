@@ -7,12 +7,17 @@ import { CartService } from 'src/app/providers/cart-service.service';
 import { HttpService } from 'src/app/providers/http.service';
 import { SnackbarService } from 'src/app/providers/snackbar.service';
 import { UtilService } from 'src/app/providers/utilservice.service';
+import { AppResponse } from 'src/model/AppResponse';
 import { I_Bill } from 'src/model/bill';
 import { ClassBill, I_Print } from 'src/model/billClass';
-import { I_BillingItem, I_BillingReq, I_Customer } from 'src/model/BillingReq';
+import {
+  I_BillingItem,
+  I_BillingReq,
+  I_BillResp,
+  I_Customer,
+} from 'src/model/BillingReq';
 import { I_CartItem } from 'src/model/cartItem';
 import { ApiEndPoint, StoreName } from 'src/model/util';
-
 @Component({
   templateUrl: './confirmed-bill.html',
   styleUrls: ['./confiremd-bill.scss'],
@@ -53,7 +58,7 @@ export class ConfiremdBillPage implements OnInit {
     this.alertServc.presentAlert(
       this.altrCtrl,
       'Confirm',
-      'Are you sure, you want to confirm the bill?',
+      'Are you sure, you want to crate the bill?',
       { ok: 'Yes', cancel: 'No' },
       () => {
         // eslint-disable-next-line no-underscore-dangle
@@ -70,11 +75,16 @@ export class ConfiremdBillPage implements OnInit {
     if (this.BILLING_ADD) {
       this.httpService
         .post(ApiEndPoint.BILL_ADD, billReq)
-        .then((e) => {
+        .then((e: AppResponse<I_BillingReq>) => {
           this.snack.openSnackBar('Bill is created');
           this.cartService.setDefaultBill();
           this.router.navigateByUrl('/tab/createbill');
           this.util.isLoading = false;
+          const billFinal: I_BillingReq = e.responseObject;
+          this.printBill({
+            ...billFinal,
+            customer: { ...billReq.customer },
+          });
         })
         .catch((e) => {
           this.snack.openSnackBar('Something went wrong');
@@ -158,5 +168,39 @@ export class ConfiremdBillPage implements OnInit {
       this.currentBill.paid;
     this.cartService.createBillPageRef.currentBiill.due =
       this.currentBill.total - this.currentBill.paid;
+  };
+
+  printBill = (billing: I_BillingReq) => {
+    let billText = `[C]<font size='big'><u>House Of Tea</u></font>\n\n\n`;
+
+    billText += `[L]<b>ORDER NO: </b>${billing.billNumber}
+[L]<b>Date: </b>${new Date(billing.billingDate).toLocaleDateString()}
+[L]<b>Customer Name: </b>${billing.customer.firstName} ${
+      billing.customer.lastName
+    }`;
+
+    billText += `\n\n[L]<b>Item(Qty) </b>[C] Dsc [R] Price`;
+    billText += `\n--------------------------------\n`;
+    for (let i = 0; i < billing.billingItemList.length; i++) {
+      const bit: I_BillingItem = billing.billingItemList[i];
+      billText += `[L]<b>${bit.itemName}(${bit.itemCount})</b>[C]${
+        bit.discount != 0 ? bit.discount : ''
+      }${bit.isDiscountInPercentage ? '%' : ''}[R]${
+        bit.sellingAmount * bit.itemCount -
+        (bit.isDiscountInPercentage
+          ? (bit.sellingAmount * bit.itemCount * bit.discount) / 100
+          : bit.discount)
+      }\n`;
+    }
+
+    billText += `\n\n[C]<font >TOTAL</font>[R]<font size='normal'> ${billing.Stotal}</font>\n`;
+    billText += `[C]<font >Discount</font>[R]<font size='normal'>-${billing.discount}</font>\n`;
+    billText += `[C]<font >Tax(%)</font>[R]<font size='normal'>-${billing.tax}</font>\n`;
+    billText += `[C]<font color='bg-black'>GRAND TOTAL</font>[R]<font size='normal'> ${
+      billing.Stotal - billing.discount - billing.tax
+    }</font>\n\n--------------------------------\n\n`;
+
+    this.util.print(billText);
+
   };
 }

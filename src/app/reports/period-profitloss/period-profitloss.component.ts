@@ -5,22 +5,11 @@ import {
   OnInit,
   SimpleChange,
 } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { AlertController } from '@ionic/angular';
 import { ConvertToFullDate } from 'src/app/pipe/convert-to-fulldate';
-import { CartService } from 'src/app/providers/cart-service.service';
-import { HttpService } from 'src/app/providers/http.service';
-import { SnackbarService } from 'src/app/providers/snackbar.service';
-import { UtilService } from 'src/app/providers/utilservice.service';
-import { AppResponse } from 'src/model/AppResponse';
-import { I_Bill } from 'src/model/bill';
 import { I_BillingReq } from 'src/model/BillingReq';
-import { I_CartItem } from 'src/model/cartItem';
 import { I_ReportResult, ReportBalance } from 'src/model/ClassBalance';
-import { I_Items } from 'src/model/items';
 import { I_ReportFilter } from 'src/model/ReportFilter';
 import { I_ReportsResp } from 'src/model/ReportFilterResp';
-import { ApiEndPoint, FILTER_BY } from 'src/model/util';
 
 @Component({
   selector: 'app-period-profitloss',

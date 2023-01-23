@@ -7,6 +7,7 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { I_MetaData } from 'src/model/metadata';
 import { ApiEndPoint, StoreName } from 'src/model/util';
+import { Printer } from 'thermal-printer-cordova-plugin/src';
 import { AppStorageService } from './app-storage/app-storage.service';
 import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
@@ -88,7 +89,7 @@ export class AppComponent implements OnInit, OnChanges {
   appLogout = () => {
     // this.auth.isLoggedIn = false;
     // this.auth.redirectUrl = '';
-    this.util.isLoading = true
+    this.util.isLoading = true;
     this.httpClient
       .post(ApiEndPoint.LOGOUT, {})
       .then(async (e) => {
@@ -152,6 +153,15 @@ export class AppComponent implements OnInit, OnChanges {
       })
       .catch((e) => {
         this.util.maxPageCountReport = 20;
+      });
+
+    this.storage
+      .getStorage(StoreName.PRINTER)
+      .then((e: Printer) => {
+        this.util.printer = e;
+      })
+      .catch((e) => {
+        this.util.printer = null;
       });
   };
 }

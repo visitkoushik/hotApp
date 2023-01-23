@@ -69,7 +69,7 @@ export class EmployeeListPage implements OnInit {
       })
       .catch((e: AppResponse<any>) => {
         this.utilSrvc.isLoading = false;
-        this.snackBar.openSnackBar(e.error.toString(), 100000);
+        this.snackBar.openSnackBar(e.error.toString());
       });
   };
 

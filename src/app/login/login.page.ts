@@ -30,6 +30,7 @@ export class LoginPage implements OnInit {
       .login(this.username, this.passcode)
       .then((e) => {
         this.util.isLoading = false;
+
         if (this.auth.redirectUrl) {
           this.router.navigateByUrl(this.auth.redirectUrl);
         } else {

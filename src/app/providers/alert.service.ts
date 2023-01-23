@@ -11,15 +11,14 @@ export class AlertService {
     alertController: AlertController,
     title: string,
     msg: string,
-    btn: { ok: string; cancel: string },
-    okAction: () => void,
+    btn: { ok: string; cancel?: string } = { ok: 'OK' },
+    okAction?: () => void,
     cancelAction?: () => void
   ) {
-
-    btn=btn || { ok: 'Yes', cancel: 'No' };
+    btn = btn || { ok: 'Yes', cancel: 'No' };
 
     const alert = await alertController.create({
-      backdropDismiss:true,
+      backdropDismiss: true,
       header: title,
       message: msg,
       buttons: [
@@ -27,14 +26,14 @@ export class AlertService {
           text: btn.cancel,
           role: 'cancel',
           handler: () => {
-            cancelAction();
+            cancelAction? cancelAction() : alertController.dismiss();
           },
         },
         {
           text: btn.ok,
           role: 'confirm',
           handler: () => {
-            okAction();
+            okAction ? okAction() : alertController.dismiss();
           },
         },
       ],

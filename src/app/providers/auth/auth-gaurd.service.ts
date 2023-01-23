@@ -69,16 +69,12 @@ export class AuthGaurdService implements CanLoad {
   fetchMetaData = async (): Promise<boolean> => {
     this.util.isLoading = true;
     this.util.metaData = null;
-    const metadataResp: HttpRespObject = await this.httpClient.get(
-      ApiEndPoint.METADATA
-    );
+    const metadataResp: boolean = await this.httpClient.fetchMetaData();
     this.util.isLoading = false;
-    if (metadataResp.status == 1) {
-      this.util.metaData = metadataResp.responseObject;
-    }
+
 
     return new Promise<boolean>((res, rej) => {
-      if (this.util.metaData?.ownerNeedtocreate) {
+      if (!metadataResp || this.util.metaData?.ownerNeedtocreate) {
         rej(false);
       } else {
         res(true);

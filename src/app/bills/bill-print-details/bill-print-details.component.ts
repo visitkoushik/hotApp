@@ -7,8 +7,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/providers/utilservice.service';
 import { I_Print } from 'src/model/billClass';
+import { I_BillResp } from 'src/model/BillingReq';
 
 @Component({
   selector: 'app-bill-print-details',
@@ -20,7 +22,11 @@ export class BillPrintDetailsComponent implements OnInit, OnChanges {
 
   public currentBillPrint: I_Print = null;
   public displayedColumns: any[] = null;
-  constructor(public util: UtilService) {}
+  constructor(
+    public util: UtilService,
+    private router: Router,
+    private activeRoute: ActivatedRoute
+  ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.currentBillPrint = JSON.parse(this.data);
     this.displayedColumns =

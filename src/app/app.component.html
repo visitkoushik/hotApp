@@ -97,6 +97,15 @@
               {{ util.metaData?.menuItems | menu : "profile" : "true" }}
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle
+            *ngIf="util.metaData?.menuItems | menu : 'branch'"
+          >
+            <mat-divider></mat-divider>
+            <ion-item routerLink="/branch-tab" routerLinkActive="active">
+              <mat-icon>table_chart</mat-icon>
+              {{ util.metaData?.menuItems | menu : "branch" : "true" }}
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle>
             <mat-divider></mat-divider>
             <ion-item (click)="appLogout()" [disabled]="!auth.isLoggedIn">
@@ -109,8 +118,8 @@
     </ion-content>
     <ion-footer>
       <ion-item *ngIf="this.util.metaData?.profile"
-        >{{ this.util.metaData.profile.gender | formatgender
-        }} {{ this.util.metaData.profile.firstName.charAt(0)}}.{{
+        >{{ this.util.metaData.profile.gender | formatgender }}
+        {{ this.util.metaData.profile.firstName.charAt(0) }}.{{
           this.util.metaData.profile.middleName
             ? this.util.metaData.profile.middleName.charAt(0) + "."
             : ""

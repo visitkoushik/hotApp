@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -30,7 +31,6 @@ import { CommonModule } from '@angular/common';
     AppStorageModule,
     PlatformModule,
     HttpClientModule,
-    CommonModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@awesome-cordova-plugins/in-app-browser": "^5.45.0",
+    "@capacitor-community/bluetooth-le": "^2.1.0",
     "@capacitor/android": "4.1.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/browser": "^4.1.0",
@@ -38,6 +39,7 @@
     "cordova-sqlite-storage": "^6.0.0",
     "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "~6.6.0",
+    "thermal-printer-cordova-plugin": "^1.0.6",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },

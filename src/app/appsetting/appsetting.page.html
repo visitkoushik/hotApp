@@ -53,4 +53,25 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
+    <ion-item>
+      <ion-button expand="block" color="primary" (click)="onClickPrinterSetup()">Printer Setup</ion-button>
+    </ion-item>
+  <ion-item *ngIf="allPrinter.length>0">
+    <ion-label>Select Printer:</ion-label>
+    <ion-select
+      color="primary"
+      class="fullwidth"
+      interface="popover"
+      [(ngModel)]="selectedPrinter"
+      (ionChange)="onDeviceChange()"
+    >
+      <ion-select-option
+        color="primary"
+        [value]="printer"
+        *ngFor="let printer of allPrinter; "
+      >
+        {{printer.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-list>

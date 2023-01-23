@@ -10,4 +10,5 @@ export interface I_Profile {
   userType: string;
   dateOfJoin: Date;
   login: { userName: string };
+  branchCode:string;
 }

@@ -1,14 +1,15 @@
-import { I_BillingReq } from "./BillingReq";
+import { I_BillingReq } from './BillingReq';
 
 export interface I_ReportsResp {
   billList: BillingReport[];
-  items:ItemReport[];
+  items: ItemReport[];
   totalPage: number;
   currentPage: number;
   profit: number;
   totalSell: number;
   totalCost: number;
   unPaid: number;
+  tax: number;
 }
 
 export interface ItemReport {
@@ -19,6 +20,7 @@ export interface ItemReport {
   total: number;
   itemName: string;
   itemID: string;
+  tax: number;
 }
 
 export interface BillingReport {

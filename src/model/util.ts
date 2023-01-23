@@ -22,6 +22,7 @@ export enum StoreName {
   TENANT = 'tenant',
   ORDER = 'order',
   THEME = 'selectedTheme',
+  PRINTER = 'selectedPrinter',
   PAGEBILL = 'pageBill',
   PAGEREPORT = 'pageReport',
   LOGIN = 'loginstore'
@@ -38,6 +39,12 @@ export enum ApiEndPoint {
   CATEGORY_ADD = 'category',
   CATEGORY_UPDATE = 'category/:id',
   CATEGORY_LIST = 'category',
+
+  BRANCH_Add='chain',
+  BRANCH_UPDATE='chain/:id',
+  BRANCH_LIST='chain',
+  BRANCH_CODE='chain/code',
+  BRANCH_DELETE = 'billing/:id',
 
   METADATA = 'metadata',
   BILL_ADD = 'billing',

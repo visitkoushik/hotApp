@@ -11,8 +11,9 @@ const routes: Routes = [
   },
   {
     path: 'newbill',
-    loadChildren: () => import('./newbill/newbill.module').then( m => m.NewbillPageModule)
-  }
+    loadChildren: () =>
+      import('./newbill/newbill.module').then((m) => m.NewbillPageModule),
+  },
 ];
 
 @NgModule({

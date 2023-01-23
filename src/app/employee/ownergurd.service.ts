@@ -33,16 +33,10 @@ export class OwnerGaurdService implements CanLoad {
 
   fetchMetaData = async (): Promise<boolean> => {
     this.utilsrvc.isLoading = true;
-    const metadataResp: HttpRespObject = await this.httpClient.get(
-      ApiEndPoint.METADATA
-    );
+    const isMetadatFind: boolean = await this.httpClient.fetchMetaData();
     this.utilsrvc.isLoading = !true;
-    if (metadataResp.status == 1) {
-      this.utilsrvc.metaData = metadataResp.responseObject;
-    }
-
     return new Promise<boolean>((res, rej) => {
-      if (this.utilsrvc.metaData?.ownerNeedtocreate) {
+      if (!isMetadatFind || this.utilsrvc.metaData?.ownerNeedtocreate) {
         this.onfail();
         rej(false);
       } else {

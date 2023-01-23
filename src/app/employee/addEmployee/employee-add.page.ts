@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Route, Router } from '@angular/router';
+import { AuthService } from 'src/app/providers/auth/auth.service';
 import { I_Employee } from 'src/model/employee';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
@@ -30,7 +33,9 @@ export class EmployeeAddPage implements OnInit {
     private forBuilder: FormBuilder,
     public utilsrvc: UtilService,
     private httpClient: HttpService,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private auth: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -42,64 +47,70 @@ export class EmployeeAddPage implements OnInit {
     let defaultUserType = this.utilsrvc.metaData.userType[0].value || '';
     let defaultRoles = this.utilsrvc.metaData.roles[0].value || '';
 
-    this.fetchMetaData();
+    // this.fetchMetaData();
 
-    this.ionicForm = this.forBuilder.group(
+    this.ionicForm = new FormGroup(
       {
-        firstName: ['', [Validators.required, Validators.maxLength(15)]],
-        middleName: ['', [Validators.maxLength(15)]],
-        lastName: ['', [Validators.maxLength(15)]],
-        gender: ['MALE', [Validators.required]],
-        email: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
-          ],
-        ],
-        mobileNumbers: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(10),
-            Validators.minLength(10),
-            Validators.pattern('^[0-9]+$'),
-          ],
-        ],
-        dateOfBirth: [dt, [Validators.required]],
-        dateOfExist: ['', []],
-        dateOfJoin: [dt, [Validators.required]],
-        userType: [defaultUserType, [Validators.required]],
-        roles: [defaultRoles, [Validators.required]],
-        salary: ['0', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        passcode: ['', [Validators.required, Validators.minLength(8)]],
-        passRept: ['', [Validators.required, Validators.minLength(8)]],
-        userName: ['', [Validators.required]],
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(15),
+        ]),
+        middleName: new FormControl('', [Validators.maxLength(15)]),
+        lastName: new FormControl('', [Validators.maxLength(15)]),
+        gender: new FormControl('MALE', [Validators.required]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        ]),
+        mobileNumbers: new FormControl('', [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.minLength(10),
+          Validators.pattern('^[0-9]+$'),
+        ]),
+        dateOfBirth: new FormControl(dt, [Validators.required]),
+        dateOfExist: new FormControl('', []),
+        dateOfJoin: new FormControl(dt, [Validators.required]),
+        userType: new FormControl(defaultUserType, [Validators.required]),
+        roles: new FormControl(defaultRoles, [Validators.required]),
+        salary: new FormControl('0', [
+          Validators.required,
+          Validators.pattern('^[0-9]+$'),
+        ]),
+        passcode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        passRept: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        userName: new FormControl('', [Validators.required]),
       },
-      { validator: this.matchPassword('passcode', 'passRept') }
+      this.matchPassword('passcode', 'passRept')
     );
   }
   get errorControl() {
     return this.ionicForm.controls;
   }
-  fetchMetaData = () => {
-    this.utilsrvc.isLoading = true;
+  // fetchMetaData = () => {
+  //   this.utilsrvc.isLoading = true;
 
-    this.httpClient
-      .get(ApiEndPoint.METADATA)
-      .then((metadataResp: HttpRespObject) => {
-        if (metadataResp.status == 1) {
-          this.utilsrvc.metaData = metadataResp.responseObject;
-        }
-        if (this.utilsrvc.metaData.ownerNeedtocreate) {
-          throw 'Owner need to create';
-        }
-        this.utilsrvc.isLoading = false;
-      })
-      .catch((e) => {
-        this.utilsrvc.isLoading = false;
-      });
-  };
+  //   this.httpClient
+  //     .get(ApiEndPoint.METADATA)
+  //     .then((metadataResp: HttpRespObject) => {
+  //       if (metadataResp.status == 1) {
+  //         this.utilsrvc.metaData = metadataResp.responseObject;
+  //       }
+  //       if (this.utilsrvc.metaData.ownerNeedtocreate) {
+  //         throw 'Owner need to create';
+  //       }
+  //       this.utilsrvc.isLoading = false;
+  //     })
+  //     .catch((e) => {
+  //       this.utilsrvc.isLoading = false;
+  //     });
+  // };
   matchPassword(firstControl, secondControl): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.get(firstControl).value;
@@ -120,6 +131,10 @@ export class EmployeeAddPage implements OnInit {
       .post(ApiEndPoint.EMPLOYEE_ADD, this.ionicForm.value)
       .then((e) => {
         this.utilsrvc.isLoading = false;
+        this.snackBar.openSnackBar('Employee Added');
+        if (!this.utilsrvc.userLogin || !this.auth.isLoggedIn) {
+          this.router.navigate(['/login']);
+        }
       })
       .catch((e) => {
         this.utilsrvc.isLoading = false;

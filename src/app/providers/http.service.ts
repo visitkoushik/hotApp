@@ -14,9 +14,14 @@ export class HttpService {
 
   constructor(private http: HttpClient, private util: UtilService) {}
 
-  public get = (api: ApiEndPoint, query?: string,id?: string,): Promise<any> => {
-    const idToFetch = (id ? '/' + id : '');
-    const _url = this.baseUrl + api.replace(':id',idToFetch)  + (query ? '?' + query : '');
+  public get = (
+    api: ApiEndPoint,
+    query?: string,
+    id?: string
+  ): Promise<any> => {
+    const idToFetch = id ? '/' + id : '';
+    const _url =
+      this.baseUrl + api.replace(':id', idToFetch) + (query ? '?' + query : '');
     const headers = new HttpHeaders();
     headers.set('content-type', 'application/json');
     if (this.util.userLogin && this.util.userLogin.authCode) {
@@ -43,17 +48,23 @@ export class HttpService {
     return this.http.delete(_url, this.getCustomHeaders()).toPromise();
   };
 
-  fetchMetaData = async (onfail?: Function): Promise<boolean> => {
+  fetchMetaData = async (): Promise<boolean> => {
     this.util.isLoading = true;
     const metadataResp: HttpRespObject = await this.get(ApiEndPoint.METADATA);
     this.util.isLoading = !true;
     if (metadataResp.status == 1) {
       this.util.metaData = metadataResp.responseObject;
+      if (
+        this.util.metaData.profile &&
+        this.util.metaData.profile.branchCode &&
+        this.util.metaData.profile.branchCode !== '0'
+      ) {
+        this.util.branchCode = this.util.metaData.profile.branchCode;
+      }
     }
 
     return new Promise<boolean>((res, rej) => {
       if (this.util.metaData?.ownerNeedtocreate) {
-        onfail ? onfail() : () => {};
         rej(false);
       } else {
         res(true);

@@ -5,8 +5,8 @@ import { GENDER } from 'src/model/util';
   name: 'formatgender',
 })
 export class FormatGenderPipe implements PipeTransform {
-  transform(value: GENDER, ...args: any[]): string {
-    switch (value) {
+  transform(value: GENDER|string, ...args: any[]): string {
+    switch (GENDER[value.toString().toUpperCase()]) {
       case GENDER.FEMALE:
         return 'Ms.';
       case GENDER.MALE:

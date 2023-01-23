@@ -32,6 +32,7 @@ const routes: Routes = [
         (m) => m.CreateBillPageModule
       ),
   },
+
   {
     path: 'configure',
     loadChildren: () =>
@@ -115,12 +116,34 @@ const routes: Routes = [
   },
   {
     path: 'employee-tab',
-    loadChildren: () => import('./employee/employee-tab/employee-tab.module').then( m => m.EmployeeTabPageModule),
+    loadChildren: () =>
+      import('./employee/employee-tab/employee-tab.module').then(
+        (m) => m.EmployeeTabPageModule
+      ),
     canLoad: [AuthGaurdService],
   },
   {
     path: 'update-employee',
-    loadChildren: () => import('./employee/update-employee/update-employee.module').then( m => m.UpdateEmployeePageModule)
+    loadChildren: () =>
+      import('./employee/update-employee/update-employee.module').then(
+        (m) => m.UpdateEmployeePageModule
+      ),
+    canLoad: [AuthGaurdService],
+  },
+  {
+    path: 'branch-tab',
+    loadChildren: () => import('./branch/branch-tab/branch-tab.module').then( m => m.BranchTabPageModule),
+    canLoad: [AuthGaurdService],
+  },
+  {
+    path: 'add-branch',
+    loadChildren: () => import('./branch/add-branch/add-branch.module').then( m => m.AddBranchPageModule),
+    canLoad: [AuthGaurdService],
+  },
+  {
+    path: 'branch-list',
+    loadChildren: () => import('./branch/branch-list/branch-list.module').then( m => m.BranchListPageModule),
+    canLoad: [AuthGaurdService],
   },
 ];
 

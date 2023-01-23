@@ -17,5 +17,6 @@ export interface I_Employee {
   isCurrent: boolean;
   passcode: string;
   userName: string;
+  branchCode: string;
   login?:{userName: string};
 }

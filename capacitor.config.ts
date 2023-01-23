@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.houseftea.book',
-  appName: 'House Of Tea',
+  appId: 'com.houseftea.inventory',
+  appName: 'House Of Tea(HOT)',
   webDir: 'www',
   bundledWebRuntime: false
 };
