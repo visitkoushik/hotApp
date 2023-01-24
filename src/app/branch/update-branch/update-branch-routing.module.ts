@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProfilePage } from './profile.page';
+import { UpdateBranchPage } from './update-branch.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage,
-    data: { title: 'Profile', hideLogin:true,displayBackButton:true},
+    component: UpdateBranchPage,
+    data: { title: 'Update Branch', hideLogin:true },
   }
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProfilePageRoutingModule {}
+export class UpdateBranchPageRoutingModule {}

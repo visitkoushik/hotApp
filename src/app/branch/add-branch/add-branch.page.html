@@ -1,0 +1,74 @@
+<ion-content>
+  <form [formGroup]="branchForm" novalidate>
+    <ion-item>
+      <ion-label position="floating" class="required"
+        >Enter branch name</ion-label
+      >
+      <ion-input formControlName="name" type="text" required></ion-input>
+      <span
+        class="error"
+        *ngIf="controls.name.touched && controls.name.errors?.required"
+      >
+        Branch name is required.
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label position="start" class="required"
+        >Generate branch Code</ion-label
+      >
+
+      <ion-input
+        formControlName="code"
+        type="text"
+        required
+        class="half-width"
+        style="background: #d4d4d4; margin: 1rem"
+        readonly="true"
+      ></ion-input>
+      <ion-button (click)="onRefresh()">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+      <span
+        class="error"
+        *ngIf="controls.code.touched && controls.code.errors?.required"
+      >
+        Branch code is required.
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" class="required"
+        >Enter branch address</ion-label
+      >
+      <ion-textarea formControlName="address" type="text"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" class="required"
+        >Add branch Items</ion-label
+      >
+      <ion-select
+        [compareWith]="compareWith"
+        placeholder="Select Items"
+        [multiple]="true"
+        formControlName="items"
+      >
+        <ion-select-option *ngFor="let items of allItems" [value]="items.id"
+          >{{ items.itemName }}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-toolbar></ion-toolbar>
+    <ion-button
+      size="default"
+      color="primary"
+      float-right
+      (click)="onSave()"
+      [disabled]="!isValid()"
+    >
+      Add Branch
+    </ion-button>
+  </ion-item>
+</ion-footer>

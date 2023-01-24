@@ -104,7 +104,6 @@ export class AppsettingPage implements OnInit {
     ThermalPrinter.listPrinters(
       { type: printerType },
       (printers: Printer[]) => {
-        debugger;
         printers = printers.filter((p) => p.majorDeviceClass === 1536);
         if (printers.length > 0) {
           this.allPrinter = printers;

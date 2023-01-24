@@ -112,6 +112,7 @@ export class CartService {
       .then((e: AppResponse<I_Items[]>) => {
         this.mainItems = [...e.responseObject];
         if (onSuccess) {
+
           onSuccess();
         }
         this.utilService.isLoading = false;

@@ -138,12 +138,16 @@ const routes: Routes = [
   {
     path: 'add-branch',
     loadChildren: () => import('./branch/add-branch/add-branch.module').then( m => m.AddBranchPageModule),
-    canLoad: [AuthGaurdService],
+
   },
   {
     path: 'branch-list',
     loadChildren: () => import('./branch/branch-list/branch-list.module').then( m => m.BranchListPageModule),
-    canLoad: [AuthGaurdService],
+
+  },
+  {
+    path: 'update-branch',
+    loadChildren: () => import('./branch/update-branch/update-branch.module').then( m => m.UpdateBranchPageModule)
   },
 ];
 

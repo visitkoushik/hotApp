@@ -40,7 +40,7 @@ export enum ApiEndPoint {
   CATEGORY_UPDATE = 'category/:id',
   CATEGORY_LIST = 'category',
 
-  BRANCH_Add='chain',
+  BRANCH_ADD='chain',
   BRANCH_UPDATE='chain/:id',
   BRANCH_LIST='chain',
   BRANCH_CODE='chain/code',
