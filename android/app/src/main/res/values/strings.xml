@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">House Of Tea(HOT)</string>
+    <string name="title_activity_main">House Of Tea(HOT)</string>
+    <string name="package_name">com.houseftea.inventory</string>
+    <string name="custom_url_scheme">com.houseftea.inventory</string>
+</resources>
