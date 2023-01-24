@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppResponse } from 'src/model/AppResponse';
+import { I_Branch } from 'src/model/branch';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
 import { UtilService } from './utilservice.service';
@@ -68,6 +70,30 @@ export class HttpService {
         rej(false);
       } else {
         res(true);
+      }
+    });
+  };
+
+  fetchBranch = (): Promise<I_Branch[] | string> => {
+    let status = 0;
+    this.util.isLoading = true;
+
+    this.get(ApiEndPoint.BRANCH_LIST)
+      .then((e: AppResponse<I_Branch[]>) => {
+        this.util.allBranches = [...e.responseObject];
+        this.util.isLoading = false;
+        status = e.status;
+      })
+      .catch((e: AppResponse<any>) => {
+        status = e.status;
+        this.util.isLoading = false;
+      });
+
+    return new Promise<I_Branch[] | string>((res, rej) => {
+      if (status == 0) {
+        rej('Failed to load branch list. Restart app if required');
+      } else {
+        res(this.util.allBranches);
       }
     });
   };

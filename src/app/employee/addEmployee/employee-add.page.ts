@@ -86,6 +86,7 @@ export class EmployeeAddPage implements OnInit {
           Validators.minLength(8),
         ]),
         userName: new FormControl('', [Validators.required]),
+        branchCode: new FormControl(this.utilsrvc.branchCode==='0'?'':this.utilsrvc.branchCode, [Validators.required]),
       },
       this.matchPassword('passcode', 'passRept')
     );
