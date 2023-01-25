@@ -10,7 +10,8 @@ import { CreateBillPage } from './create-bill.page';
 import { MaterialModule } from '../../material.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { AppStorageModule } from '../../app-storage/app-storage.module';
-
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
+import { BranchSelectorComponent } from 'src/app/branch-selector/branch-selector.component';
 
 @NgModule({
   imports: [
@@ -19,9 +20,9 @@ import { AppStorageModule } from '../../app-storage/app-storage.module';
     IonicModule,
     CreateBillPageRoutingModule,
     MaterialModule,
-    PipeModule
+    PipeModule,
+    BranchSelectorModule,
   ],
-  declarations: [CreateBillPage]
-
+  declarations: [CreateBillPage],
 })
 export class CreateBillPageModule {}

@@ -9,7 +9,6 @@ import { I_MetaData } from 'src/model/metadata';
 import { ApiEndPoint, StoreName } from 'src/model/util';
 import { Printer } from 'thermal-printer-cordova-plugin/src';
 import { AppStorageService } from './app-storage/app-storage.service';
-import { AuthService } from './providers/auth/auth.service';
 import { CartService } from './providers/cart-service.service';
 import { HttpService } from './providers/http.service';
 import { SnackbarService } from './providers/snackbar.service';
@@ -30,7 +29,6 @@ export class AppComponent implements OnInit, OnChanges {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    public auth: AuthService,
     public util: UtilService,
     private storage: AppStorageService,
     private snackbar: SnackbarService,
@@ -87,19 +85,16 @@ export class AppComponent implements OnInit, OnChanges {
     }
   };
   appLogout = () => {
-    // this.auth.isLoggedIn = false;
-    // this.auth.redirectUrl = '';
+    // this.util.isLoggedIn = false;
+    // this.util.redirectUrl = '';
     this.util.isLoading = true;
     this.httpClient
       .post(ApiEndPoint.LOGOUT, {})
       .then(async (e) => {
         this.util.isLoading = false;
-        this.util.onAppLogout(this.auth);
-        await this.storage.setStorage(StoreName.LOGIN, {
-          userLogin: null,
-          isLoggedIn: false,
-        });
-        this.router.navigate(['/login']);
+        this.util.onAppLogout();
+
+        // this.router.navigate(['/login']);
       })
       .catch((e) => {
         this.util.isLoading = false;

@@ -8,7 +8,6 @@ import { TabItemPageRoutingModule } from './tab-item-routing.module';
 
 import { TabItemPage } from './tab-item.page';
 import { MaterialModule } from 'src/app/material.module';
-import { AddItemDisplayGuard } from './add-item.guard';
 
 @NgModule({
   imports: [
@@ -19,6 +18,5 @@ import { AddItemDisplayGuard } from './add-item.guard';
     MaterialModule
   ],
   declarations: [TabItemPage],
-  providers:[AddItemDisplayGuard]
 })
 export class TabItemPageModule {}

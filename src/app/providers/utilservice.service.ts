@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { I_MetaData } from 'src/model/metadata';
 import { I_ReportsResp } from 'src/model/ReportFilterResp';
 import { I_UserLogin } from 'src/model/userLogin';
-import { I_TenantDetails } from 'src/model/util';
+import { I_TenantDetails, StoreName } from 'src/model/util';
 import { Printer, PrinterToUse } from 'thermal-printer-cordova-plugin/src';
 import { AuthService } from './auth/auth.service';
 import { ThermalPrinterPlugin } from 'thermal-printer-cordova-plugin/src';
 import { I_Branch } from 'src/model/branch';
 import { I_Profile } from 'src/model/Profile';
+import { AppStorageService } from '../app-storage/app-storage.service';
+import { Router } from '@angular/router';
 
 declare let ThermalPrinter: ThermalPrinterPlugin;
 
@@ -15,6 +17,7 @@ declare let ThermalPrinter: ThermalPrinterPlugin;
   providedIn: 'root',
 })
 export class UtilService {
+  private url = '';
   public gvtTax = 0;
   public maxPageCount: number;
   public maxPageCountReport: number;
@@ -27,21 +30,30 @@ export class UtilService {
   public iReportsResp: I_ReportsResp;
   public allBranches: I_Branch[] = [];
   public branchCode: string;
+  public isLoggedIn = false;
+  get redirectUrl(): string {
+    return this.url;
+  }
+  set redirectUrl(url: string) {
+    this.url = url;
+  }
 
-  constructor() {}
+  constructor(private storage: AppStorageService,private router:Router) {}
 
-  public onAppLogout = (auth: AuthService) => {
+  public onAppLogout = async () => {
+    await this.storage.setStorage(StoreName.LOGIN, {
+      userLogin: null,
+      isLoggedIn: false,
+    });
     this.userLogin = null;
-    auth.isLoggedIn = false;
-    auth.isLoggedIn = false;
-    auth.redirectUrl = '/';
+    this.isLoggedIn = false;
+    this.redirectUrl = '/';
+    this.router.navigate(['/login']);
   };
 
-
-  public print = (textToPrint:string):Promise<string>=>{
-    return new Promise((res,rej)=>{
-
-      if(this.printer===null){
+  public print = (textToPrint: string): Promise<string> => {
+    return new Promise((res, rej) => {
+      if (this.printer === null) {
         rej('Printer not set yet. Please goto App Setting and set the printer');
       }
       ThermalPrinter.printFormattedTextAndCut(
@@ -54,9 +66,9 @@ export class UtilService {
           res('Successfully printed!');
         },
         function (error) {
-          rej('Printing error '+  error);
+          rej('Printing error ' + error);
         }
       );
-    })
-  }
+    });
+  };
 }

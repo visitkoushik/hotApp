@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddItemDisplayGuard } from './add-item.guard';
 
 import { TabItemPage } from './tab-item.page';
 

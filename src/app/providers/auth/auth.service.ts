@@ -19,8 +19,8 @@ import { UtilService } from '../utilservice.service';
   providedIn: 'root',
 })
 export class AuthService {
-  public isLoggedIn = false;
-  private url = '';
+
+
 
   constructor(
     private router: Router,
@@ -29,12 +29,6 @@ export class AuthService {
     private storage: AppStorageService
   ) {}
 
-  get redirectUrl(): string {
-    return this.url;
-  }
-  set redirectUrl(url: string) {
-    this.url = url;
-  }
 
   public login = (username, password): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -45,10 +39,10 @@ export class AuthService {
 
           if (e.status == 1) {
             this.util.userLogin = { ...e.responseObject };
-            this.isLoggedIn = true;
+            this.util.isLoggedIn = true;
             await this.storage.setStorage(StoreName.LOGIN, {
               userLogin: { ...e.responseObject },
-              isLoggedIn: this.isLoggedIn,
+              isLoggedIn: this.util.isLoggedIn,
             });
             await this.httpClient.fetchMetaData();
             resolve('Login success');
@@ -57,7 +51,7 @@ export class AuthService {
         })
         .catch((e) => {
           const apperr: AppResponse<string> = e.error;
-          this.isLoggedIn = false;
+          this.util.isLoggedIn = false;
           reject(apperr.error);
         });
     });

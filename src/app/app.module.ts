@@ -31,7 +31,9 @@ import { CommonModule } from '@angular/common';
     AppStorageModule,
     PlatformModule,
     HttpClientModule,
+
   ],
+
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CartService,

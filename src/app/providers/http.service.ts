@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppResponse } from 'src/model/AppResponse';
 import { I_Branch } from 'src/model/branch';
 import { HttpRespObject } from 'src/model/httpRespModel';
 import { ApiEndPoint } from 'src/model/util';
+import { AppStorageModule } from '../app-storage/app-storage.module';
+import { AuthService } from './auth/auth.service';
 import { UtilService } from './utilservice.service';
 
 @Injectable({
@@ -29,25 +32,70 @@ export class HttpService {
     if (this.util.userLogin && this.util.userLogin.authCode) {
       headers.set('auth-code', this.util.userLogin.authCode);
     }
-    return this.http.get(_url, this.getCustomHeaders()).toPromise();
+
+    return new Promise((res, rej) => {
+      this.http
+        .get(_url, this.getCustomHeaders())
+        .toPromise()
+        .then((e) => res(e))
+        .catch((e) => {
+          if (e.status === 401) {
+            this.util.onAppLogout();
+          }
+          rej(e);
+        });
+    });
   };
 
   public post = (api: ApiEndPoint, body): Promise<any> => {
     const _url = this.baseUrl + api;
 
-    return this.http.post(_url, body, this.getCustomHeaders()).toPromise();
+    return new Promise((res, rej) => {
+      this.http
+        .post(_url, body, this.getCustomHeaders())
+        .toPromise()
+        .then((e) => res(e))
+        .catch((e) => {
+          if (e.status === 401) {
+            this.util.onAppLogout();
+          }
+          rej(e);
+        });
+    });
   };
 
   public put = (api: ApiEndPoint, id: string, body: any): Promise<any> => {
     const _url = this.baseUrl + api.replace(':id', id);
 
-    return this.http.put(_url, body, this.getCustomHeaders()).toPromise();
+    return new Promise((res, rej) => {
+      this.http
+        .put(_url, body, this.getCustomHeaders())
+        .toPromise()
+        .then((e) => res(e))
+        .catch((e) => {
+          if (e.status === 401) {
+            this.util.onAppLogout();
+          }
+          rej(e);
+        });
+    });
   };
 
   public delete = (api: ApiEndPoint, id: string): Promise<any> => {
     const _url = this.baseUrl + api.replace(':id', id);
 
-    return this.http.delete(_url, this.getCustomHeaders()).toPromise();
+    return new Promise((res, rej) => {
+      this.http
+        .delete(_url, this.getCustomHeaders())
+        .toPromise()
+        .then((e) => res(e))
+        .catch((e) => {
+          if (e.status === 401) {
+            this.util.onAppLogout();
+          }
+          rej(e);
+        });
+    });
   };
 
   fetchMetaData = async (): Promise<boolean> => {

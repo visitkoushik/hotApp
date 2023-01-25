@@ -13,14 +13,14 @@
       <ion-buttons slot="end">
         <ion-button
           class="menuicon"
-          *ngIf="!auth.isLoggedIn && pageEvent?.hideLogin !== true"
+          *ngIf="!util.isLoggedIn && pageEvent?.hideLogin !== true"
           routerLink="/login"
         >
           <mat-icon end>lock</mat-icon>
         </ion-button>
         <ion-button
           class="menuicon"
-          *ngIf="auth.isLoggedIn && pageEvent?.hideLogin !== true"
+          *ngIf="util.isLoggedIn && pageEvent?.hideLogin !== true"
         >
           <mat-icon end>lock_open</mat-icon>
         </ion-button>
@@ -108,7 +108,7 @@
           </ion-menu-toggle>
           <ion-menu-toggle>
             <mat-divider></mat-divider>
-            <ion-item (click)="appLogout()" [disabled]="!auth.isLoggedIn">
+            <ion-item (click)="appLogout()" [disabled]="!util.isLoggedIn">
               <mat-icon>exit_to_app</mat-icon>
               <span>LogOut</span>
             </ion-item>

@@ -34,7 +34,6 @@ export class EmployeeAddPage implements OnInit {
     public utilsrvc: UtilService,
     private httpClient: HttpService,
     private snackBar: SnackbarService,
-    private auth: AuthService,
     private router: Router
   ) {}
 
@@ -133,7 +132,7 @@ export class EmployeeAddPage implements OnInit {
       .then((e) => {
         this.utilsrvc.isLoading = false;
         this.snackBar.openSnackBar('Employee Added');
-        if (!this.utilsrvc.userLogin || !this.auth.isLoggedIn) {
+        if (!this.utilsrvc.userLogin || !this.utilsrvc.isLoggedIn) {
           this.router.navigate(['/login']);
         }
       })

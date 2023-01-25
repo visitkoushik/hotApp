@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
       .then((e) => {
         this.util.isLoading = false;
 
-        if (this.auth.redirectUrl) {
-          this.router.navigateByUrl(this.auth.redirectUrl);
+        if (this.util.redirectUrl) {
+          this.router.navigateByUrl(this.util.redirectUrl);
         } else {
           this.onCancel();
         }

@@ -1,0 +1,14 @@
+<ion-item>
+  <ion-select
+    color="primary"
+    class="fullwidth"
+    interface="popover"
+    (ionChange)="onBranchChange($event)"
+  >
+    <ion-select-option
+      *ngFor="let branch of this.util.allBranches"
+      [value]="branch"
+      >{{ branch.code }}=>{{ branch.name }}</ion-select-option
+    >
+  </ion-select>
+</ion-item>

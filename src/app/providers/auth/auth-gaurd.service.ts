@@ -34,7 +34,7 @@ export class AuthGaurdService implements CanLoad {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     const url: string = route.path;
-    if (this.auth.isLoggedIn) {
+    if (this.util.isLoggedIn) {
       if(!this.util.metaData){
         this.fetchMetaData()
       }
@@ -45,23 +45,23 @@ export class AuthGaurdService implements CanLoad {
         .getStorage(StoreName.LOGIN)
         .then(async (e) => {
           this.util.userLogin = e.userLogin;
-          this.auth.isLoggedIn = e.isLoggedIn;
-          if (!this.auth.isLoggedIn) {
-            this.auth.redirectUrl = url;
+          this.util.isLoggedIn = e.isLoggedIn;
+          if (!this.util.isLoggedIn) {
+            this.util.redirectUrl = url;
             this.router.navigate(['/login']);
           } else {
             await this.fetchMetaData();
           }
-          res(this.auth.isLoggedIn);
+          res(this.util.isLoggedIn);
 
         })
         .catch((e) => {
           this.util.userLogin = null;
-          this.auth.isLoggedIn = false;
+          this.util.isLoggedIn = false;
 
-          this.auth.redirectUrl = url;
+          this.util.redirectUrl = url;
           this.router.navigate(['/login']);
-          res(this.auth.isLoggedIn);
+          res(this.util.isLoggedIn);
         });
     });
   }
