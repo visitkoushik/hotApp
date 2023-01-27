@@ -20,6 +20,8 @@ import { AlertService } from '../providers/alert.service';
   styleUrls: ['./appsetting.page.scss'],
 })
 export class AppsettingPage implements OnInit {
+  public thermalPrinter: any = null;
+
   public themeColor = [
     { name: 'Default', class: 'default' },
     { name: 'Dark', class: 'dark-theme' },
@@ -53,7 +55,7 @@ export class AppsettingPage implements OnInit {
   constructor(
     private theme: ThemeService,
     private store: AppStorageService,
-    private util: UtilService,
+    public util: UtilService,
     private alert: AlertService,
     private alertCtrl: AlertController
   ) {
@@ -61,6 +63,12 @@ export class AppsettingPage implements OnInit {
     this.selectPageSettingBill = this.util.maxPageCount;
     this.selectPageSettingReport = this.util.maxPageCountReport;
     this.selectedPrinter = this.util.printer as unknown as Printer;
+
+    try {
+      this.thermalPrinter = ThermalPrinter;
+    } catch {
+      this.thermalPrinter = null;
+    }
   }
   async ngOnInit(): Promise<void> {
     await BleClient.initialize({ androidNeverForLocation: true });
@@ -100,8 +108,10 @@ export class AppsettingPage implements OnInit {
 
   fetchPrinter = () => {
     const printerType: 'bluetooth' | 'usb' | 'tcp' = 'bluetooth';
-
-    ThermalPrinter.listPrinters(
+    if (!this.thermalPrinter) {
+      return;
+    }
+    this.thermalPrinter.listPrinters(
       { type: printerType },
       (printers: Printer[]) => {
         printers = printers.filter((p) => p.majorDeviceClass === 1536);
@@ -123,15 +133,48 @@ export class AppsettingPage implements OnInit {
 
   connectToPrinter = (printerToUse: Printer) => {
     this.util.print(
-      `[C]<u><font size='small'>If you able to see me the your printer has configured</font></u>`
+      `[C]<u><font size='small'>${this.getTestText()}</font></u>`
     );
   };
 
+  getTestText = () => {
+    const message = [
+      'The first casualty when war comes is truth, -Hiram W Johnson. But who decide what truth is',
+      'Keep Your Blood In, You`ll Need Every Drop.-Ghost',
+      'Terrorism Is Good For Business. It`s Insurance.- Valeria',
+      'When the power of love overcomes the love of power the world will know peace. -Jimi Hendrix',
+      'Every new day begins with possibilities. It`s up to us to fill it with the things that move us toward progress and peace. -Ronald Reagan',
+      'War does not determine who is right - only who is left. -Bertrand Russell',
+      'Older men declare war. But it is the youth that must fight and die. -Herbert Hoover',
+      'Before you embark on a journey of revenge, dig two graves. -Confucius',
+      'The truth of the matter is that you always know the right thing to do. The hard part is doing it. -Robert H. Schuller',
+      'Patriotism is your conviction that this country is superior to all others because you were born in it. -George Bernard Shaw',
+      'A leader leads by example not by force. -Sun Tzu',
+      'A citizen will cross the ocean to fight for democracy, but won`t cross the street to vote in a national election.',
+      'Whether you like it or not, history is on our side. We will bury you!, -Nikita Khrushchev',
+      'Principle is OK up to a certain point, but principle doesn`t do any good if you lose. -Dick Cheney',
+      'I think the human race needs to think about killing. How much evil must we do to do good? -Robert McNamara',
+    ];
+
+    const index = this.generateRangom(0, message.length);
+
+    return message[index] || message[0];
+  };
+  generateRangom = (low, up) => {
+    const u = Math.max(low, up);
+    const l = Math.min(low, up);
+    const diff = u - l;
+    const r = Math.floor(Math.random() * (diff + 1)); //'+1' because Math.random() returns 0..0.99, it does not include 'diff' value, so we do +1, so 'diff + 1' won't be included, but just 'diff' value will be.
+
+    return l + r; //add the random number that was selected within distance between low and up to the lower limit.
+  };
   onDeviceChange = async () => {
     this.util.printer = this.selectedPrinter;
 
     await this.store.setStorage(StoreName.PRINTER, this.selectedPrinter);
+  };
 
-    this.connectToPrinter(this.selectedPrinter);
+  test = () => {
+    this.connectToPrinter(this.util.printer);
   };
 }

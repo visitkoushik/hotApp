@@ -9,6 +9,7 @@ import { AllBillsPageRoutingModule } from './all-bills-routing.module';
 import { AllBillsPage } from './all-bills.page';
 import { PipeModule } from '../../pipe/pipe.module';
 import { MaterialModule } from '../../material.module';
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MaterialModule } from '../../material.module';
     IonicModule,
     AllBillsPageRoutingModule,
     PipeModule,
+    BranchSelectorModule,
     MaterialModule
   ],
   declarations: [AllBillsPage]

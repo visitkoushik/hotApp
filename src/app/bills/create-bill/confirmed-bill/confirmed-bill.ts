@@ -101,6 +101,7 @@ export class ConfiremdBillPage implements OnInit {
     billReq.customer = this.getCustomerInfo();
     billReq.paid = this.currentBill.paid;
     billReq.tax = this.currentBill.tax;
+    billReq.branchCode=this.util.branchCode;
     billReq.billingItemList = this.currentBill.itemPurchased.map(
       (cart: I_CartItem) => {
         const billingItem: I_BillingItem = {} as I_BillingItem;

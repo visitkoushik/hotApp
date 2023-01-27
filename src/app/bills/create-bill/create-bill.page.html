@@ -1,5 +1,9 @@
 <ion-header>
-  <app-branch-selector></app-branch-selector>
+  <app-branch-selector
+    *ngIf="this.util.metaData.profile.branchCode=='0'"
+    (branchChanged)="onBranchChanged()"
+  ></app-branch-selector>
+
   <ion-item>
     <ion-label position="floating" color="danger">Customer Name *</ion-label>
     <ion-input
@@ -128,7 +132,7 @@
         fill="solid"
         size="default"
         color="primary"
-        [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.currentBiill.customerName?.trim().length===0"
+        [disabled]="+(creatBillPage.listOfCartItem|subtotal:'count')===0 || creatBillPage.currentBiill.customerName?.trim().length===0 || this.util.branchCode==='0'"
         (click)="onNextScreen()"
       >
         Next

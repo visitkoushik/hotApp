@@ -1,4 +1,8 @@
 <ion-content>
+  <app-branch-selector
+    *ngIf="this.utilSrvc.metaData.profile.branchCode=='0'"
+    (branchChanged)="onBranchChanged()"
+  ></app-branch-selector>
   <mat-list>
     <mat-card
       *ngFor="let emp of allEmployeies;trackBy: trackByFn "

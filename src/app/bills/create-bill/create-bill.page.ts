@@ -13,6 +13,7 @@ import { GENDER, I_CreateBillPage, StoreName } from 'src/model/util';
 import { CartService } from '../../providers/cart-service.service';
 
 import { AppStorageService } from '../../app-storage/app-storage.service';
+import { UtilService } from 'src/app/providers/utilservice.service';
 @Component({
   selector: 'app-create-bill',
   templateUrl: './create-bill.page.html',
@@ -23,6 +24,7 @@ export class CreateBillPage implements OnInit {
   CLONED_GENDER = GENDER;
   creatBillPage: I_CreateBillPage = null;
   constructor(
+    public util:UtilService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
     private router: Router
@@ -101,24 +103,13 @@ export class CreateBillPage implements OnInit {
   };
 
   public onReset = () => {};
-
+  onBranchChanged() {
+    this.fetchData()
+  }
   trackByFn = (inx: number, item: I_CartItem) => item.id;
 
   private fetchData = () => {
-    // this.storage
-    //   .getStorage(StoreName.ITEM)
-    //   .then((e) => {
-    //     this.cartService.mainItems = [...e];
-    //     if (!this.cartService.createBillPageRef || !this.cartService.createBillPageRef.currentBiill) {
-    //       this.cartService.setDefaultBill();
-    //     } else {
-    //       this.cartService.updateDefaultBill();
-    //     }
-    //     this.creatBillPage = { ...this.cartService.createBillPageRef };
-    //   })
-    //   .catch((e) => {});
-
-    this.cartService.getAllItem(true, () => {
+    this.cartService.getAllItem(this.util.branchCode ,true, () => {
       if (
         !this.cartService.createBillPageRef ||
         !this.cartService.createBillPageRef.currentBiill

@@ -2,6 +2,9 @@
   <h5 style="margin-left: 1rem">Filter By</h5>
 </ion-header>
 <ion-content>
+  <app-branch-selector
+    *ngIf="this.util.metaData.profile.branchCode=='0'"
+  ></app-branch-selector>
   <ion-item>
     <mat-label>Filter Report By</mat-label>
     <ion-radio-group aria-label="" [(ngModel)]="filterDateBy">
@@ -91,7 +94,9 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" color="medium" (click)="openBrowser()">Advance</ion-button>
+  <ion-button expand="block" color="medium" (click)="openBrowser()"
+    >Advance</ion-button
+  >
   <mat-divider></mat-divider>
   <ion-item>
     <ion-title></ion-title>

@@ -10,7 +10,7 @@ import { BranchSelectorComponent } from './branch-selector.component';
 import { HttpService } from '../providers/http.service';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, MaterialModule, PipeModule],
+  imports: [CommonModule, FormsModule, IonicModule, MaterialModule, PipeModule],
   declarations: [BranchSelectorComponent],
   exports: [BranchSelectorComponent],
 })

@@ -11,6 +11,7 @@ import { PipeModule } from '../pipe/pipe.module';
 import { MaterialModule } from '../material.module';
 import { YearPickerModule } from '../custom-mat-picker/year-picker/year-picker.module';
 import { MonthPickerModule } from '../custom-mat-picker/month-picker/month-picker.module';
+import { BranchSelectorModule } from '../branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { MonthPickerModule } from '../custom-mat-picker/month-picker/month-picke
     MaterialModule,
     YearPickerModule,
     ReactiveFormsModule,
-    MonthPickerModule
+    MonthPickerModule,
+    BranchSelectorModule
 
   ],
   declarations: [ReportsPage]

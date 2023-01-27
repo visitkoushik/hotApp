@@ -22,7 +22,7 @@ export class EmployeeListPage implements OnInit {
   public allEmployeies: I_Employee[] = [];
   public EMPLOYEE_READ: boolean = false;
   constructor(
-    private utilSrvc: UtilService,
+    public utilSrvc: UtilService,
     private activeRoute: ActivatedRoute,
     private snackBar: SnackbarService,
     private httpSrvc: HttpService,
@@ -57,12 +57,16 @@ export class EmployeeListPage implements OnInit {
   ngOnInit() {
     this.fetchAllEmployee();
   }
+
+  onBranchChanged() {
+    this.fetchAllEmployee();
+  }
   trackByFn = (inx, emp: I_Employee) => emp.userName;
 
   private fetchAllEmployee = () => {
     this.utilSrvc.isLoading = true;
     this.httpSrvc
-      .get(ApiEndPoint.EMPLOYEE_LIST)
+      .get(ApiEndPoint.EMPLOYEE_LIST,`branchCode=${this.utilSrvc.branchCode}`)
       .then((e: AppResponse<I_Employee[]>) => {
         this.allEmployeies = [...e.responseObject];
         this.utilSrvc.isLoading = false;

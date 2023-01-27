@@ -1,4 +1,8 @@
 <ion-header>
+  <app-branch-selector
+    *ngIf="this.util.metaData.profile.branchCode=='0'"
+    (branchChanged)="onBranchChanged()"
+  ></app-branch-selector>
   <mat-form-field class="newbill-full-width" appearance="fill">
     <mat-label>Choose a date</mat-label>
     <!-- #docregion toggle -->

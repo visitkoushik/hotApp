@@ -26,9 +26,9 @@ export class ItemListPage implements OnInit {
   CATEGORY_READ: boolean;
 
   constructor(
+    public util: UtilService,
     public cartsrvc: CartService,
     private router: Router,
-    private util: UtilService
   ) {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
@@ -74,8 +74,12 @@ export class ItemListPage implements OnInit {
   };
 
   private getItemList = () => {
-    this.cartsrvc.getAllItem(this.includeOutOfStockItem ? null : true, () => {
+    this.cartsrvc.getAllItem(this.util.branchCode, this.includeOutOfStockItem ? null : true, () => {
       this.allItems = this.cartsrvc.mainItems;
     });
   };
+
+  onBranchChanged=()=>{
+    this.getItemList();
+  }
 }

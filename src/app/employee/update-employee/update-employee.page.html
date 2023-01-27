@@ -1,5 +1,10 @@
 <ion-content>
   <form [formGroup]="ionicForm" novalidate *ngIf="emp.login.userName">
+    <app-branch-selector
+      *ngIf="this.utilsrvc.metaData.profile.branchCode=='0'"
+      (branchChanged)="onBranchChanged()"
+    ></app-branch-selector>
+    <input type="hidden" formControlName="branchCode" />
     <ion-item>
       <ion-label position="floating" class="required">First name</ion-label>
       <ion-input formControlName="firstName" type="text" required></ion-input>

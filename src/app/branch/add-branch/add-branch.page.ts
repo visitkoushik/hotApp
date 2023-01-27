@@ -31,6 +31,7 @@ export class AddBranchPage implements OnInit {
 
   ngOnInit() {
     this.cartsrvc.getAllItem(
+      this.utilsrvc.branchCode,
       true,
       (e: AppResponse<I_Items[]>) => {
         this.allItems = [...this.cartsrvc.mainItems];

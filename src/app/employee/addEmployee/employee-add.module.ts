@@ -10,6 +10,7 @@ import { EmployeeAddPage } from './employee-add.page';
 import { MaterialModule } from '../../material.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { BrowserModule } from '@angular/platform-browser';
     ReactiveFormsModule,
     MaterialModule,
     PipeModule,
+    BranchSelectorModule,
     EmployeeAddPageRoutingModule,
 
   ],

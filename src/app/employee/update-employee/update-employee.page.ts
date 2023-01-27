@@ -23,6 +23,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   styleUrls: ['./update-employee.page.scss'],
 })
 export class UpdateEmployeePage implements OnInit {
+
   public minDate = new Date(1950, 0, 1);
   public maxDate = new Date();
   public update: boolean = true;
@@ -30,8 +31,8 @@ export class UpdateEmployeePage implements OnInit {
   ionicForm: FormGroup;
   public isSubmitted: boolean = false;
   constructor(
-    private forBuilder: FormBuilder,
     public utilsrvc: UtilService,
+    private forBuilder: FormBuilder,
     private httpClient: HttpService,
     private snackBar: SnackbarService,
     private activeRoute: ActivatedRoute,
@@ -75,11 +76,11 @@ export class UpdateEmployeePage implements OnInit {
         userType: [defaultUserType, [Validators.required]],
         roles: [defaultRoles, [Validators.required]],
         salary: ['0', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        // passcode: ['', [Validators.required, Validators.minLength(8)]],
-        // passRept: ['', [Validators.required, Validators.minLength(8)]],
+
         userName: ['', [Validators.required]],
+        branchCode: [this.utilsrvc.branchCode || '0'],
       }
-      //{ validator: this.matchPassword('passcode','passRept') }
+
     );
 
     this.activeRoute.queryParams.subscribe((p) => {
@@ -98,13 +99,16 @@ export class UpdateEmployeePage implements OnInit {
         this.ionicForm.get('userName').setValue(this.emp.login.userName);
         this.ionicForm.get('userType').setValue(this.emp.userType);
         this.ionicForm.get('roles').setValue(this.emp.roles);
+        this.ionicForm.get('branchCode').setValue(this.emp.branchCode);
       }
     });
   }
   get errorControl() {
     return this.ionicForm.controls;
   }
-
+  onBranchChanged() {
+    this.errorControl['branchCode'].setValue(this.utilsrvc.branchCode);
+  }
   matchPassword(firstControl, secondControl): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.get(firstControl).value;

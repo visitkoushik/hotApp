@@ -23,6 +23,9 @@ import { UtilService } from '../../providers/utilservice.service';
   styleUrls: ['./employee-add.page.scss'],
 })
 export class EmployeeAddPage implements OnInit {
+  onBranchChanged() {
+    this.errorControl['branchCode'].setValue(this.utilsrvc.branchCode);
+  }
   public minDate = new Date(1950, 0, 1);
   public maxDate = new Date();
   public update: boolean = false;
@@ -30,7 +33,6 @@ export class EmployeeAddPage implements OnInit {
   ionicForm: FormGroup;
   public isSubmitted: boolean = false;
   constructor(
-    private forBuilder: FormBuilder,
     public utilsrvc: UtilService,
     private httpClient: HttpService,
     private snackBar: SnackbarService,
@@ -85,7 +87,7 @@ export class EmployeeAddPage implements OnInit {
           Validators.minLength(8),
         ]),
         userName: new FormControl('', [Validators.required]),
-        branchCode: new FormControl(this.utilsrvc.branchCode==='0'?'':this.utilsrvc.branchCode, [Validators.required]),
+        branchCode: new FormControl(this.utilsrvc.branchCode || '0'),
       },
       this.matchPassword('passcode', 'passRept')
     );
@@ -143,6 +145,6 @@ export class EmployeeAddPage implements OnInit {
   }
 
   isValid = (): boolean => {
-    return this.ionicForm.valid;
+    return this.ionicForm.valid && this.utilsrvc.branchCode !== '0';
   };
 }

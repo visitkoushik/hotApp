@@ -10,6 +10,7 @@ import { UpdateEmployeePage } from './update-employee.page';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ReactiveFormsModule,
     MaterialModule,
     PipeModule,
+    BranchSelectorModule,
     UpdateEmployeePageRoutingModule
   ],
   declarations: [UpdateEmployeePage, ResetPasswordComponent]

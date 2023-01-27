@@ -128,7 +128,7 @@ export class HttpService {
 
     this.get(ApiEndPoint.BRANCH_LIST)
       .then((e: AppResponse<I_Branch[]>) => {
-        this.util.allBranches = [...e.responseObject];
+        this.util.allBranches = [...e.responseObject]
         this.util.isLoading = false;
         status = e.status;
       })

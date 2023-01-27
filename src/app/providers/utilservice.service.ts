@@ -29,7 +29,7 @@ export class UtilService {
   public userLogin: I_UserLogin;
   public iReportsResp: I_ReportsResp;
   public allBranches: I_Branch[] = [];
-  public branchCode: string;
+  public branchCode: string = '0';
   public isLoggedIn = false;
   get redirectUrl(): string {
     return this.url;
@@ -38,7 +38,7 @@ export class UtilService {
     this.url = url;
   }
 
-  constructor(private storage: AppStorageService,private router:Router) {}
+  constructor(private storage: AppStorageService, private router: Router) {}
 
   public onAppLogout = async () => {
     await this.storage.setStorage(StoreName.LOGIN, {

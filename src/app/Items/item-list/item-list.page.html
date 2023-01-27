@@ -1,4 +1,8 @@
 <ion-header>
+  <app-branch-selector
+  *ngIf="this.util.metaData.profile.branchCode=='0'"
+  (branchChanged)="onBranchChanged()"
+></app-branch-selector>
   <ion-searchbar
     placeholder="Search..."
     [(ngModel)]="filterTerm"

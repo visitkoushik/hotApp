@@ -9,6 +9,7 @@ import { EmployeeListPageRoutingModule } from './employee-list-routing.module';
 import { EmployeeListPage } from './employee-list.page';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -17,9 +18,9 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     IonicModule,
     MaterialModule,
     PipeModule,
-    EmployeeListPageRoutingModule
-
+    BranchSelectorModule,
+    EmployeeListPageRoutingModule,
   ],
-  declarations: [EmployeeListPage]
+  declarations: [EmployeeListPage],
 })
 export class EmployeeListPageModule {}

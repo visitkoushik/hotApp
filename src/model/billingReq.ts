@@ -13,6 +13,7 @@ export interface I_BillingReq {
   tax: number;
   id?: string;
   billingDate?: Date;
+  branchCode:string;
 }
 
 export interface I_BillResp {

@@ -91,6 +91,7 @@ export class CartService {
   };
 
   public getAllItem = (
+    branchCode: string,
     availableStatus: boolean | null,
     onSuccess?: Function,
     onFail?: Function
@@ -103,16 +104,21 @@ export class CartService {
       availableStatus === undefined ||
       availableStatus === true
     ) {
-      promise = this.httpService.get(ApiEndPoint.ITEM_LIST, 'available=true');
+      promise = this.httpService.get(
+        ApiEndPoint.ITEM_LIST,
+        'available=true&branchCode=' + branchCode
+      );
     } else {
-      promise = this.httpService.get(ApiEndPoint.ITEM_LIST);
+      promise = this.httpService.get(
+        ApiEndPoint.ITEM_LIST,
+        'branchCode=' + branchCode
+      );
     }
 
     promise
       .then((e: AppResponse<I_Items[]>) => {
         this.mainItems = [...e.responseObject];
         if (onSuccess) {
-
           onSuccess();
         }
         this.utilService.isLoading = false;

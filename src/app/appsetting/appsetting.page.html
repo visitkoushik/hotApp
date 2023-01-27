@@ -17,6 +17,7 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
+
   <ion-item>
     <ion-label>Per page record in Bill:</ion-label>
     <ion-select
@@ -53,17 +54,24 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-    <ion-item>
-      <ion-button expand="block" color="primary" (click)="onClickPrinterSetup()">Printer Setup</ion-button>
-    </ion-item>
-  <ion-item *ngIf="allPrinter.length>0">
-    <ion-label>Select Printer:</ion-label>
+
+  <ion-item>
+    <ion-button
+      expand="block"
+      color="primary"
+      (click)="onClickPrinterSetup()"
+      [disabled]="!thermalPrinter"
+      >Printer Setup</ion-button
+    >
+
     <ion-select
+      *ngIf="allPrinter.length>0"
       color="primary"
       class="fullwidth"
       interface="popover"
       [(ngModel)]="selectedPrinter"
       (ionChange)="onDeviceChange()"
+      placeholder="Select Printer"
     >
       <ion-select-option
         color="primary"
@@ -73,5 +81,6 @@
         {{printer.name}}
       </ion-select-option>
     </ion-select>
+    <ion-button [disabled]="!util.printer" (click)="test()">Test</ion-button>
   </ion-item>
 </ion-list>

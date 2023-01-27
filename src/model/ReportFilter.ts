@@ -6,4 +6,5 @@ export interface I_ReportFilter {
   paged?: boolean;
   count?: number;
   page?: number;
+  branchCode?:string;
 }

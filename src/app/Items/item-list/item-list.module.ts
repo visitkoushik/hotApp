@@ -9,6 +9,7 @@ import { ItemListPageRoutingModule } from './item-list-routing.module';
 import { ItemListPage } from './item-list.page';
 import { MaterialModule } from 'src/app/material.module';
 import { PipeModule } from 'src/app/pipe/pipe.module';
+import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     IonicModule,
     ItemListPageRoutingModule,
     MaterialModule,
-    PipeModule
+    PipeModule,
+    BranchSelectorModule,
   ],
   declarations: [ItemListPage]
 })

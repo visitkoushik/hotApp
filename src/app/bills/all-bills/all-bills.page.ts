@@ -28,6 +28,9 @@ import { UtilService } from '../../providers/utilservice.service';
   styleUrls: ['./all-bills.page.scss'],
 })
 export class AllBillsPage implements OnInit {
+onBranchChanged() {
+this.fetchBills();
+}
   public currentMaxPage = 10;
   public currentDate: Date = null;
   public allBills: I_Bill[] = [];
@@ -37,11 +40,11 @@ export class AllBillsPage implements OnInit {
   BILLING_DELETE: boolean;
   BILLING_UPDATE: boolean;
   constructor(
+    public util: UtilService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
     private router: Router,
     private storage: AppStorageService,
-    private util: UtilService,
     private alrtCtrl: AlertController,
     private alertSrvc: AlertService,
     private snackbar: SnackbarService,
@@ -118,7 +121,7 @@ export class AllBillsPage implements OnInit {
       const dt = this.convertDate(new Date(this.currentDate));
       const appResp: AppResponse<I_BillResp> = await this.httpServic.get(
         ApiEndPoint.BILL_LIST,
-        `date=${dt}&paged=true&page=${page || 1}&count=${this.currentMaxPage}`
+        `date=${dt}&paged=true&page=${page || 1}&count=${this.currentMaxPage}&branchCode=${this.util.branchCode}`
       );
 
       if (appResp.status == 1) {

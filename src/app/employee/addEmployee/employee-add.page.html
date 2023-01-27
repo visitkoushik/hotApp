@@ -1,19 +1,21 @@
 <ion-content>
   <form [formGroup]="ionicForm" novalidate>
+    <app-branch-selector
+      *ngIf="this.utilsrvc.metaData.profile.branchCode=='0'"
+      (branchChanged)="onBranchChanged()"
+    ></app-branch-selector>
+    <input type="hidden" formControlName="branchCode" />
     <ion-item>
       <ion-label position="floating" class="required">First name</ion-label>
       <ion-input formControlName="firstName" type="text" required></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.firstName.errors?.required">
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.firstName.errors?.required"
+      >
         First name is required.
       </span>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating" class="required">First name</ion-label>
-      <ion-input formControlName="firstName" type="text" required></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.firstName.errors?.required">
-        First name is required.
-      </span>
-    </ion-item>
+
 
     <ion-item>
       <ion-label position="floating">Middle name</ion-label>
@@ -58,7 +60,10 @@
         maxlength="10"
         required="true"
       ></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.mobileNumbers.errors?.required">
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.mobileNumbers.errors?.required"
+      >
         Mobile number is required.
       </span>
     </ion-item>
@@ -66,7 +71,10 @@
     <ion-item>
       <ion-label position="floating" class="required">E-mail</ion-label>
       <ion-input formControlName="email" type="text" required></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.email.errors?.required">
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.email.errors?.required"
+      >
         Email is required.
       </span>
     </ion-item>
@@ -105,7 +113,10 @@
       <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
       <mat-datepicker #dob></mat-datepicker>
     </mat-form-field>
-    <span class="error" *ngIf="isSubmitted && errorControl.dateOfBirth.errors?.required">
+    <span
+      class="error"
+      *ngIf="isSubmitted && errorControl.dateOfBirth.errors?.required"
+    >
       Date of birth is required.
     </span>
     <mat-form-field class="newbill-full-width" appearance="fill">
@@ -120,29 +131,47 @@
       <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
       <mat-datepicker #doj></mat-datepicker>
     </mat-form-field>
-    <span class="error" *ngIf="isSubmitted && errorControl.dateOfJoin.errors?.required">
+    <span
+      class="error"
+      *ngIf="isSubmitted && errorControl.dateOfJoin.errors?.required"
+    >
       Date of Joining is required.
     </span>
     <ion-item>
       <ion-label position="floating" class="required">User Name</ion-label>
       <ion-input formControlName="userName" type="text" required></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.userName.errors?.required">
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.userName.errors?.required"
+      >
         userName is required.
       </span>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating" class="required">Password</ion-label>
-      <ion-input formControlName="passcode" type="Password" required></ion-input>
-       <span class="error" *ngIf="isSubmitted && errorControl.passcode.errors?.required">
+      <ion-input
+        formControlName="passcode"
+        type="Password"
+        required
+      ></ion-input>
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.passcode.errors?.required"
+      >
         Password should be minimum 8 charecter.
       </span>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating" class="required">Repeat Password</ion-label>
-      <ion-input formControlName="passRept" type="Password" ></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.passRept.errors?.required">
+      <ion-label position="floating" class="required"
+        >Repeat Password</ion-label
+      >
+      <ion-input formControlName="passRept" type="Password"></ion-input>
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.passRept.errors?.required"
+      >
         password not matched.
       </span>
     </ion-item>
@@ -150,7 +179,10 @@
     <ion-item>
       <ion-label position="floating" class="required">Salary</ion-label>
       <ion-input formControlName="salary" type="number" required></ion-input>
-      <span class="error" *ngIf="isSubmitted && errorControl.passRept.errors?.required">
+      <span
+        class="error"
+        *ngIf="isSubmitted && errorControl.passRept.errors?.required"
+      >
         Salary required
       </span>
     </ion-item>

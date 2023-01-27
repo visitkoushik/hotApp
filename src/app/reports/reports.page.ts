@@ -26,6 +26,7 @@ import { Browser } from '@capacitor/browser';
   styleUrls: ['./reports.page.scss'],
 })
 export class ReportsPage implements OnInit {
+
   // eslint-disable-next-line @typescript-eslint/naming-convention
   FILTERBY = FILTER_BY;
 
@@ -111,6 +112,7 @@ export class ReportsPage implements OnInit {
           paged: true,
           page: 1,
           count: this.util.maxPageCountReport,
+          branchCode:this.util.branchCode
         },
         () => {
           this.router.navigate(['report-tab'], {
