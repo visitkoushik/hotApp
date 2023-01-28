@@ -14,6 +14,7 @@ import { HttpService } from './providers/http.service';
 import { SnackbarService } from './providers/snackbar.service';
 import { ThemeService } from './providers/theme.service';
 import { UtilService } from './providers/utilservice.service';
+import { ConnectionStatus, Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,10 @@ export class AppComponent implements OnInit, OnChanges {
   pageEvent: any = null;
   isLoggedIn = false;
   metaData: I_MetaData = null;
+  showNetworkStatus = false;
+  networkStatus = false;
+  networkStatusTime: any = null;
+  networkMessage: string = '';
 
   constructor(
     private router: Router,
@@ -56,6 +61,24 @@ export class AppComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
+    this.logCurrentNetworkStatus();
+    Network.addListener('networkStatusChange', (status: ConnectionStatus) => {
+      this.networkStatus = status.connected;
+      if (this.networkStatusTime) {
+        this.showNetworkStatus = false;
+        clearTimeout(this.networkStatusTime);
+      }
+
+      this.networkStatusTime = setTimeout(() => {
+        this.showNetworkStatus = false;
+      }, 5000);
+
+      this.networkMessage = status.connected ? 'We are online' : 'Check internet connection';
+      this.showNetworkStatus = true;
+    });
+
+
+
     this.metaData = this.util.metaData;
     this.theme.activeTheme('default');
     // this.fetchMetaData();
@@ -112,6 +135,29 @@ export class AppComponent implements OnInit, OnChanges {
         this.util.isLoading = !true;
       });
   };
+
+
+  logCurrentNetworkStatus = async () => {
+    const status = await Network.getStatus();
+
+    this.networkStatus = status.connected;
+    if(this.networkStatus){
+      return;
+    }
+    if (this.networkStatusTime) {
+      this.showNetworkStatus = false;
+      clearTimeout(this.networkStatusTime);
+    }
+
+    this.networkStatusTime = setTimeout(() => {
+      this.showNetworkStatus = false;
+    }, 5000);
+
+    this.networkMessage = status.connected ? 'We are online' : 'Check internet connection';
+    this.showNetworkStatus = true;
+  };
+
+
 
   fetchTenantInfo = () => {
     this.util.isLoading = true;

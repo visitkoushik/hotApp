@@ -6,7 +6,9 @@
 
   padding-left: 1rem;
 }
-
+.header {
+  text-align: center;
+}
 .menuheader {
   height: 31%;
   background: linear-gradient(
@@ -42,31 +44,30 @@ ion-menu {
 
 // }
 .searchbar-input.sc-ion-searchbar-md {
-    padding-left: unset;
-    padding-right: unset;
-    -webkit-padding-start: 55px;
-    padding-inline-start: 55px;
-    -webkit-padding-end: 55px;
-    padding-inline-end: 55px;
-    background: transparent;
-    box-shadow: 2px 2px 2px 2px;
+  padding-left: unset;
+  padding-right: unset;
+  -webkit-padding-start: 55px;
+  padding-inline-start: 55px;
+  -webkit-padding-end: 55px;
+  padding-inline-end: 55px;
+  background: transparent;
+  box-shadow: 2px 2px 2px 2px;
 }
 
-.menuheadercontent{
+.menuheadercontent {
   position: absolute;
   z-index: 1;
   top: 8.1%;
   left: 7.2%;
-
 }
 
-img{
+img {
   position: absolute;
   bottom: 0;
   transform: rotate(20deg);
 }
 
-.drop{
+.drop {
   display: inline-block;
   transform: rotate(-45deg);
   border: 5px solid green;
@@ -77,11 +78,9 @@ img{
   border-bottom-right-radius: 50%;
 }
 
-
-.imgtext{
+.imgtext {
   top: 18px;
   left: 12%;
   transform: rotate(0deg);
   width: 80%;
-
 }

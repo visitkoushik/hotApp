@@ -1,5 +1,9 @@
 <ion-app>
-  <ion-header mode="ios">
+  <ion-header
+    mode="ios"
+    class="header"
+    [ngStyle]="{ 'background-color': networkStatus ? 'green' : 'red' }"
+  >
     <ion-toolbar class="app-toolbar" color="primary">
       <ion-button
         size="small"
@@ -34,6 +38,7 @@
       mode="indeterminate"
       *ngIf="util.isLoading"
     ></mat-progress-bar>
+    <ion-label *ngIf="showNetworkStatus">{{ networkMessage }}</ion-label>
   </ion-header>
   <ion-menu menuId="main-menu" contentId="main" side="end">
     <ion-content>
@@ -97,9 +102,7 @@
               {{ util.metaData?.menuItems | menu : "profile" : "true" }}
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle
-            *ngIf="util.metaData?.menuItems | menu : 'branch'"
-          >
+          <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'branch'">
             <mat-divider></mat-divider>
             <ion-item routerLink="/branch-tab" routerLinkActive="active">
               <mat-icon>table_chart</mat-icon>
