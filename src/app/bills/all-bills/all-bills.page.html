@@ -27,9 +27,10 @@
     >
       <mat-card-title-group>
         <div style="width: 100%">
-          <h5>{{billItem.gender|formatgender}}{{billItem.customerName}}</h5>
-          <div>Bill Number:{{billItem.billnumber}}</div>
-          <div class="dangercolor">{{billItem.billDate|dateformat:'date'}}</div>
+          <h5>
+            {{billItem.customer.gender|formatgender}}{{billItem.customer.firstName}}
+            {{billItem.customer.middleName}} {{billItem.customer.lastName}}
+          </h5>
         </div>
 
         <!-- <mat-card-subtitle style="color: red">
@@ -37,33 +38,53 @@
         > -->
       </mat-card-title-group>
       <mat-card-content class="rowAmount">
-        {{billItem.itemPurchased|subtotal}}Rs.
+        {{billItem.Stotal}}Rs.
       </mat-card-content>
-      <ion-button
-        color="danger"
-        class="paybutton"
-        *ngIf="billItem.due>0 && BILLING_UPDATE"
-        (click)="onPayDue($event,billItem)"
-      >
-        Due:{{billItem.due}}
-      </ion-button>
-      <ion-button
-        color="danger"
-        class="paybutton"
-        fill="clear"
-        *ngIf="billItem.due===0 && BILLING_DELETE"
-        (click)="onDelete($event,billItem)"
-      >
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
+      <mat-card-footer style="display: flex; background-color: #ffffff04">
+        <div style="width: 30%; justify-content: flex-start; margin-left: 1rem">
+          <div>Bill Number:{{billItem.billNumber}}</div>
+          <div class="dangercolor">
+            {{billItem.billingDate|dateformat:'date'}}
+          </div>
+        </div>
+        <div
+          style="
+            width: 68%;
+            justify-content: flex-end;
+            text-align: right;
+            margin-right: 1rem;
+          "
+        >
+          <ion-button
+            color="dark"
+            fill="clear"
+            *ngIf="BILLING_UPDATE"
+            (click)="openDialog($event,billItem)"
+          >
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+          <ion-button
+            color="danger"
+            fill="clear"
+            *ngIf="billItem.Stotal===billItem.paid && BILLING_DELETE"
+            (click)="onDelete($event,billItem)"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button
+            color="danger"
+            *ngIf="(billItem.Stotal>billItem.paid && BILLING_UPDATE)"
+            (click)="onPayDue($event,billItem)"
+          >
+            Due:{{billItem.Stotal-billItem.paid}}
+          </ion-button>
+        </div>
+      </mat-card-footer>
     </mat-card>
   </mat-list>
 </ion-content>
 <ion-footer>
-  <div
-    *ngIf="allBillResponse?.responseObject?.profit"
-   class="totalProfit"
-  >
+  <div *ngIf="allBillResponse?.responseObject?.profit" class="totalProfit">
     <span>Total Profit: </span>
     <span>{{allBillResponse?.responseObject?.profit}}</span>
   </div>

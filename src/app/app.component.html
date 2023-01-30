@@ -1,7 +1,6 @@
 <ion-app>
   <ion-header
     mode="ios"
-    class="header"
     [ngStyle]="{ 'background-color': networkStatus ? 'green' : 'red' }"
   >
     <ion-toolbar class="app-toolbar" color="primary">
@@ -38,7 +37,7 @@
       mode="indeterminate"
       *ngIf="util.isLoading"
     ></mat-progress-bar>
-    <ion-label *ngIf="showNetworkStatus">{{ networkMessage }}</ion-label>
+    <div *ngIf="showNetworkStatus" class="header">{{ networkMessage }}</div>
   </ion-header>
   <ion-menu menuId="main-menu" contentId="main" side="end">
     <ion-content>

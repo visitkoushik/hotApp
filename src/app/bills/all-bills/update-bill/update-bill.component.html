@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-title>Add more items</ion-title>
+  <ion-searchbar
+    placeholder="Search..."
+    [(ngModel)]="creatBillPage.filterTerm"
+    animated="true"
+  ></ion-searchbar>
+</ion-header>
+<ion-content style="height: 65%; max-height: 400px">
+  <mat-list>
+    <mat-card
+      *ngFor="
+        let cartItem of creatBillPage.listOfCartItem
+          | filter : creatBillPage.filterTerm;
+        trackBy: trackByFn
+      "
+    >
+      <mat-card-title-group>
+        <mat-card-title> {{ cartItem.items.itemName }}</mat-card-title>
+        <mat-card-subtitle class="requiredcolor"
+          >Price:{{ cartItem.items.itemPrice.sellingAmount.toFixed(2) }} Rs.
+        </mat-card-subtitle>
+
+        <div class="rowList2" *ngIf="cartItem.count > 0">
+          <div class="rowListinner">
+            <ion-button
+              fill="clear"
+              color="primary"
+              (click)="onModifyItem(cartItem.id, false)"
+            >
+              -
+            </ion-button>
+            <ion-input
+              [value]="cartItem.count"
+              class="inputClass"
+              readonly
+            ></ion-input>
+            <ion-button
+              fill="clear"
+              color="primary"
+              (click)="onModifyItem(cartItem.id, true)"
+            >
+              +
+            </ion-button>
+          </div>
+        </div>
+        <div class="rowList3" *ngIf="cartItem.count === 0">
+          <ion-button
+            fill="clear"
+            color="primary"
+            (click)="onModifyItem(cartItem.id, true)"
+          >
+            ADD
+          </ion-button>
+        </div>
+      </mat-card-title-group>
+    </mat-card>
+  </mat-list>
+  <mat-divider></mat-divider>
+</ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-label position="floating" style="color: red">Paid*</ion-label>
+    <ion-input
+      placeholder="Ex:20.00"
+      type="number"
+      [(ngModel)]="paid"
+    ></ion-input>
+  </ion-item>
+  <ion-item style="position: absolute; width: 100%">
+    <div>
+      Total:{{
+        +(creatBillPage.listOfCartItem | subtotal) +
+          currentBill.Stotal -
+          currentBill.paid
+      }}
+    </div>
+    <ion-button
+      fill="solid"
+      size="default"
+      color="primary"
+      [disabled]="
+        +(creatBillPage.listOfCartItem | subtotal) === 0 ||
+        paid >
+          +(creatBillPage.listOfCartItem | subtotal) +
+            currentBill.Stotal -
+            currentBill.paid ||
+        paid < 0
+      "
+      (click)="onAddScreen()"
+      style="position: absolute; right: 0"
+    >
+      Add
+    </ion-button>
+  </ion-item>
+</ion-footer>

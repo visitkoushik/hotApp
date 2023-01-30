@@ -8,7 +8,6 @@ export interface I_BillingReq {
   Ptotal: number;
   Stotal: number;
   customer: I_Customer;
-  itemCount: number;
   paid: number;
   tax: number;
   id?: string;

@@ -81,7 +81,7 @@ export class ConfiremdBillPage implements OnInit {
           this.router.navigateByUrl('/tab/createbill');
           this.util.isLoading = false;
           const billFinal: I_BillingReq = e.responseObject;
-          this.printBill({
+          this.util.printBill({
             ...billFinal,
             customer: { ...billReq.customer },
           });
@@ -171,37 +171,5 @@ export class ConfiremdBillPage implements OnInit {
       this.currentBill.total - this.currentBill.paid;
   };
 
-  printBill = (billing: I_BillingReq) => {
-    let billText = `[C]<font size='big'><u>House Of Tea</u></font>\n\n\n`;
 
-    billText += `[L]<b>ORDER NO: </b>${billing.billNumber}
-[L]<b>Date: </b>${new Date(billing.billingDate).toLocaleDateString()}
-[L]<b>Customer Name: </b>${billing.customer.firstName} ${
-      billing.customer.lastName
-    }`;
-
-    billText += `\n\n[L]<b>Item(Qty) </b>[C] Dsc [R] Price`;
-    billText += `\n--------------------------------\n`;
-    for (let i = 0; i < billing.billingItemList.length; i++) {
-      const bit: I_BillingItem = billing.billingItemList[i];
-      billText += `[L]<b>${bit.itemName}(${bit.itemCount})</b>[C]${
-        bit.discount != 0 ? bit.discount : ''
-      }${bit.isDiscountInPercentage ? '%' : ''}[R]${
-        bit.sellingAmount * bit.itemCount -
-        (bit.isDiscountInPercentage
-          ? (bit.sellingAmount * bit.itemCount * bit.discount) / 100
-          : bit.discount)
-      }\n`;
-    }
-
-    billText += `\n\n[C]<font >TOTAL</font>[R]<font size='normal'> ${billing.Stotal}</font>\n`;
-    billText += `[C]<font >Discount</font>[R]<font size='normal'>-${billing.discount}</font>\n`;
-    billText += `[C]<font >Tax(%)</font>[R]<font size='normal'>-${billing.tax}</font>\n`;
-    billText += `[C]<font color='bg-black'>GRAND TOTAL</font>[R]<font size='normal'> ${
-      billing.Stotal - billing.discount - billing.tax
-    }</font>\n\n--------------------------------\n\n`;
-
-    this.util.print(billText);
-
-  };
 }

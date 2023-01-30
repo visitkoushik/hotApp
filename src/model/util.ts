@@ -48,7 +48,7 @@ export enum ApiEndPoint {
 
   METADATA = 'metadata',
   BILL_ADD = 'billing',
-  BILL_UPDATE = 'billing/:id',
+  BILL_UPDATE_ITEMADD = 'billing/itemadd/:id',
   BILL_UPDATE_PAYDUE = 'billing/paydue/:id',
   BILL_LIST = 'billing',
   BILL_DELETE = 'billing/:id',

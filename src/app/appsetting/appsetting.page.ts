@@ -107,6 +107,7 @@ export class AppsettingPage implements OnInit {
   };
 
   fetchPrinter = () => {
+    this.util.isLoading = true;
     const printerType: 'bluetooth' | 'usb' | 'tcp' = 'bluetooth';
     if (!this.thermalPrinter) {
       return;
@@ -115,6 +116,7 @@ export class AppsettingPage implements OnInit {
       { type: printerType },
       (printers: Printer[]) => {
         printers = printers.filter((p) => p.majorDeviceClass === 1536);
+        this.util.isLoading = false;
         if (printers.length > 0) {
           this.allPrinter = printers;
         } else {
@@ -126,7 +128,12 @@ export class AppsettingPage implements OnInit {
         }
       },
       function (error) {
-        console.error('Ups, we cant list the printers!', error);
+        this.util.isLoading = false;
+        this.alert.presentAlert(
+          this.alertCtrl,
+          'Ups, we cant list the printers!',
+          error.toString()
+        );
       }
     );
   };

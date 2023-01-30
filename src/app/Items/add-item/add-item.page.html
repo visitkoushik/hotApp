@@ -22,7 +22,7 @@
     <mat-label class="dangercolor">Select category *</mat-label>
 
     <mat-select
-      [(ngModel)]="item.category"
+      [(ngModel)]="item.category['id'] ||item.category"
       name="report"
       disableOptionCentering
       panelClass="myPanelClass"

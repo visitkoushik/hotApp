@@ -10,6 +10,7 @@ import { AllBillsPage } from './all-bills.page';
 import { PipeModule } from '../../pipe/pipe.module';
 import { MaterialModule } from '../../material.module';
 import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
+import { UpdateBillComponent } from './update-bill/update-bill.component';
 
 @NgModule({
   imports: [
@@ -19,8 +20,8 @@ import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.mo
     AllBillsPageRoutingModule,
     PipeModule,
     BranchSelectorModule,
-    MaterialModule
+    MaterialModule,
   ],
-  declarations: [AllBillsPage]
+  declarations: [AllBillsPage, UpdateBillComponent],
 })
 export class AllBillsPageModule {}

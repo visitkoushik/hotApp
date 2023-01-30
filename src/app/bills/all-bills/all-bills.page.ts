@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import {
   ActivatedRoute,
@@ -21,6 +22,7 @@ import { ApiEndPoint, StoreName } from 'src/model/util';
 import { AppStorageService } from '../../app-storage/app-storage.service';
 import { CartService } from '../../providers/cart-service.service';
 import { UtilService } from '../../providers/utilservice.service';
+import { UpdateBillComponent } from './update-bill/update-bill.component';
 
 @Component({
   selector: 'app-all-bills',
@@ -28,12 +30,14 @@ import { UtilService } from '../../providers/utilservice.service';
   styleUrls: ['./all-bills.page.scss'],
 })
 export class AllBillsPage implements OnInit {
-onBranchChanged() {
-this.fetchBills();
-}
+  dialogRef: MatDialogRef<UpdateBillComponent, any>;
+  pageIndex: number=0;
+  onBranchChanged() {
+    this.fetchBills();
+  }
   public currentMaxPage = 10;
   public currentDate: Date = null;
-  public allBills: I_Bill[] = [];
+  public allBills: I_BillingReq[] = [];
   public allBillResponse: AppResponse<I_BillResp> = null;
   public maxDate;
   BILLING_READ: boolean;
@@ -48,7 +52,8 @@ this.fetchBills();
     private alrtCtrl: AlertController,
     private alertSrvc: AlertService,
     private snackbar: SnackbarService,
-    private httpServic: HttpService
+    private httpServic: HttpService,
+    private dialog: MatDialog
   ) {
     this.currentMaxPage = this.util.maxPageCount;
     this.currentDate = new Date();
@@ -86,122 +91,100 @@ this.fetchBills();
   }
 
   ngOnInit() {
-
     this.setMaxDate();
     this.fetchBills();
   }
 
-  onClickItemBill = (billItem: I_Bill) => {
+  onClickItemBill = (billItem: I_BillingReq) => {
     this.router.navigate(['existingbill'], {
       relativeTo: this.activeRoute,
-      queryParams: { data: JSON.stringify(billItem) },
+      queryParams: {
+        data: JSON.stringify(this.convertBillRequestToBill(billItem)),
+      },
     });
   };
   fetchBills = async (page?: number) => {
     this.fetchBillsfromServer(page || 1);
   };
-  fetchBillsfromStorage = () => {
-    this.storage
-      .getStorage(StoreName.BILL)
-      .then(async (e) => {
-        this.util.isLoading = !true;
-        [...this.cartService.allBiills] = [...e];
 
-        this.allBills = await this.updateBills();
-      })
-      .catch((e) => {
-        this.util.isLoading = !true;
-      });
-  };
-
-  fetchBillsfromServer = async (page: number): Promise<I_Bill[]> => {
+  fetchBillsfromServer = async (page: number): Promise<I_BillingReq[]> => {
     this.allBills = [];
     if (this.BILLING_READ) {
-      this.util.isLoading=true;
+      this.util.isLoading = true;
       const dt = this.convertDate(new Date(this.currentDate));
       const appResp: AppResponse<I_BillResp> = await this.httpServic.get(
         ApiEndPoint.BILL_LIST,
-        `date=${dt}&paged=true&page=${page || 1}&count=${this.currentMaxPage}&branchCode=${this.util.branchCode}`
+        `date=${dt}&paged=true&page=${page || 1}&count=${
+          this.currentMaxPage
+        }&branchCode=${this.util.branchCode}`
       );
 
       if (appResp.status == 1) {
         this.allBillResponse = { ...appResp };
-        const iBill: I_Bill[] = this.allBillResponse.responseObject.list.map(
-          (b: I_BillingReq) => {
-            let ibill: I_Bill = {} as I_Bill;
-            ibill.billID = b.id;
-            ibill.billnumber = +b.billNumber;
-            ibill.customerContact = b.customer.mobileNumbers;
-            ibill.customerName =
-              b.customer.firstName +
-              ' ' +
-              b.customer.middleName +
-              ' ' +
-              b.customer.lastName;
-            ibill.gender = b.customer.gender;
-            ibill.discount = b.discount;
-            ibill.paid = b.paid;
-            ibill.due = b.Stotal + b.tax - b.paid;
-            ibill.tax = b.tax;
-            ibill.billDate = b.billingDate;
-            ibill.itemPurchased = b.billingItemList.map((bi: I_BillingItem) => {
-              const b: I_CartItem = {} as I_CartItem;
-              b.id = bi.id;
-              b.count = bi.itemCount;
-              let i: I_Items = {} as I_Items;
-              i.id = bi.itemID;
-              i.itemName = bi.itemName;
-              i.discount = bi.discount;
-              i.isDiscountInPercentage = bi.isDiscountInPercentage;
-              i.itemPrice = {} as {
-                priceAmount: number;
-                sellingAmount: number;
-              };
-              i.itemPrice.priceAmount = bi.priceAmount;
-              i.itemPrice.sellingAmount = bi.sellingAmount;
+        // const iBill: I_Bill[] = this.allBillResponse.responseObject.list.map(
+        //   (b: I_BillingReq) => {
+        //     let ibill: I_Bill = {} as I_Bill;
+        //     ibill.billID = b.id;
+        //     ibill.billnumber = +b.billNumber;
+        //     ibill.customerContact = b.customer.mobileNumbers;
+        //     ibill.customerName =
+        //       b.customer.firstName +
+        //       ' ' +
+        //       b.customer.middleName +
+        //       ' ' +
+        //       b.customer.lastName;
+        //     ibill.gender = b.customer.gender;
+        //     ibill.discount = b.discount;
+        //     ibill.paid = b.paid;
+        //     ibill.due = b.Stotal + b.tax - b.paid;
+        //     ibill.tax = b.tax;
+        //     ibill.billDate = b.billingDate;
+        //     ibill.itemPurchased = b.billingItemList.map((bi: I_BillingItem) => {
+        //       const b: I_CartItem = {} as I_CartItem;
+        //       b.id = bi.id;
+        //       b.count = bi.itemCount;
+        //       let i: I_Items = {} as I_Items;
+        //       i.id = bi.itemID;
+        //       i.itemName = bi.itemName;
+        //       i.discount = bi.discount;
+        //       i.isDiscountInPercentage = bi.isDiscountInPercentage;
+        //       i.itemPrice = {} as {
+        //         priceAmount: number;
+        //         sellingAmount: number;
+        //       };
+        //       i.itemPrice.priceAmount = bi.priceAmount;
+        //       i.itemPrice.sellingAmount = bi.sellingAmount;
 
-              b.items = JSON.parse(JSON.stringify(i));
-              return b;
-            });
-            return ibill;
-          }
-        );
-        this.allBills = [...iBill];
-        this.util.isLoading=false;
-        return iBill;
+        //       b.items = JSON.parse(JSON.stringify(i));
+        //       return b;
+        //     });
+        //     return ibill;
+        //   }
+        // );
+        this.allBills = [...this.allBillResponse.responseObject.list];
+        this.util.isLoading = false;
+        return this.allBills;
       }
     }
     this.snackbar.openSnackBar(
       `You don't have permission to read Billing List`
     );
-    this.util.isLoading=false;
-    return [] as I_Bill[];
+    this.util.isLoading = false;
+    return [] as I_BillingReq[];
   };
 
-  updateBills = (): Promise<I_Bill[]> =>
-    new Promise((res) => {
-      const allBills = [...this.cartService.allBiills]?.filter(
-        (itm) =>
-          itm.status &&
-          new Date(itm.billDate).toLocaleDateString() ===
-            new Date(this.currentDate).toLocaleDateString()
-      );
-      res(allBills || []);
-    });
-
   onChangeDate = async () => {
-    // this.allBills = await this.updateBills();
     await this.fetchBills();
   };
 
-  trackByFn = (inx, item: I_Bill) => item.billID;
+  trackByFn = (inx, item: I_BillingReq) => item.id || '';
 
-  onPayDue = (e, bill: I_Bill) => {
+  onPayDue = (e, bill: I_BillingReq) => {
     e.stopPropagation();
     this.presentAlert(bill);
   };
 
-  onDelete = (e, bill: I_Bill) => {
+  onDelete = (e, bill: I_BillingReq) => {
     e.stopPropagation();
     this.alertSrvc.presentAlert(
       this.alrtCtrl,
@@ -216,20 +199,10 @@ this.fetchBills();
     );
   };
 
-  deleteFromStorage = async (bill: I_Bill) => {
-    this.cartService.allBiills = this.cartService.allBiills.map((b: I_Bill) =>
-      b.billID === bill.billID ? { ...b, status: false } : b
-    );
-
-    await this.storage.setStorage(StoreName.BILL, [
-      ...this.cartService.allBiills,
-    ]);
-    this.allBills = await this.updateBills();
-  };
-  deleteFromServer = async (bill: I_Bill) => {
+  deleteFromServer = async (bill: I_BillingReq) => {
     this.util.isLoading = true;
     this.httpServic
-      .delete(ApiEndPoint.BILL_DELETE, bill.billID)
+      .delete(ApiEndPoint.BILL_DELETE, bill.id)
       .then((e: AppResponse<string>) => {
         this.snackbar.openSnackBar(e.responseObject);
         this.fetchBills()
@@ -250,13 +223,13 @@ this.fetchBills();
     this.maxDate = new Date();
   };
 
-  yesHandler = async (bill: I_Bill, dueInput: string) => {
+  yesHandler = async (bill: I_BillingReq, dueInput: string) => {
     this.payDueServer(bill, dueInput);
   };
-  payDueServer = (bill: I_Bill, dueInput: string) => {
+  payDueServer = (bill: I_BillingReq, dueInput: string) => {
     this.util.isLoading = true;
     this.httpServic
-      .put(ApiEndPoint.BILL_UPDATE_PAYDUE, bill.billID, {
+      .put(ApiEndPoint.BILL_UPDATE_PAYDUE, bill.id, {
         paid: dueInput,
       })
       .then((e: AppResponse<string>) => {
@@ -275,35 +248,12 @@ this.fetchBills();
       });
   };
 
-  payDueStorage = async (bill: I_Bill, dueInput: string) => {
-    if (!dueInput || +dueInput <= 0 || bill.due < +dueInput) {
-      if (!dueInput || +dueInput >= bill.due) {
-        this.snackbar.openSnackBar(
-          'Input amount cannot be greater than due amount'
-        );
-      } else {
-        this.snackbar.openSnackBar('Enter amount atleast 1 Rs.');
-      }
-
-      return false;
-    }
-    this.allBills = this.allBills.map((e) =>
-      e.billID === bill.billID
-        ? { ...e, due: e.total - e.paid - +dueInput, paid: e.paid + +dueInput }
-        : e
-    );
-
-    this.cartService.allBiills = [...this.allBills];
-    await this.storage
-      .setStorage(StoreName.BILL, [...this.cartService.allBiills])
-      .catch((err) => this.snackbar.openSnackBar('Error update data'));
-  };
-
   noHandler = () => {};
 
-  async presentAlert(bill: I_Bill) {
+  async presentAlert(bill: I_BillingReq) {
     const alert = await this.alrtCtrl.create({
       header: 'Please enter amount',
+      subHeader: `Due amount:  ${bill.Stotal - bill.paid}`,
       buttons: [
         {
           text: 'Cancel',
@@ -323,7 +273,7 @@ this.fetchBills();
           type: 'number',
           placeholder: 'Due amount',
           min: 1,
-          max: bill.due,
+          max: bill.Stotal - bill.paid,
         },
       ],
     });
@@ -341,8 +291,89 @@ this.fetchBills();
       .toString()
       .padStart(2, '0')}T00:00:00.000Z`;
   };
-  handlePageEvent = (ev:PageEvent) => {
+  handlePageEvent = (ev: PageEvent) => {
+    this.pageIndex = ev.pageIndex + 1;
+    this.fetchBills(this.pageIndex);
+  };
 
-    this.fetchBills(ev.pageIndex+1);
+  openDialog = (e, bill: I_BillingReq): void => {
+    e.stopPropagation();
+    this.dialogRef = this.dialog.open(UpdateBillComponent, {
+      width: '95%',
+      height: '600px',
+      maxWidth: '450px',
+      maxHeight: '95%',
+      data: { ...bill },
+    });
+
+    this.dialogRef.afterClosed().subscribe((newBilltoUpdate) => {
+      if (!newBilltoUpdate) {
+        return;
+      }
+      this.alertSrvc.presentAlert(
+        this.alrtCtrl,
+        'Confirmation',
+        'Are you sure to add the items?',
+        {
+          ok: 'Yes',
+          cancel: 'No',
+        },
+        () => {
+          this.httpServic
+            .put(
+              ApiEndPoint.BILL_UPDATE_ITEMADD,
+              newBilltoUpdate.id.toString(),
+              newBilltoUpdate
+            )
+            .then((e) => {
+             this.snackbar.openSnackBar('Bill updated')
+             this.util.printBill(newBilltoUpdate)
+              this.fetchBills(this.pageIndex);
+            })
+            .catch((e) => console.log(e));
+        }
+      );
+    });
+  };
+
+  onCLoseAddDialog = () => {};
+
+  convertBillRequestToBill = (b: I_BillingReq): I_Bill => {
+    let ibill: I_Bill = {} as I_Bill;
+    ibill.billID = b.id;
+    ibill.billnumber = +b.billNumber;
+    ibill.customerContact = b.customer.mobileNumbers;
+    ibill.customerName =
+      b.customer.firstName +
+      ' ' +
+      b.customer.middleName +
+      ' ' +
+      b.customer.lastName;
+    ibill.gender = b.customer.gender;
+    ibill.discount = b.discount;
+    ibill.paid = b.paid;
+    ibill.due = b.Stotal + b.tax - b.paid;
+    ibill.tax = b.tax;
+    ibill.billDate = b.billingDate;
+    ibill.itemPurchased = b.billingItemList.map((bi: I_BillingItem) => {
+      const b: I_CartItem = {} as I_CartItem;
+      b.id = bi.id;
+      b.count = bi.itemCount;
+      let i: I_Items = {} as I_Items;
+      i.id = bi.itemID;
+      i.itemName = bi.itemName;
+      i.discount = bi.discount;
+      i.isDiscountInPercentage = bi.isDiscountInPercentage;
+      i.itemPrice = {} as {
+        priceAmount: number;
+        sellingAmount: number;
+      };
+      i.itemPrice.priceAmount = bi.priceAmount;
+      i.itemPrice.sellingAmount = bi.sellingAmount;
+
+      b.items = JSON.parse(JSON.stringify(i));
+      return b;
+    });
+    return ibill;
   };
 }

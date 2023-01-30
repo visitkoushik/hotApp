@@ -9,13 +9,14 @@ import { CartService } from '../providers/cart-service.service';
 export class FilterPipe implements PipeTransform {
   constructor(private cartsrvc: CartService) {}
   transform(value: any[], ...args: string[]): any[] {
+
     if (Array.isArray(value) && args && args[0]?.trim()) {
       if (!('itemName' in (value[0] as any))) {
         return (
-          (value as I_CartItem[]).filter(
-            (e) =>
-              e.items?.itemName ||
-              ''.toLowerCase().includes(args[0].toLowerCase())
+          (value as I_CartItem[]).filter((e) =>
+            (e.items?.itemName || '')
+              .toLowerCase()
+              .includes(args[0].toLowerCase())
           ) || [...value]
         );
       } else if ('itemName' in (value[0] as any)) {
