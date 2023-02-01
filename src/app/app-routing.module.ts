@@ -149,6 +149,10 @@ const routes: Routes = [
     path: 'update-branch',
     loadChildren: () => import('./branch/update-branch/update-branch.module').then( m => m.UpdateBranchPageModule)
   },
+  {
+    path: 'other-expenses',
+    loadChildren: () => import('./other-expenses/other-expenses.module').then( m => m.OtherExpensesPageModule)
+  },
 ];
 
 @NgModule({

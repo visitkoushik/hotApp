@@ -40,9 +40,10 @@ export class AddCategoryPage implements OnInit {
   ) {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
-          // this.util.isLoading = true;
-
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/tab-item/add-category')
+        ) {
           this.getCategory();
         }
 
@@ -120,7 +121,6 @@ export class AddCategoryPage implements OnInit {
     } else {
       this.addCategory();
     }
-
   };
 
   private addCategory = () => {

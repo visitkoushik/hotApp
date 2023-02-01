@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreName } from 'src/model/util';
 import { AppStorageService } from '../app-storage/app-storage.service';
-import { ThemeService } from '../providers/theme.service';
-import { UtilService } from '../providers/utilservice.service';
-import {
-  Printer,
-  ThermalPrinterPlugin,
-} from 'thermal-printer-cordova-plugin/src';
 
-declare let ThermalPrinter: ThermalPrinterPlugin;
+import { UtilService } from '../providers/utilservice.service';
 
 import { BleClient } from '@capacitor-community/bluetooth-le';
 import { AlertController } from '@ionic/angular';
 import { AlertService } from '../providers/alert.service';
+import { Printer } from 'thermal-printer-cordova-plugin/src';
+import { ThemeService } from '../providers/theme.service';
+import { PrinterService } from '../providers/printer-service.service';
 
 @Component({
   selector: 'app-appsetting',
@@ -21,7 +18,7 @@ import { AlertService } from '../providers/alert.service';
 })
 export class AppsettingPage implements OnInit {
   public thermalPrinter: any = null;
-
+  public numberOfRecipt: number = 1;
   public themeColor = [
     { name: 'Default', class: 'default' },
     { name: 'Dark', class: 'dark-theme' },
@@ -57,18 +54,19 @@ export class AppsettingPage implements OnInit {
     private store: AppStorageService,
     public util: UtilService,
     private alert: AlertService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private printerService: PrinterService
   ) {
     this.dynamicTheme();
     this.selectPageSettingBill = this.util.maxPageCount;
     this.selectPageSettingReport = this.util.maxPageCountReport;
     this.selectedPrinter = this.util.printer as unknown as Printer;
+    if (this.selectedPrinter) this.allPrinter = [this.selectedPrinter];
 
-    try {
-      this.thermalPrinter = ThermalPrinter;
-    } catch {
-      this.thermalPrinter = null;
-    }
+    this.thermalPrinter = this.printerService.checkPrinterDriver();
+    debugger;
+    this.numberOfRecipt =
+      this.util.numberOfRecipt === undefined ? 1 : this.util.numberOfRecipt;
   }
   async ngOnInit(): Promise<void> {
     await BleClient.initialize({ androidNeverForLocation: true });
@@ -103,44 +101,28 @@ export class AppsettingPage implements OnInit {
 
   onClickPrinterSetup = () => {
     // this.setUpBleClient();
+
     this.fetchPrinter();
   };
 
   fetchPrinter = () => {
     this.util.isLoading = true;
-    const printerType: 'bluetooth' | 'usb' | 'tcp' = 'bluetooth';
-    if (!this.thermalPrinter) {
-      return;
-    }
-    this.thermalPrinter.listPrinters(
-      { type: printerType },
-      (printers: Printer[]) => {
-        printers = printers.filter((p) => p.majorDeviceClass === 1536);
+    this.printerService
+      .getListOfPrinter()
+      .then((e: Printer[]) => {
         this.util.isLoading = false;
-        if (printers.length > 0) {
-          this.allPrinter = printers;
-        } else {
-          this.alert.presentAlert(
-            this.alertCtrl,
-            'Print Error',
-            'No Printer Found'
-          );
-        }
-      },
-      function (error) {
+        this.allPrinter = e;
+      })
+      .catch((e) => {
         this.util.isLoading = false;
-        this.alert.presentAlert(
-          this.alertCtrl,
-          'Ups, we cant list the printers!',
-          error.toString()
-        );
-      }
-    );
+        this.alert.presentAlert(this.alertCtrl, 'Printer Error', e);
+      });
   };
 
-  connectToPrinter = (printerToUse: Printer) => {
-    this.util.print(
-      `[C]<u><font size='small'>${this.getTestText()}</font></u>`
+  connectToPrinter = () => {
+    this.printerService.print(
+      `[C]<u><font size='small'>${this.getTestText()}</font></u>`,
+      this.util.printer
     );
   };
 
@@ -161,6 +143,11 @@ export class AppsettingPage implements OnInit {
       'Whether you like it or not, history is on our side. We will bury you!, -Nikita Khrushchev',
       'Principle is OK up to a certain point, but principle doesn`t do any good if you lose. -Dick Cheney',
       'I think the human race needs to think about killing. How much evil must we do to do good? -Robert McNamara',
+      'If the enemy is in range, so are you.',
+      'War is delightful to those who have not yet experienced it.',
+      `Nearly all men can stand adversity, but if you want to test a man's character, give him power.`,
+      `Never forget that your weapon was made by the lowest bidder.`,
+      `Heroes may not be braver than anyone else. They're just brave five minutes longer.`,
     ];
 
     const index = this.generateRangom(0, message.length);
@@ -182,6 +169,12 @@ export class AppsettingPage implements OnInit {
   };
 
   test = () => {
-    this.connectToPrinter(this.util.printer);
+    this.connectToPrinter();
+  };
+
+  onChange = (ev) => {
+    debugger;
+    this.util.numberOfRecipt = this.numberOfRecipt;
+    this.store.setStorage(StoreName.RECIPTNUMBER, this.numberOfRecipt);
   };
 }

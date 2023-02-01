@@ -58,7 +58,7 @@
           <ion-button
             color="dark"
             fill="clear"
-            *ngIf="BILLING_UPDATE"
+            *ngIf="BILLING_UPDATE && ((today.valueOf()- billItem.billingDate.valueOf())/(1000* 60 * 60 * 12)< 1)"
             (click)="openDialog($event,billItem)"
           >
             <ion-icon name="add"></ion-icon>

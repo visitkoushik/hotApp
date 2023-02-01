@@ -35,7 +35,10 @@ export class EmployeeListPage implements OnInit {
 
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/employee-tab/list')
+        ) {
           // this.util.isLoading = true;
           this.fetchAllEmployee();
         }
@@ -66,7 +69,7 @@ export class EmployeeListPage implements OnInit {
   private fetchAllEmployee = () => {
     this.utilSrvc.isLoading = true;
     this.httpSrvc
-      .get(ApiEndPoint.EMPLOYEE_LIST,`branchCode=${this.utilSrvc.branchCode}`)
+      .get(ApiEndPoint.EMPLOYEE_LIST, `branchCode=${this.utilSrvc.branchCode}`)
       .then((e: AppResponse<I_Employee[]>) => {
         this.allEmployeies = [...e.responseObject];
         this.utilSrvc.isLoading = false;

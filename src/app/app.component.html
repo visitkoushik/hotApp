@@ -56,6 +56,12 @@
               {{ util.metaData?.menuItems | menu : "bill" : "true" }}
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'transaction'">
+            <ion-item routerLink="/other-expenses" routerLinkActive="active">
+              <mat-icon>view_list</mat-icon>
+              {{ util.metaData?.menuItems | menu : "transaction" : "true" }}
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle *ngIf="util.metaData?.menuItems | menu : 'item'">
             <ion-item routerLink="/tab-item" routerLinkActive="active">
               <mat-icon>view_list</mat-icon>

@@ -1,5 +1,14 @@
 <ion-content>
   <ion-item>
+    <ion-label position="floating" class="required">Branch</ion-label>
+    <ion-input
+      [(ngModel)]="profile.branchCode"
+      type="text"
+      required
+      readonly="true"
+    ></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label position="floating" class="required">First name</ion-label>
     <ion-input
       [(ngModel)]="profile.firstName"

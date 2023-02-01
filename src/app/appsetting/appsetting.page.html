@@ -54,34 +54,74 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
-  <ion-item>
-    <ion-label>Printer Setup</ion-label>
-    <ion-button
-      expand="block"
-      color="primary"
-      (click)="onClickPrinterSetup()"
-      [disabled]="!thermalPrinter"
-      >Search</ion-button
-    >
-
-    <ion-select
-      *ngIf="allPrinter.length>0"
-      color="primary"
-      class="fullwidth"
-      interface="popover"
-      [(ngModel)]="selectedPrinter"
-      (ionChange)="onDeviceChange()"
-      placeholder="Select Printer"
-    >
-      <ion-select-option
+  <ion-list>
+    <ion-item>
+      <ion-label>Printer Setup</ion-label>
+      <ion-button
+        expand="block"
         color="primary"
-        [value]="printer"
-        *ngFor="let printer of allPrinter; "
+        (click)="onClickPrinterSetup()"
+        [disabled]="!thermalPrinter"
+        >Search</ion-button
       >
-        {{printer.name}}
-      </ion-select-option>
-    </ion-select>
-    <ion-button [disabled]="!util.printer" (click)="test()">Test</ion-button>
-  </ion-item>
+
+      <ion-select
+        *ngIf="allPrinter.length>0"
+        color="primary"
+        class="fullwidth"
+        interface="popover"
+        [(ngModel)]="selectedPrinter"
+        (ionChange)="onDeviceChange()"
+        placeholder="Select Printer"
+      >
+        <ion-select-option
+          color="primary"
+          [value]="printer"
+          *ngFor="let printer of allPrinter; "
+        >
+          {{printer.name}}
+        </ion-select-option>
+      </ion-select>
+      <ion-button [disabled]="!util.printer" (click)="test()">Test</ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>Copies of Bill to print</ion-label>
+      <ion-radio-group  [(ngModel)]="numberOfRecipt" (ionChange)="onChange($event)">
+        <ion-item no-padding>
+          <ion-label>Do not Print</ion-label>
+          <ion-radio
+            slot="start"
+            id="mrgndr"
+            name="gender-male"
+            [value]="0"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+        <ion-item no-padding>
+          <ion-label>One</ion-label>
+          <ion-radio
+            slot="start"
+            id="mrgndr"
+            name="gender-male"
+            [value]="1"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+
+        <ion-item no-padding>
+          <ion-label>Two</ion-label>
+          <ion-radio
+            slot="start"
+            id="mrgndr"
+            name="gender-male"
+            [value]="2"
+            class="radiobutton"
+            color="primary"
+          ></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-item>
+  </ion-list>
 </ion-list>

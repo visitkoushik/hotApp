@@ -81,10 +81,12 @@ export class ConfiremdBillPage implements OnInit {
           this.router.navigateByUrl('/tab/createbill');
           this.util.isLoading = false;
           const billFinal: I_BillingReq = e.responseObject;
-          this.util.printBill({
-            ...billFinal,
-            customer: { ...billReq.customer },
-          });
+
+            this.util.printBill({
+              ...billFinal,
+              customer: { ...billReq.customer },
+            });
+
         })
         .catch((e) => {
           this.snack.openSnackBar('Something went wrong');
@@ -101,7 +103,7 @@ export class ConfiremdBillPage implements OnInit {
     billReq.customer = this.getCustomerInfo();
     billReq.paid = this.currentBill.paid;
     billReq.tax = this.currentBill.tax;
-    billReq.branchCode=this.util.branchCode;
+    billReq.branchCode = this.util.branchCode;
     billReq.billingItemList = this.currentBill.itemPurchased.map(
       (cart: I_CartItem) => {
         const billingItem: I_BillingItem = {} as I_BillingItem;
@@ -170,6 +172,4 @@ export class ConfiremdBillPage implements OnInit {
     this.cartService.createBillPageRef.currentBiill.due =
       this.currentBill.total - this.currentBill.paid;
   };
-
-
 }

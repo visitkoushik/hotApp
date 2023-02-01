@@ -204,5 +204,16 @@ export class AppComponent implements OnInit, OnChanges {
       .catch((e) => {
         this.util.printer = null;
       });
+
+      this.storage
+      .getStorage(StoreName.RECIPTNUMBER)
+      .then((e: Printer) => {
+        this.util.numberOfRecipt = +e;
+      })
+      .catch((e) => {
+        this.util.numberOfRecipt = 1;
+      });
+
+
   };
 }

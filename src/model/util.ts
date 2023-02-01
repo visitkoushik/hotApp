@@ -15,6 +15,7 @@ export enum FILTER_BY {
   YEAR,
 }
 
+
 export enum StoreName {
   ITEM = 'items',
   CATEGORY = 'category',
@@ -25,7 +26,8 @@ export enum StoreName {
   PRINTER = 'selectedPrinter',
   PAGEBILL = 'pageBill',
   PAGEREPORT = 'pageReport',
-  LOGIN = 'loginstore'
+  LOGIN = 'loginstore',
+  RECIPTNUMBER = "RECIPTNUMBER"
 }
 
 export enum ApiEndPoint {

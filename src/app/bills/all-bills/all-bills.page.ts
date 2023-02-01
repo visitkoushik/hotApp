@@ -31,7 +31,8 @@ import { UpdateBillComponent } from './update-bill/update-bill.component';
 })
 export class AllBillsPage implements OnInit {
   dialogRef: MatDialogRef<UpdateBillComponent, any>;
-  pageIndex: number=0;
+  pageIndex: number = 0;
+  today: Date;
   onBranchChanged() {
     this.fetchBills();
   }
@@ -69,7 +70,10 @@ export class AllBillsPage implements OnInit {
       -1;
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/tab/allbills')
+        ) {
           // this.util.isLoading = true;
           this.currentMaxPage = this.util.maxPageCount;
           this.setMaxDate();
@@ -104,6 +108,7 @@ export class AllBillsPage implements OnInit {
     });
   };
   fetchBills = async (page?: number) => {
+    this.today = new Date();
     this.fetchBillsfromServer(page || 1);
   };
 
@@ -306,7 +311,7 @@ export class AllBillsPage implements OnInit {
       data: { ...bill },
     });
 
-    this.dialogRef.afterClosed().subscribe((newBilltoUpdate) => {
+    this.dialogRef.afterClosed().subscribe((newBilltoUpdate: I_BillingReq) => {
       if (!newBilltoUpdate) {
         return;
       }
@@ -326,8 +331,9 @@ export class AllBillsPage implements OnInit {
               newBilltoUpdate
             )
             .then((e) => {
-             this.snackbar.openSnackBar('Bill updated')
-             this.util.printBill(newBilltoUpdate)
+              this.snackbar.openSnackBar('Bill updated');
+
+              this.util.printBill(this.calculateTotal(newBilltoUpdate));
               this.fetchBills(this.pageIndex);
             })
             .catch((e) => console.log(e));
@@ -337,7 +343,23 @@ export class AllBillsPage implements OnInit {
   };
 
   onCLoseAddDialog = () => {};
+  private calculateTotal(record: I_BillingReq): I_BillingReq {
+    record.Ptotal = 0;
+    record.Stotal = 0;
+    record.billingItemList.map((b) => {
+      record.Ptotal += b.priceAmount * b.itemCount;
+      record.Stotal +=
+        (b.sellingAmount -
+          (b.discount > 0
+            ? b.isDiscountInPercentage
+              ? (b.sellingAmount * b.discount) / 100
+              : b.discount
+            : 0)) *
+        b.itemCount;
+    });
 
+    return record;
+  }
   convertBillRequestToBill = (b: I_BillingReq): I_Bill => {
     let ibill: I_Bill = {} as I_Bill;
     ibill.billID = b.id;

@@ -11,6 +11,7 @@ import { I_Profile } from 'src/model/Profile';
 import { AppStorageService } from '../app-storage/app-storage.service';
 import { Router } from '@angular/router';
 import { I_BillingReq, I_BillingItem } from 'src/model/BillingReq';
+import { PrinterService } from './printer-service.service';
 
 declare let ThermalPrinter: ThermalPrinterPlugin;
 
@@ -32,6 +33,7 @@ export class UtilService {
   public allBranches: I_Branch[] = [];
   public branchCode: string = '0';
   public isLoggedIn = false;
+  public numberOfRecipt: number;
   get redirectUrl(): string {
     return this.url;
   }
@@ -39,7 +41,11 @@ export class UtilService {
     this.url = url;
   }
 
-  constructor(private storage: AppStorageService, private router: Router) {}
+  constructor(
+    private storage: AppStorageService,
+    private router: Router,
+    private printerSrvc:PrinterService
+  ) {}
 
   public onAppLogout = async () => {
     await this.storage.setStorage(StoreName.LOGIN, {
@@ -48,38 +54,23 @@ export class UtilService {
     });
     this.userLogin = null;
     this.isLoggedIn = false;
-    this.redirectUrl = '/';
+    // this.redirectUrl = '/';
     this.router.navigate(['/login']);
   };
 
-  public print = (textToPrint: string): Promise<string> => {
-    const thermalPrinter = ThermalPrinter;
-    return new Promise((res, rej) => {
-      if (this.printer === null || !thermalPrinter) {
-        rej('Printer not set yet. Please goto App Setting and set the printer');
-        return;
-      }
-      ThermalPrinter.printFormattedTextAndCut(
-        {
-          type: 'bluetooth',
-          id: this.printer.address,
-          text: textToPrint,
-        },
-        function () {
-          res('Successfully printed!');
-        },
-        function (error) {
-          rej('Printing error ' + error);
-        }
-      );
-    });
+  printBill = async (bill: I_BillingReq) => {
+    this.isLoading=true;
+    let num = this.numberOfRecipt;
+    while (num--) {
+      await this.printRecipt(bill);
+    }
+    this.isLoading=false
   };
-
-  printBill = (billing: I_BillingReq) => {
+  private printRecipt = async (billing: I_BillingReq) => {
     let billText = `[C]<font size='big'><u>House Of Tea</u></font>\n\n\n`;
 
     billText += `[L]<b>ORDER NO: </b>${billing.billNumber}
-[L]<b>Date: </b>${new Date(billing.billingDate).toLocaleDateString()}
+[L]<b>Date: </b>${new Date(billing.billingDate).toLocaleDateString()} ${new Date(billing.billingDate).toLocaleTimeString()}
 [L]<b>Customer Name: </b>${billing.customer.firstName} ${
       billing.customer.lastName
     }`;
@@ -105,6 +96,6 @@ export class UtilService {
       billing.Stotal - billing.discount - billing.tax
     }</font>\n\n--------------------------------\n\n`;
 
-    this.print(billText);
+    await this.printerSrvc.print(billText,this.printer);
   };
 }

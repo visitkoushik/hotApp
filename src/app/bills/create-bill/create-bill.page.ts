@@ -24,7 +24,7 @@ export class CreateBillPage implements OnInit {
   CLONED_GENDER = GENDER;
   creatBillPage: I_CreateBillPage = null;
   constructor(
-    public util:UtilService,
+    public util: UtilService,
     private cartService: CartService,
     private activeRoute: ActivatedRoute,
     private router: Router
@@ -35,7 +35,10 @@ export class CreateBillPage implements OnInit {
 
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/tab/createbill')
+        ) {
           this.fetchData();
           this.creatBillPage = { ...this.cartService.createBillPageRef };
         }
@@ -104,12 +107,12 @@ export class CreateBillPage implements OnInit {
 
   public onReset = () => {};
   onBranchChanged() {
-    this.fetchData()
+    this.fetchData();
   }
   trackByFn = (inx: number, item: I_CartItem) => item.id;
 
   private fetchData = () => {
-    this.cartService.getAllItem(this.util.branchCode ,true, () => {
+    this.cartService.getAllItem(this.util.branchCode, true, () => {
       if (
         !this.cartService.createBillPageRef ||
         !this.cartService.createBillPageRef.currentBiill

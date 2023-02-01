@@ -28,11 +28,14 @@ export class ItemListPage implements OnInit {
   constructor(
     public util: UtilService,
     public cartsrvc: CartService,
-    private router: Router,
+    private router: Router
   ) {
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/tab-item/item-list')
+        ) {
           // this.util.isLoading = true;
 
           this.getItemList();
@@ -74,12 +77,16 @@ export class ItemListPage implements OnInit {
   };
 
   private getItemList = () => {
-    this.cartsrvc.getAllItem(this.util.branchCode, this.includeOutOfStockItem ? null : true, () => {
-      this.allItems = this.cartsrvc.mainItems;
-    });
+    this.cartsrvc.getAllItem(
+      this.util.branchCode,
+      this.includeOutOfStockItem ? null : true,
+      () => {
+        this.allItems = this.cartsrvc.mainItems;
+      }
+    );
   };
 
-  onBranchChanged=()=>{
+  onBranchChanged = () => {
     this.getItemList();
-  }
+  };
 }

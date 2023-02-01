@@ -40,7 +40,10 @@ export class BranchListPage implements OnInit {
 
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {
-        if (event instanceof NavigationStart) {
+        if (
+          event instanceof NavigationStart &&
+          event.url.startsWith('/branch-tab/list')
+        ) {
           // this.util.isLoading = true;
           this.fetchAll();
         }
