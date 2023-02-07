@@ -6,16 +6,46 @@ import { OtherExpensesPage } from './other-expenses.page';
 const routes: Routes = [
   {
     path: '',
-    component: OtherExpensesPage
+    component: OtherExpensesPage,
+    children: [
+      {
+        path: 'add',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./add/add.module').then((m) => m.AddPageModule),
+          },
+        ],
+      },
+      {
+        path: 'list',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./list/list.module').then((m) => m.ListPageModule),
+          },
+        ],
+      },
+      {
+        path: 'update',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./update/update.module').then((m) => m.UpdatePageModule),
+          },
+        ],
+      },
+
+      {
+        path: '',
+        redirectTo: '/other-expenses/add',
+        pathMatch: 'full',
+      },
+    ],
   },
-  {
-    path: 'add',
-    loadChildren: () => import('./add/add.module').then( m => m.AddPageModule)
-  },
-  {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then( m => m.ListPageModule)
-  }
 ];
 
 @NgModule({

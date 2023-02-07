@@ -12,33 +12,33 @@ th.mat-header-cell:last-of-type,
 th.mat-header-cell:first-of-type,
 td.mat-cell:last-of-type,
 td.mat-cell:first-of-type {
-  padding: 0;
+  padding-right: 1rem  ;
+  padding-left: 1rem  ;
 }
 th.mat-header-cell,
 th.mat-header-cell {
   border-bottom: 1px solid currentColor;
 }
-.mat-column-perticulars {
-  width: 50vw;
+.mat-column-detail {
+  width: 55vw;
   text-align: center;
   padding: 0;
-  border-right: 1px solid currentColor;
 }
-.mat-column-amountCr,
-.mat-column-amountDr {
-  width: 25vw;
+.mat-column-amount {
+  width: 45vw;
   text-align: center;
   padding: 0;
-  border-right: 1px solid currentColor;
-}
 
-.mat-column-amountDr {
-  color: red;
 }
-.mat-column-amountCr {
-  color: green;
-}
+.tdamount{
+  text-align: right;
+  font-weight: bold;
 
+}
+.tddetail{
+  text-align: left;
+
+}
 .resultstyle {
   display: block;
   text-align: right;
@@ -48,4 +48,8 @@ th.mat-header-cell {
 
 h5 {
   margin: 0;
+}
+
+.detail{
+  border-right: 2px solid gray;
 }

@@ -132,26 +132,43 @@ const routes: Routes = [
   },
   {
     path: 'branch-tab',
-    loadChildren: () => import('./branch/branch-tab/branch-tab.module').then( m => m.BranchTabPageModule),
+    loadChildren: () =>
+      import('./branch/branch-tab/branch-tab.module').then(
+        (m) => m.BranchTabPageModule
+      ),
     canLoad: [AuthGaurdService],
   },
   {
     path: 'add-branch',
-    loadChildren: () => import('./branch/add-branch/add-branch.module').then( m => m.AddBranchPageModule),
-
+    loadChildren: () =>
+      import('./branch/add-branch/add-branch.module').then(
+        (m) => m.AddBranchPageModule
+      ),
+      canLoad: [AuthGaurdService],
   },
   {
     path: 'branch-list',
-    loadChildren: () => import('./branch/branch-list/branch-list.module').then( m => m.BranchListPageModule),
-
+    loadChildren: () =>
+      import('./branch/branch-list/branch-list.module').then(
+        (m) => m.BranchListPageModule
+      ),
+      canLoad: [AuthGaurdService],
   },
   {
     path: 'update-branch',
-    loadChildren: () => import('./branch/update-branch/update-branch.module').then( m => m.UpdateBranchPageModule)
+    loadChildren: () =>
+      import('./branch/update-branch/update-branch.module').then(
+        (m) => m.UpdateBranchPageModule
+      ),
+      canLoad: [AuthGaurdService],
   },
   {
     path: 'other-expenses',
-    loadChildren: () => import('./other-expenses/other-expenses.module').then( m => m.OtherExpensesPageModule)
+    loadChildren: () =>
+      import('./other-expenses/other-expenses.module').then(
+        (m) => m.OtherExpensesPageModule
+      ),
+    canLoad: [AuthGaurdService],
   },
 ];
 

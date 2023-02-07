@@ -85,7 +85,7 @@ export class ConfiremdBillPage implements OnInit {
             this.util.printBill({
               ...billFinal,
               customer: { ...billReq.customer },
-            });
+            },this.altrCtrl,this.alertServc);
 
         })
         .catch((e) => {

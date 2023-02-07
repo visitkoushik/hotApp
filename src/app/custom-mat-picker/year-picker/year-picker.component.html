@@ -1,8 +1,8 @@
 <mat-form-field appearance="fill" class="yeartoggle">
   <mat-label>{{ label }}</mat-label>
   <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-    <input matStartDate placeholder="Start Year" #mesIni />
-    <input matEndDate placeholder="End Year" #mesFin />
+    <input matStartDate placeholder="Start Year" #mesIni readonly />
+    <input matEndDate placeholder="End Year" #mesFin readonly />
   </mat-date-range-input>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker

@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'itemwise',
     loadChildren: () => import('./itemwise/itemwise.module').then( m => m.ItemwisePageModule)
+  },
+  {
+    path: 'overall',
+    loadChildren: () => import('./overall/overall.module').then( m => m.OverallPageModule)
   }
 ];
 

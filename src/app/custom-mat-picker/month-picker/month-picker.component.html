@@ -1,17 +1,9 @@
 <mat-form-field appearance="fill" class="monthtoggle">
   <mat-label>{{ label }}</mat-label>
   <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-    <input
-      matStartDate
-      placeholder="Start Month"
-      #mesIni
-    />
+    <input matStartDate placeholder="Start Month" #mesIni readonly />
 
-    <input
-      matEndDate
-      placeholder="End Month"
-      #mesFin
-    />
+    <input matEndDate placeholder="End Month" #mesFin readonly />
   </mat-date-range-input>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker

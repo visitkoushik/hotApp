@@ -12,6 +12,8 @@ import { AppStorageService } from '../app-storage/app-storage.service';
 import { Router } from '@angular/router';
 import { I_BillingReq, I_BillingItem } from 'src/model/BillingReq';
 import { PrinterService } from './printer-service.service';
+import { AlertController } from '@ionic/angular';
+import { AlertService } from './alert.service';
 
 declare let ThermalPrinter: ThermalPrinterPlugin;
 
@@ -44,7 +46,7 @@ export class UtilService {
   constructor(
     private storage: AppStorageService,
     private router: Router,
-    private printerSrvc:PrinterService
+    private printerSrvc: PrinterService
   ) {}
 
   public onAppLogout = async () => {
@@ -58,19 +60,41 @@ export class UtilService {
     this.router.navigate(['/login']);
   };
 
-  printBill = async (bill: I_BillingReq) => {
-    this.isLoading=true;
+  printBill = async (
+    bill: I_BillingReq,
+    alertCtrl: AlertController,
+    alertSrvc: AlertService
+  ) => {
+    this.isLoading = true;
     let num = this.numberOfRecipt;
     while (num--) {
-      await this.printRecipt(bill);
+
+      if (num == 0 && this.numberOfRecipt==2) {
+        alertSrvc.presentAlert(
+          alertCtrl,
+          '',
+          'Printing client receipt',
+          { ok: 'OK' },
+          async () => {
+            await this.printRecipt(bill);
+          }
+        );
+      }
+      else{
+        await this.printRecipt(bill);
+      }
     }
-    this.isLoading=false
+    this.isLoading = false;
   };
   private printRecipt = async (billing: I_BillingReq) => {
     let billText = `[C]<font size='big'><u>House Of Tea</u></font>\n\n\n`;
 
     billText += `[L]<b>ORDER NO: </b>${billing.billNumber}
-[L]<b>Date: </b>${new Date(billing.billingDate).toLocaleDateString()} ${new Date(billing.billingDate).toLocaleTimeString()}
+[L]<b>Date: </b>${new Date(
+      billing.billingDate
+    ).toLocaleDateString()} ${new Date(
+      billing.billingDate
+    ).toLocaleTimeString()}
 [L]<b>Customer Name: </b>${billing.customer.firstName} ${
       billing.customer.lastName
     }`;
@@ -92,10 +116,14 @@ export class UtilService {
     billText += `\n\n[C]<font >TOTAL</font>[R]<font size='normal'> ${billing.Stotal}</font>\n`;
     billText += `[C]<font >Discount</font>[R]<font size='normal'>-${billing.discount}</font>\n`;
     billText += `[C]<font >Tax(%)</font>[R]<font size='normal'>-${billing.tax}</font>\n`;
+    billText +=
+      billing.Stotal - billing.discount - billing.tax === billing.paid
+        ? ``
+        : `[C]<font >Due</font>[R]<font size='normal'>-${billing.tax}</font>\n`;
     billText += `[C]<font color='bg-black'>GRAND TOTAL</font>[R]<font size='normal'> ${
       billing.Stotal - billing.discount - billing.tax
     }</font>\n\n--------------------------------\n\n`;
 
-    await this.printerSrvc.print(billText,this.printer);
+    await this.printerSrvc.print(billText, this.printer);
   };
 }

@@ -63,6 +63,13 @@ export enum ApiEndPoint {
 
   REPORT_BILLWISE = 'reports/billwise',
   REPORT_ITEMWISE = 'reports/itemwise',
+  REPORT_OVERALL = 'reports/overall',
+
+  TRANSACTION_ADD  = 'transaction',
+  TRANSACTION_READ  = 'transaction',
+  TRANSACTION_UPDATE  = 'transaction/:id',
+  TRANSACTION_DELETE = 'transaction/:id',
+
 
 }
 

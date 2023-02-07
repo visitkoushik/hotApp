@@ -55,8 +55,13 @@
   >
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-      <input matStartDate placeholder="Start date" [(ngModel)]="startDate" />
-      <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
+      <input
+        matStartDate
+        placeholder="Start date"
+        [(ngModel)]="startDate"
+        readonly
+      />
+      <input matEndDate placeholder="End date" [(ngModel)]="endDate" readonly />
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
@@ -91,6 +96,14 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-divider></mat-divider>
+  <ion-button expand="block" color="primary" (click)="overAll()"
+    >Over All PnL</ion-button
+  >
+  <div style="font-size: '0.6rem'; text-align: 'center'; font-style: italic;">
+    (Item wise is not applicable for overAll report)
+  </div>
 </ion-content>
 
 <ion-footer>

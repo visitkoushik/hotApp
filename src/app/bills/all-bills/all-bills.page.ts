@@ -193,12 +193,22 @@ export class AllBillsPage implements OnInit {
     e.stopPropagation();
     this.alertSrvc.presentAlert(
       this.alrtCtrl,
-      'Confirm Delete',
+      `Confirm Delete of Bill: ${bill.billNumber}`,
       'Are you sure, you want to delete the bill? ',
       { ok: 'Yes', cancel: 'No' },
       async () => {
         // eslint-disable-next-line no-underscore-dangle
-        this.deleteFromServer(bill);
+        this.alertSrvc.presentAlert(
+          this.alrtCtrl,
+          `Confirm Delete of Bill: ${bill.billNumber}`,
+          'Once Delete it is not revertable. Check the bill number before you delete. Want to continue?',
+          { ok: 'Yes', cancel: 'No' },
+          async () => {
+            // eslint-disable-next-line no-underscore-dangle
+            this.deleteFromServer(bill);
+          },
+          () => {}
+        );
       },
       () => {}
     );
@@ -333,7 +343,11 @@ export class AllBillsPage implements OnInit {
             .then((e) => {
               this.snackbar.openSnackBar('Bill updated');
 
-              this.util.printBill(this.calculateTotal(newBilltoUpdate));
+              this.util.printBill(
+                this.calculateTotal(newBilltoUpdate),
+                this.alrtCtrl,
+                this.alertSrvc
+              );
               this.fetchBills(this.pageIndex);
             })
             .catch((e) => console.log(e));
@@ -397,5 +411,12 @@ export class AllBillsPage implements OnInit {
       return b;
     });
     return ibill;
+  };
+
+  getDate = (dt): boolean => {
+
+    return (
+      (this.today.valueOf() - new Date(dt).valueOf()) / 1000 / 60 / 60 / 12 < 1
+    );
   };
 }

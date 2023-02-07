@@ -36,12 +36,6 @@ const routes: Routes = [
         ],
       },
 
-      // {
-      //   path: '',
-      //   redirectTo: '/tab-item/add-item',
-      //   pathMatch: 'full',
-      //   canLoad: [AddItemDisplayGuard],
-      // },
       {
         path: '',
         redirectTo: '/tab-item/item-list',

@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { OtherExpensesPageRoutingModule } from './other-expenses-routing.module';
 
 import { OtherExpensesPage } from './other-expenses.page';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OtherExpensesPageRoutingModule
+    MaterialModule,
+
+    OtherExpensesPageRoutingModule,
   ],
-  declarations: [OtherExpensesPage]
+  declarations: [OtherExpensesPage],
 })
 export class OtherExpensesPageModule {}

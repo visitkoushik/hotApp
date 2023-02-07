@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ListPageRoutingModule } from './list-routing.module';
+import { OverallPageRoutingModule } from './overall-routing.module';
 
-import { ListPage } from './list.page';
+import { OverallPage } from './overall.page';
 import { MaterialModule } from 'src/app/material.module';
-import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.module';
 
 @NgModule({
   imports: [
@@ -16,9 +15,8 @@ import { BranchSelectorModule } from 'src/app/branch-selector/branch-selector.mo
     FormsModule,
     IonicModule,
     MaterialModule,
-    BranchSelectorModule,
-    ListPageRoutingModule,
+    OverallPageRoutingModule
   ],
-  declarations: [ListPage],
+  declarations: [OverallPage]
 })
-export class ListPageModule {}
+export class OverallPageModule {}

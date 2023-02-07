@@ -55,8 +55,46 @@ export class ReportsPage implements OnInit {
     private httpServc: HttpService,
     private snacBar: SnackbarService
   ) {}
+  overAll() {
+    const paramObj = {
+      filterDateBy: this.filterDateBy,
+      startDate:
+        this.filterDateBy === this.FILTERBY.DATE
+          ? this.startDate
+          : this.filterDateBy === this.FILTERBY.MONTH
+          ? this.startM
+          : this.startY,
+      endDate:
+        this.filterDateBy === this.FILTERBY.DATE
+          ? this.endDate
+          : this.filterDateBy === this.FILTERBY.MONTH
+          ? this.endM
+          : this.endY,
+      selectedReport: this.selectedReport,
+    };
 
+    this.httpServc
+      .post(ApiEndPoint.REPORT_OVERALL, {
+        startDate: paramObj.startDate,
+        endDate: paramObj.endDate,
+        selectedReport: paramObj.selectedReport,
+        filterDateBy: paramObj.filterDateBy,
+        paged: true,
+        page: 1,
+        count: this.util.maxPageCountReport,
+        branchCode: this.util.branchCode,
+      })
+      .then((e: AppResponse<any>) => {
+        console.log(e);
+        this.router.navigate(['overall'], {
+          relativeTo: this.activeRoute,
+          queryParams: { p: JSON.stringify(paramObj), r: JSON.stringify(e) },
+        });
+      })
+      .catch((e) => console.log(e));
+  }
   ngOnInit() {
+    this.maxDate = new Date();
     this.fetchItems();
     this.router.events.subscribe(
       (event: NavigationStart | NavigationEnd | NavigationError) => {

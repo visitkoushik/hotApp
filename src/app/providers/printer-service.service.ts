@@ -16,7 +16,6 @@ export class PrinterService {
 
   checkPrinterDriver = () => {
     try {
-      debugger;
       this.thermalPrinter = ThermalPrinter;
       return true;
     } catch {

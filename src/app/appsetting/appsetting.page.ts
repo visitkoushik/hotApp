@@ -64,7 +64,7 @@ export class AppsettingPage implements OnInit {
     if (this.selectedPrinter) this.allPrinter = [this.selectedPrinter];
 
     this.thermalPrinter = this.printerService.checkPrinterDriver();
-    debugger;
+
     this.numberOfRecipt =
       this.util.numberOfRecipt === undefined ? 1 : this.util.numberOfRecipt;
   }
@@ -173,7 +173,7 @@ export class AppsettingPage implements OnInit {
   };
 
   onChange = (ev) => {
-    debugger;
+
     this.util.numberOfRecipt = this.numberOfRecipt;
     this.store.setStorage(StoreName.RECIPTNUMBER, this.numberOfRecipt);
   };
